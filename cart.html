@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your cart — Kim's Cleaning Supplies</title>
+<meta name="description" content="Check out with PayPal or Venmo, or pick your order up in Quincy, IL.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="images/brand/logo-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header id="site-header"></header>
+
+<main>
+  <section class="tight">
+    <div class="wrap">
+
+      <!-- thank you -->
+      <div id="thanks" class="hide">
+        <div class="thankyou">
+          <div class="tick" id="tick"></div>
+          <h1 id="thanks-h">Thank you</h1>
+          <p class="muted" style="max-width:46ch;margin:0 auto 22px" id="thanks-p"></p>
+          <div class="btn-row" style="justify-content:center">
+            <a class="btn btn-primary" href="shop.html">Back to the shop</a>
+            <a class="btn btn-ghost" href="events.html">See where we'll be</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- cart -->
+      <div id="cart-view">
+        <h1>Your cart</h1>
+
+        <div id="empty" class="empty hide">
+          <div style="font-size:0">&nbsp;</div>
+          <h2 style="margin-top:0">Nothing in here yet</h2>
+          <p class="muted">Two cloths is the usual place to start.</p>
+          <a class="btn btn-primary" href="shop.html">Go to the shop</a>
+        </div>
+
+        <div class="cart-grid hide" id="grid">
+          <div>
+            <div id="lines"></div>
+            <p style="margin-top:18px"><a href="shop.html">&larr; Keep shopping</a></p>
+          </div>
+
+          <aside>
+            <div class="pay-box">
+              <h3 style="margin-top:0">How should we get it to you?</h3>
+              <div class="toggle" id="fulfil">
+                <button type="button" data-mode="ship" aria-pressed="true">Ship to me<small id="ship-cost"></small></button>
+                <button type="button" data-mode="pickup" aria-pressed="false">Pickup<small>Quincy, IL &middot; free</small></button>
+              </div>
+
+              <div id="pickup-note" class="notice hide" style="margin-bottom:16px">
+                <strong>Free pickup in Quincy.</strong>
+                Kim will email you to arrange a time. Pickup is at 2922 Lincoln Hill SW, Quincy, IL.
+              </div>
+
+              <div id="guest">
+                <label class="field"><span>Name</span><input id="g-name" type="text" autocomplete="name"></label>
+                <label class="field"><span>Email</span><input id="g-email" type="email" autocomplete="email"></label>
+                <label class="field"><span>Phone</span><input id="g-phone" type="tel" autocomplete="tel"></label>
+                <div id="ship-fields">
+                  <label class="field"><span>Street address</span><input id="g-address" type="text" autocomplete="street-address"></label>
+                  <label class="field"><span>City</span><input id="g-city" type="text" autocomplete="address-level2"></label>
+                  <div class="field-row">
+                    <label class="field"><span>State</span><input id="g-state" type="text" maxlength="2" autocomplete="address-level1" placeholder="IL"></label>
+                    <label class="field"><span>ZIP</span><input id="g-zip" type="text" inputmode="numeric" maxlength="10" autocomplete="postal-code"></label>
+                  </div>
+                </div>
+              </div>
+
+              <ul class="totals" id="totals"></ul>
+            </div>
+
+            <div id="paypal-box" class="pay-box" style="margin-top:16px">
+              <div class="pay-head"><span class="paypal-badge">P</span><h3>Pay with PayPal</h3></div>
+              <div id="paypal-buttons"></div>
+              <p class="tiny muted" style="margin:12px 0 0">
+                PayPal checkout may also offer Venmo and card for US customers.
+              </p>
+            </div>
+
+            <div id="venmo-box" style="margin-top:16px"></div>
+          </aside>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<div class="sticky-bar hide" id="sticky">
+  <span class="sb-price" id="sb-total"></span>
+  <button class="btn btn-primary" type="button" id="sb-go">Checkout</button>
+</div>
+
+<footer id="site-footer"></footer>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/paypal.js"></script>
+<script>
+(function () {
+  KIMS.mount("cart.html");
+
+  var CFG = KIMS_CONFIG;
+  var el = {
+    empty:   document.getElementById("empty"),
+    grid:    document.getElementById("grid"),
+    lines:   document.getElementById("lines"),
+    totals:  document.getElementById("totals"),
+    fulfil:  document.getElementById("fulfil"),
+    shipF:   document.getElementById("ship-fields"),
+    pickupN: document.getElementById("pickup-note"),
+    sticky:  document.getElementById("sticky"),
+    sbTotal: document.getElementById("sb-total"),
+    thanks:  document.getElementById("thanks"),
+    cartV:   document.getElementById("cart-view"),
+    ppBox:   document.getElementById("paypal-box"),
+    ppBtns:  document.getElementById("paypal-buttons"),
+    venmo:   document.getElementById("venmo-box")
+  };
+
+  document.getElementById("tick").innerHTML = KIMS.icon.check;
+  document.getElementById("ship-cost").textContent =
+    CFG.flatShipping > 0 ? KIMS.money(CFG.flatShipping) + " flat" : "free";
+
+  var FIELDS = ["name", "email", "phone", "address", "city", "state", "zip"];
+  var SHIP_REQUIRED = ["name", "email", "phone", "address", "city", "state", "zip"];
+
+  /* restore saved details */
+  var saved = Cart.checkout();
+  FIELDS.forEach(function (f) {
+    var input = document.getElementById("g-" + f);
+    if (!input) return;
+    input.value = saved[f] || "";
+    input.addEventListener("input", function () {
+      var patch = {}; patch[f] = input.value.trim();
+      Cart.saveCheckout(patch);
+      refreshPayment();
+    });
+  });
+
+  /* ---------------- lines ---------------- */
+  function drawLines() {
+    var lines = Cart.lines();
+    el.lines.innerHTML = "";
+
+    lines.forEach(function (l) {
+      var row = document.createElement("div");
+      row.className = "line";
+
+      var media = document.createElement("div");
+      media.className = "line-media";
+      media.appendChild(KIMS.smartImg(l.product.images, l.name));
+      row.appendChild(media);
+
+      var body = document.createElement("div");
+      body.innerHTML =
+        '<div class="line-name"><a href="product.html?id=' + encodeURIComponent(l.slug) + '">' +
+          KIMS.esc(l.name) + "</a></div>" +
+        (l.variant ? '<div class="line-variant">' + KIMS.esc(l.variant) + "</div>" : "") +
+        '<div class="line-foot">' +
+          '<div class="qty">' +
+            '<button type="button" data-act="minus" aria-label="One fewer">&minus;</button>' +
+            '<input type="number" min="1" max="99" value="' + l.qty + '" aria-label="Quantity">' +
+            '<button type="button" data-act="plus" aria-label="One more">+</button>' +
+          "</div>" +
+          '<button class="link-btn" type="button" data-act="remove">Remove</button>' +
+          '<span class="line-price">' + KIMS.money(l.total) + "</span>" +
+        "</div>";
+
+      body.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-act]");
+        if (!b) return;
+        if (b.dataset.act === "remove") Cart.remove(l.slug, l.variant);
+        if (b.dataset.act === "plus")  Cart.setQty(l.slug, l.variant, l.qty + 1);
+        if (b.dataset.act === "minus") Cart.setQty(l.slug, l.variant, l.qty - 1);
+        render();
+      });
+      body.querySelector('input[type="number"]').addEventListener("change", function (e) {
+        Cart.setQty(l.slug, l.variant, parseInt(e.target.value, 10) || 0);
+        render();
+      });
+
+      row.appendChild(body);
+      el.lines.appendChild(row);
+    });
+  }
+
+  /* ---------------- totals ---------------- */
+  function drawTotals() {
+    var sub = Cart.subtotal();
+    var ship = Cart.shipping();
+    var mode = Cart.checkout().fulfillment;
+    var rows = ['<li><span>Subtotal</span><span>' + KIMS.money(sub) + "</span></li>"];
+
+    if (CFG.flatShipping > 0) {
+      rows.push('<li><span>Shipping</span><span>' +
+        (mode === "pickup" ? "Free — pickup" : KIMS.money(ship)) + "</span></li>");
+    }
+    rows.push('<li class="grand"><span>Total</span><span>' + KIMS.money(sub + ship) + "</span></li>");
+    el.totals.innerHTML = rows.join("");
+    el.sbTotal.textContent = KIMS.money(sub + ship);
+  }
+
+  /* ---------------- fulfillment ---------------- */
+  function drawFulfil() {
+    var mode = Cart.checkout().fulfillment;
+    Array.prototype.forEach.call(el.fulfil.children, function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.mode === mode));
+    });
+    el.shipF.classList.toggle("hide", mode === "pickup");
+    el.pickupN.classList.toggle("hide", mode !== "pickup");
+  }
+
+  el.fulfil.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-mode]");
+    if (!b) return;
+    Cart.saveCheckout({ fulfillment: b.dataset.mode });
+    render();
+  });
+
+  /* ---------------- payment ---------------- */
+  function missingFields() {
+    var c = Cart.checkout();
+    var need = c.fulfillment === "pickup" ? ["name", "email", "phone"] : SHIP_REQUIRED;
+    var labels = { name: "name", email: "email", phone: "phone", address: "street address",
+                   city: "city", state: "state", zip: "ZIP" };
+    return need.filter(function (f) { return !String(c[f] || "").trim(); })
+               .map(function (f) { return labels[f]; });
+  }
+
+  function refreshPayment() {
+    if (!Cart.items().length) {
+      el.ppBox.classList.add("hide");
+      el.venmo.innerHTML = "";
+      return;
+    }
+    el.ppBox.classList.remove("hide");
+    var missing = missingFields();
+    var blocked = missing.length
+      ? "Add your " + missing.join(", ") + " above and the payment buttons appear here."
+      : "";
+    Payments.renderPayPal(el.ppBtns, { blocked: blocked });
+    Payments.renderVenmo(el.venmo);
+  }
+
+  Payments.onSuccess = function (method, payerName) {
+    Cart.clear();
+    showThanks(
+      payerName ? "Thank you, " + payerName : "Thank you",
+      "Your payment went through. PayPal has emailed you the receipt — that is the one to keep. " +
+      (Cart.checkout().fulfillment === "pickup"
+        ? "Kim will email you to arrange pickup in Quincy."
+        : "Kim packs orders a couple of times a week and will email when yours is on its way.")
+    );
+  };
+
+  Payments.onVenmoPending = function () {
+    Cart.clear();
+    KIMS.updateBadge();
+  };
+
+  function showThanks(head, body) {
+    document.getElementById("thanks-h").textContent = head;
+    document.getElementById("thanks-p").textContent = body;
+    el.cartV.classList.add("hide");
+    el.sticky.classList.add("hide");
+    el.thanks.classList.remove("hide");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  /* ---------------- render ---------------- */
+  function render() {
+    var any = Cart.items().length > 0;
+    el.empty.classList.toggle("hide", any);
+    el.grid.classList.toggle("hide", !any);
+    el.sticky.classList.toggle("hide", !any);
+    if (any) { drawLines(); drawFulfil(); drawTotals(); }
+    refreshPayment();
+    KIMS.updateBadge();
+  }
+
+  document.getElementById("sb-go").addEventListener("click", function () {
+    var missing = missingFields();
+    var target = missing.length
+      ? document.getElementById("g-" + (Cart.checkout().fulfillment === "pickup" ? "name" : "name"))
+      : el.ppBox;
+    if (missing.length) {
+      var firstEmpty = ["name", "email", "phone", "address", "city", "state", "zip"]
+        .map(function (f) { return document.getElementById("g-" + f); })
+        .filter(function (i) { return i && !i.closest(".hide") && !i.value.trim(); })[0];
+      target = firstEmpty || target;
+    }
+    target.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (missing.length && target.focus) setTimeout(function () { target.focus(); }, 380);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

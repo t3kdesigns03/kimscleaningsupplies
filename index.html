@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kim's Cleaning Supplies — cleans with just water</title>
+<meta name="description" content="Kim's Cleaning Cloth: microfiber that cleans glass, granite, screens and windshields with water only. Made in USA. Sold by Kim Schoch and Alice at Iowa and Illinois shows, and here.">
+<link rel="icon" href="images/brand/logo-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header id="site-header"></header>
+
+<main>
+
+  <!-- ---------------- hero ---------------- -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-photo">
+          <img src="images/brand/hero.jpg" alt="A pack of Kim's Cleaning Cloths with the green earth and vine label, beside white microfiber cloths and dusters" width="1600" height="1195" fetchpriority="high">
+        </div>
+        <div>
+          <span class="eyebrow">Eco Easy Microfiber &middot; Made in USA</span>
+          <h1>Cleans with just water.</h1>
+          <p class="hero-sub">Wet it. Wring it. Wipe it. Walk away.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="shop.html?filter=cloths">Shop the cloths</a>
+            <a class="btn btn-ghost" href="shop.html?filter=dusters">See the tools</a>
+          </div>
+          <ul class="chips" id="proof"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- how it works ---------------- -->
+  <section class="band-cream">
+    <div class="wrap">
+      <h2 class="center">Four steps, no bottle</h2>
+      <p class="center muted" style="max-width:52ch;margin:0 auto 26px">
+        The fiber is split so fine it lifts dirt off the surface and holds it. That is the
+        whole trick — the spray was never doing the work.
+      </p>
+      <ol class="steps" id="steps"></ol>
+    </div>
+  </section>
+
+  <!-- ---------------- cloths ---------------- -->
+  <section>
+    <div class="wrap">
+      <h2>Start with the cloths</h2>
+      <p class="muted" style="max-width:54ch">
+        One cloth. Just water. The same trick that works on a kitchen window works on a windshield.
+      </p>
+      <div class="grid" id="cloth-grid"></div>
+    </div>
+  </section>
+
+  <!-- ---------------- tools ---------------- -->
+  <section class="band-cream">
+    <div class="wrap">
+      <h2>Mops, dusters and the hair towel</h2>
+      <p class="muted" style="max-width:54ch">
+        Same fiber, different jobs. The dusters are dry-use only — that is how they hold a
+        charge and pull dust off instead of pushing it around.
+      </p>
+      <div class="grid" id="tool-grid"></div>
+      <div style="margin-top:26px">
+        <a class="btn btn-ghost" href="shop.html">See everything</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- testimonials ---------------- -->
+  <section>
+    <div class="wrap">
+      <h2>What people tell us at the booth</h2>
+      <div class="quotes" id="quote-strip"></div>
+      <div style="margin-top:24px">
+        <a class="btn btn-quiet" href="about.html#testimonials">Read more of them</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- events teaser ---------------- -->
+  <section class="band-green">
+    <div class="wrap">
+      <h2>Come say hi</h2>
+      <p style="max-width:54ch;color:#D3E0C6">
+        Kim and Alice are on the road most weekends from August through December. Bring your
+        worst window &mdash; there is a demo table.
+      </p>
+      <ul class="events" id="next-events" style="margin-top:20px"></ul>
+      <div style="margin-top:22px">
+        <a class="btn btn-quiet" href="events.html">Full fall schedule</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- fundraiser ---------------- -->
+  <section class="band-cream">
+    <div class="wrap narrow center">
+      <h2>School, church, or a party at your place</h2>
+      <p class="muted">
+        Fundraisers do well with these because people actually use them up and come back.
+        Home-show parties work the same way &mdash; you host, Kim brings the demo table.
+      </p>
+      <a class="btn btn-primary" href="contact.html">Get in touch</a>
+    </div>
+  </section>
+
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script>
+(function () {
+  KIMS.mount("index.html");
+
+  /* proof chips */
+  var proof = [
+    ["flag", "Made in USA"],
+    ["loop", "Washable &amp; reusable"],
+    ["drop", "No sprays needed"]
+  ];
+  document.getElementById("proof").innerHTML = proof.map(function (p) {
+    return '<li class="chip">' + KIMS.icon[p[0]] + p[1] + "</li>";
+  }).join("");
+
+  /* steps */
+  var steps = [
+    ["drop",  "Wet it",     "Plain tap water. Cold is fine."],
+    ["wring", "Wring it",   "Hard. Damp, not dripping."],
+    ["wipe",  "Wipe it",    "One pass. No circles, no spray."],
+    ["walk",  "Walk away",  "It dries clear on its own. No buffing."]
+  ];
+  document.getElementById("steps").innerHTML = steps.map(function (s) {
+    return '<li class="step"><span class="step-n">' + KIMS.icon[s[0]] + "</span>" +
+           "<h3>" + s[1] + "</h3><p>" + s[2] + "</p></li>";
+  }).join("");
+
+  /* product cards */
+  function card(p) {
+    var el = document.createElement("article");
+    el.className = "card";
+    var media = document.createElement("a");
+    media.className = "card-media";
+    media.href = "product.html?id=" + encodeURIComponent(p.slug);
+    media.appendChild(KIMS.smartImg(p.images, p.name));
+    el.appendChild(media);
+
+    var body = document.createElement("div");
+    body.className = "card-body";
+    body.innerHTML =
+      '<h3><a href="product.html?id=' + encodeURIComponent(p.slug) + '">' + KIMS.esc(p.name) + "</a></h3>" +
+      '<p class="card-use">' + KIMS.esc(p.blurb) + "</p>" +
+      '<div class="card-foot"><span class="price">' + KIMS.money(p.price) + "</span>" +
+      '<button class="btn btn-primary btn-sm" type="button">Add</button></div>';
+    body.querySelector("button").addEventListener("click", function () {
+      Cart.add(p.slug, 1, p.options ? p.options[0].value : "");
+      KIMS.toast(p.name + " added");
+    });
+    el.appendChild(body);
+    return el;
+  }
+
+  var cloths = KIMS.products().filter(function (p) { return p.category === "cloths"; });
+  var tools  = KIMS.products().filter(function (p) { return p.category !== "cloths"; }).slice(0, 3);
+  var cg = document.getElementById("cloth-grid");
+  var tg = document.getElementById("tool-grid");
+  cloths.forEach(function (p) { cg.appendChild(card(p)); });
+  tools.forEach(function (p) { tg.appendChild(card(p)); });
+
+  /* testimonials */
+  var picks = [0, 1, 2].map(function (i) { return KIMS_TESTIMONIALS[i]; });
+  document.getElementById("quote-strip").innerHTML = picks.map(function (t) {
+    return '<blockquote class="quote"><p>&ldquo;' + KIMS.esc(t.text) + '&rdquo;</p>' +
+      "<cite>" + KIMS.esc(t.who) + (t.where ? ' <span>&mdash; ' + KIMS.esc(t.where) + "</span>" : "") +
+      "</cite></blockquote>";
+  }).join("");
+
+  /* next three events */
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var upcoming = KIMS_EVENTS.filter(function (e) { return new Date(e.end + "T23:59:59") >= today; });
+  if (!upcoming.length) upcoming = KIMS_EVENTS.slice(-3);
+  document.getElementById("next-events").innerHTML = upcoming.slice(0, 3).map(function (e) {
+    var where = [e.venue, e.city + ", " + e.state].filter(Boolean).join(" &middot; ");
+    return '<li class="event" style="background:rgba(255,253,247,.07);border-color:rgba(255,253,247,.2)">' +
+      '<span class="event-date" style="color:#E9C93E">' + e.date + "</span>" +
+      '<span class="event-body"><strong style="color:#FFFDF7">' + KIMS.esc(e.name) + "</strong>" +
+      '<span style="color:#BDCFAE">' + where + "</span></span></li>";
+  }).join("");
+})();
+</script>
+</body>
+</html>

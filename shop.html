@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop — Kim's Cleaning Supplies</title>
+<meta name="description" content="Microfiber cleaning cloths in 2, 6 and 18 packs, dry dust mops, hand and high dusters, and the hair towel. Water only. Made in USA.">
+<link rel="icon" href="images/brand/logo-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header id="site-header"></header>
+
+<main>
+  <section class="tight">
+    <div class="wrap">
+      <span class="eyebrow">Everything Kim sells</span>
+      <h1>Shop</h1>
+      <p class="muted" style="max-width:54ch">
+        Nine things. All of them microfiber, all of them washable, and none of them need a
+        bottle of anything. Pickup in Quincy is free at checkout.
+      </p>
+    </div>
+  </section>
+
+  <section class="tight" style="padding-top:0">
+    <div class="wrap">
+      <div class="filters" id="filters" role="group" aria-label="Filter products"></div>
+      <div class="grid" id="shop-grid"></div>
+      <p id="empty-note" class="muted hide" style="padding:32px 0">Nothing in that group yet.</p>
+    </div>
+  </section>
+
+  <section class="band-cream">
+    <div class="wrap narrow center">
+      <h2>Not sure which pack?</h2>
+      <p class="muted">
+        Two cloths is enough to prove it to yourself. Six is what most families end up keeping.
+        Eighteen is the one that turns into Christmas presents.
+      </p>
+      <a class="btn btn-ghost" href="product.html?id=cloth-6">Look at the 6-pack</a>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script>
+(function () {
+  KIMS.mount("shop.html");
+
+  var grid = document.getElementById("shop-grid");
+  var note = document.getElementById("empty-note");
+  var filters = document.getElementById("filters");
+  var active = KIMS.param("filter") || "all";
+  if (!KIMS_CATEGORIES.some(function (c) { return c.key === active; })) active = "all";
+
+  filters.innerHTML = KIMS_CATEGORIES.map(function (c) {
+    return '<button class="filter" type="button" data-key="' + c.key + '" aria-pressed="' +
+      (c.key === active) + '">' + c.label + "</button>";
+  }).join("");
+
+  function card(p) {
+    var el = document.createElement("article");
+    el.className = "card";
+
+    var media = document.createElement("a");
+    media.className = "card-media";
+    media.href = "product.html?id=" + encodeURIComponent(p.slug);
+    media.setAttribute("aria-label", p.name);
+    media.appendChild(KIMS.smartImg(p.images, p.name));
+    el.appendChild(media);
+
+    var body = document.createElement("div");
+    body.className = "card-body";
+    body.innerHTML =
+      '<h3><a href="product.html?id=' + encodeURIComponent(p.slug) + '">' + KIMS.esc(p.name) + "</a></h3>" +
+      '<p class="card-use">' + KIMS.esc(p.blurb) + "</p>" +
+      '<div class="card-foot"><span class="price">' + KIMS.money(p.price) + "</span>" +
+      '<button class="btn btn-primary btn-sm" type="button">Add</button></div>';
+    body.querySelector("button").addEventListener("click", function () {
+      Cart.add(p.slug, 1, p.options ? p.options[0].value : "");
+      KIMS.toast(p.name + " added to cart");
+    });
+    el.appendChild(body);
+    return el;
+  }
+
+  function draw() {
+    var list = KIMS.products().filter(function (p) {
+      return active === "all" || p.category === active;
+    });
+    grid.innerHTML = "";
+    list.forEach(function (p) { grid.appendChild(card(p)); });
+    note.classList.toggle("hide", list.length > 0);
+    Array.prototype.forEach.call(filters.children, function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.key === active));
+    });
+    var url = active === "all" ? "shop.html" : "shop.html?filter=" + active;
+    history.replaceState(null, "", url);
+  }
+
+  filters.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-key]");
+    if (!b) return;
+    active = b.dataset.key;
+    draw();
+  });
+
+  draw();
+})();
+</script>
+</body>
+</html>

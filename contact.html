@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Kim's Cleaning Supplies</title>
+<meta name="description" content="Order questions, event bookings, school and church fundraisers, and home-show parties. Email Kim Schoch in Quincy, IL.">
+<link rel="icon" href="images/brand/logo-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header id="site-header"></header>
+
+<main>
+  <section class="tight">
+    <div class="wrap">
+      <div class="cart-grid" style="padding-bottom:0">
+        <div>
+          <span class="eyebrow">We read everything</span>
+          <h1>Get in touch</h1>
+          <p class="muted" style="max-width:52ch">
+            Schools, churches, clubs and home-show parties are welcome &mdash; fundraisers do
+            well with these. Order questions get answered the same week.
+          </p>
+
+          <form id="contact-form" novalidate>
+            <label class="field"><span>Your name</span>
+              <input type="text" name="name" id="f-name" autocomplete="name" required>
+            </label>
+            <label class="field"><span>Email</span>
+              <input type="email" name="email" id="f-email" autocomplete="email" required>
+            </label>
+            <label class="field"><span>Phone <span class="muted small">(optional)</span></span>
+              <input type="tel" name="phone" id="f-phone" autocomplete="tel">
+            </label>
+            <label class="field"><span>What's this about?</span>
+              <select name="topic" id="f-topic">
+                <option>Order question</option>
+                <option>Event</option>
+                <option>Fundraiser</option>
+                <option>Home party</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label class="field"><span>Message</span>
+              <textarea name="message" id="f-message" required placeholder="Dates, how many people, or which product you're asking about."></textarea>
+            </label>
+
+            <p id="form-error" class="notice hide" role="alert"></p>
+
+            <button class="btn btn-primary btn-block" type="submit">Send</button>
+            <p class="tiny muted" style="margin-top:12px" id="send-note">
+              This opens your email app with the message already written, so you can see exactly
+              what gets sent.
+            </p>
+          </form>
+
+          <div id="sent" class="notice hide" role="status">
+            <strong>Sent &mdash; thank you.</strong>
+            Kim reads these herself, so give her a day or two. If your email app didn't open,
+            write to <a href="mailto:streakfreeks@yahoo.com" id="fallback-mail">streakfreeks@yahoo.com</a> directly.
+          </div>
+        </div>
+
+        <aside>
+          <div class="pay-box">
+            <h3 style="margin-top:0">Kim Schoch</h3>
+            <div class="kv"><span>Email</span><b><a href="mailto:streakfreeks@yahoo.com" id="email-link">streakfreeks@yahoo.com</a></b></div>
+            <div class="kv"><span>Pickup</span><b style="text-align:right">2922 Lincoln Hill SW<br>Quincy, IL</b></div>
+            <p class="small muted" style="margin:14px 0 0">
+              Pickup is free &mdash; choose it at checkout and Kim will email you to arrange a time.
+            </p>
+          </div>
+
+          <div class="pay-box" style="margin-top:16px">
+            <h3 style="margin-top:0">Fundraisers</h3>
+            <p class="small mb0">
+              Groups take orders on paper, we fill them in one batch, and the group keeps a cut.
+              It works because people come back for more cloths &mdash; there is no bottle to
+              run out of, but there is always another window.
+            </p>
+          </div>
+
+          <div class="pay-box" style="margin-top:16px">
+            <h3 style="margin-top:0">Catch us in person</h3>
+            <p class="small">Most weekends, August through December, across Iowa and Illinois.</p>
+            <a class="btn btn-quiet btn-sm" href="events.html">See the schedule</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script>
+(function () {
+  KIMS.mount("contact.html");
+
+  var CFG = KIMS_CONFIG;
+  var mail = CFG.contactEmail;
+  ["email-link", "fallback-mail"].forEach(function (id) {
+    var a = document.getElementById(id);
+    if (a) { a.href = "mailto:" + mail; a.textContent = mail; }
+  });
+
+  var form = document.getElementById("contact-form");
+  var err = document.getElementById("form-error");
+  var sent = document.getElementById("sent");
+
+  if (CFG.formspreeId) {
+    document.getElementById("send-note").textContent =
+      "Goes straight to Kim's inbox. You'll get a copy if you leave your email.";
+  }
+
+  function val(id) { return document.getElementById(id).value.trim(); }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    err.classList.add("hide");
+
+    var name = val("f-name"), email = val("f-email"), phone = val("f-phone");
+    var topic = val("f-topic"), message = val("f-message");
+
+    var problems = [];
+    if (!name) problems.push("your name");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) problems.push("a working email address");
+    if (!message) problems.push("a message");
+    if (problems.length) {
+      err.textContent = "Still needs " + problems.join(", ") + ".";
+      err.classList.remove("hide");
+      err.scrollIntoView({ block: "center" });
+      return;
+    }
+
+    var body =
+      "From: " + name + "\n" +
+      "Email: " + email + "\n" +
+      (phone ? "Phone: " + phone + "\n" : "") +
+      "About: " + topic + "\n\n" +
+      message + "\n";
+
+    var subject = "[" + topic + "] " + name;
+
+    function openMail() {
+      window.location.href = "mailto:" + encodeURIComponent(mail) +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+      form.classList.add("hide");
+      sent.classList.remove("hide");
+      sent.scrollIntoView({ block: "center" });
+    }
+
+    if (CFG.formspreeId) {
+      fetch("https://formspree.io/f/" + CFG.formspreeId, {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name, email: email, phone: phone, topic: topic, message: message })
+      }).then(function () {
+        form.classList.add("hide");
+        sent.classList.remove("hide");
+        sent.scrollIntoView({ block: "center" });
+      }).catch(openMail);
+    } else {
+      openMail();
+    }
+  });
+})();
+</script>
+</body>
+</html>

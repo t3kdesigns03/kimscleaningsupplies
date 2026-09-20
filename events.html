@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where to find us — Kim's Cleaning Supplies</title>
+<meta name="description" content="Fall 2026 schedule: fairs, home shows and festivals across Iowa and Illinois where Kim and Alice have a booth.">
+<link rel="icon" href="images/brand/logo-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header id="site-header"></header>
+
+<main>
+  <section class="tight">
+    <div class="wrap">
+      <span class="eyebrow">Fall schedule 2026</span>
+      <h1>Where to find us</h1>
+      <p class="muted" style="max-width:56ch">
+        Kim and Alice are on the road most weekends from August through early December.
+        There is always a demo table &mdash; bring your worst window, or your phone screen.
+      </p>
+    </div>
+  </section>
+
+  <section class="tight" style="padding-top:0">
+    <div class="wrap">
+      <h2 id="upcoming-h" class="h3">Still to come</h2>
+      <ul class="events" id="upcoming"></ul>
+
+      <div id="past-wrap" class="hide">
+        <hr class="rule">
+        <h2>Earlier this season</h2>
+        <ul class="events" id="past"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-cream">
+    <div class="wrap narrow center">
+      <h2>Want us at your school, church, or home party?</h2>
+      <p class="muted">
+        Fundraisers work well with these because people use them up and come back for more.
+        Tell us the date and how many people you expect.
+      </p>
+      <a class="btn btn-primary" href="contact.html">Get in touch</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow center">
+      <h2>Can't make a show?</h2>
+      <p class="muted">Everything at the booth is here too, and pickup in Quincy is free.</p>
+      <a class="btn btn-ghost" href="shop.html">Shop online</a>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script>
+(function () {
+  KIMS.mount("events.html");
+
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var up = [], past = [];
+  KIMS_EVENTS.forEach(function (e) {
+    (new Date(e.end + "T23:59:59") >= today ? up : past).push(e);
+  });
+
+  function row(e, isNext, dim) {
+    var where = [e.venue, e.city + ", " + e.state].filter(Boolean).join(" &middot; ");
+    return '<li class="event' + (dim ? " past" : "") + '">' +
+      '<span class="event-date">' + e.date + "</span>" +
+      '<span class="event-body"><strong>' + KIMS.esc(e.name) +
+        (isNext ? '<span class="event-next">Next up</span>' : "") + "</strong>" +
+      "<span>" + where + "</span></span></li>";
+  }
+
+  var upEl = document.getElementById("upcoming");
+  if (up.length) {
+    upEl.innerHTML = up.map(function (e, i) { return row(e, i === 0, false); }).join("");
+  } else {
+    document.getElementById("upcoming-h").textContent = "The 2026 season has wrapped";
+    upEl.innerHTML =
+      '<li class="event"><span class="event-body"><strong>Next year’s dates go up in the summer.</strong>' +
+      '<span>Email us and we will tell you when the schedule is set — or order online any time.</span>' +
+      "</span></li>";
+  }
+
+  if (past.length) {
+    document.getElementById("past-wrap").classList.remove("hide");
+    document.getElementById("past").innerHTML = past.map(function (e) { return row(e, false, true); }).join("");
+  }
+})();
+</script>
+</body>
+</html>

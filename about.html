@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Kim &amp; Alice — Kim's Cleaning Supplies</title>
+<meta name="description" content="Kim Schoch and Alice sell Eco Easy microfiber at fairs and home shows across Iowa and Illinois. Pickup in Quincy, IL. Water only, made in USA.">
+<link rel="icon" href="images/brand/logo-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header id="site-header"></header>
+
+<main>
+  <section class="tight">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Quincy, Illinois</span>
+          <h1>Kim and Alice</h1>
+          <p style="font-size:1.12rem">
+            Kim Schoch and Alice sell Eco Easy microfiber &mdash; cloths, mops, dusters and the
+            hair towel &mdash; at fairs, home shows and school fundraisers across Iowa and
+            Illinois. They have been doing it long enough that people find the booth on purpose.
+          </p>
+          <p>
+            Everything they sell, they use. The demo is the whole pitch: hand someone a damp
+            cloth, point at the worst window in the building, and let them try it. Nobody
+            needs a paragraph after that.
+          </p>
+          <p>
+            Ordering here ships anywhere. If you are near Quincy, choose pickup at checkout and
+            save the shipping &mdash; Kim is at
+            <strong>2922 Lincoln Hill SW, Quincy, IL</strong>.
+          </p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="shop.html">See what they sell</a>
+            <a class="btn btn-ghost" href="events.html">Where they'll be</a>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <img src="images/brand/pack.jpg" alt="The Kim's Cleaning Cloth package, showing the green earth and vine label" width="1200" height="833">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-cream">
+    <div class="wrap">
+      <h2>What makes the cloth different</h2>
+      <div class="grid" style="grid-template-columns:1fr">
+        <div class="panel">
+          <p style="margin-bottom:0">
+            It is <strong>70% polyester and 30% polyamide</strong>, heat-melded rather than woven
+            loose. Dry, it feels almost like paper. Wet, it goes soft and lint-free. The fiber is
+            split so fine that it lifts dirt and oil off a surface and holds onto it, instead of
+            smearing it around the way a cotton rag does. That is why water is enough, and why
+            fabric softener ruins it &mdash; softener fills in the split fiber and the cloth stops
+            grabbing.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:22px">
+        <div class="panel">
+          <h3>Time</h3>
+          <p class="mb0 small">One pass, no spray, no buffing, no second cloth to dry with. The
+          kitchen and the bathroom mirrors stop being a project.</p>
+        </div>
+        <div class="panel">
+          <h3>Money</h3>
+          <p class="mb0 small">No more bottles of blue liquid and no more paper towels. A cloth
+          goes through hundreds of washes before it gives up.</p>
+        </div>
+        <div class="panel">
+          <h3>Energy</h3>
+          <p class="mb0 small">Nothing sprayed into the air you are breathing, and nothing to keep
+          up out of reach of the kids or the dog.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="grid" style="grid-template-columns:1fr;gap:22px">
+        <div>
+          <h2>Where it works</h2>
+          <ul class="facts" id="surfaces" style="columns:2;column-gap:28px"></ul>
+        </div>
+        <div>
+          <h2>What comes off</h2>
+          <ul class="facts" id="removes" style="columns:2;column-gap:28px"></ul>
+          <p class="small muted">Water only. No sprays on any of it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-cream" id="testimonials">
+    <div class="wrap">
+      <h2>What people tell us</h2>
+      <p class="muted" style="max-width:54ch">Collected at booths, mostly on the second visit.</p>
+      <div class="quotes" id="all-quotes"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow center">
+      <h2>Want us at your school, church, or home party?</h2>
+      <p class="muted">Fundraisers, groups, and home shows &mdash; Kim brings the demo table.</p>
+      <a class="btn btn-primary" href="contact.html">Get in touch</a>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script>
+(function () {
+  KIMS.mount("about.html");
+  function li(list) { return list.map(function (s) { return "<li>" + KIMS.esc(s) + "</li>"; }).join(""); }
+  document.getElementById("surfaces").innerHTML = li(KIMS_SURFACES);
+  document.getElementById("removes").innerHTML = li(KIMS_REMOVES);
+  document.getElementById("all-quotes").innerHTML = KIMS_TESTIMONIALS.map(function (t) {
+    return '<blockquote class="quote"><p>&ldquo;' + KIMS.esc(t.text) + '&rdquo;</p><cite>' +
+      KIMS.esc(t.who) + (t.where ? ' <span>&mdash; ' + KIMS.esc(t.where) + "</span>" : "") +
+      "</cite></blockquote>";
+  }).join("");
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Netlify build config for the Next.js app.
+# If this project lives in a subfolder of the repo, set the base directory in
+# the Netlify UI (Site settings > Build & deploy > Base directory) to this
+# folder, or uncomment `base` below.
+
+[build]
+  # base = "kims-cleaning-next"
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "20"

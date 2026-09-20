@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 560" width="1040" height="560" role="img" aria-label="Kim's Cleaning Supplies — Premium. Sustainable. Proven.">
+<title>Kim's Cleaning Supplies</title>
+<defs>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;family=Source+Sans+3:wght@600;700&amp;display=swap');
+  .wordmark { font-family: "Fraunces", Georgia, "Times New Roman", serif; }
+  .label    { font-family: "Source Sans 3", "Segoe UI", Arial, sans-serif; }
+</style>
+<linearGradient id="ocean" x1=".12" y1="0" x2=".88" y2="1"><stop offset="0" stop-color="#9ACB4E"/><stop offset=".42" stop-color="#4E9A36"/><stop offset="1" stop-color="#17471F"/></linearGradient>
+<linearGradient id="land" x1="0" y1="0" x2=".7" y2="1"><stop offset="0" stop-color="#23632B"/><stop offset="1" stop-color="#103A19"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#E3B400"/><stop offset=".55" stop-color="#F6DB45"/><stop offset="1" stop-color="#E8C316"/></linearGradient>
+<linearGradient id="leafLight" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#4E9A36"/><stop offset="1" stop-color="#8CC63F"/></linearGradient>
+<linearGradient id="leafDeep" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1E5626"/><stop offset="1" stop-color="#3E8A2E"/></linearGradient>
+<radialGradient id="shine" cx=".33" cy=".28" r=".72"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".20"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+<clipPath id="globeClip"><circle cx="56" cy="64" r="44"/></clipPath>
+</defs>
+
+<!-- soft cream card -->
+<rect x="6" y="6" width="1028" height="548" rx="26" fill="#F7F3E8" stroke="#E4DCC9" stroke-width="2"/>
+
+<!-- ===== globe + leaves mark (native 120x120, scaled) ===== -->
+<g transform="translate(70,132) scale(2.35)">
+  <circle cx="56" cy="64" r="44" fill="url(#ocean)"/>
+  <g clip-path="url(#globeClip)" fill="url(#land)" opacity=".68">
+    <path d="M45 25.5 L52 25 L54.5 30 L49 33.5 L44 31 Z"/>
+    <path d="M22 47 L28 36 L36.5 30 L46 30 L54 36 L57.5 43 L50 45 L53 50 L47 57 L40 60.5 L31 57 L24 52.5 Z"/>
+    <path d="M47 57.5 L53 63 L57.5 71.5 L53 70 L48 63.5 Z"/>
+    <path d="M57.5 73 L64 70.5 L69.5 77 L68 85.5 L63 96 L59 105.5 L57 97 L58.5 89 L54 81 Z"/>
+    <path d="M65 41.5 L70 36.5 L75 39 L80 36.5 L85.5 41 L80 46.5 L71.5 47.5 L66 45.5 Z"/>
+    <path d="M85 39.5 L93 43.5 L96 51.5 L89.5 52 L83.5 45.5 Z"/>
+    <path d="M66 51.5 L74.5 47.5 L84 48.5 L89 55.5 L86.5 63.5 L82 74 L78 88 L74 79 L73.5 67 L68 59 Z"/>
+    <path d="M90 73.5 L92.5 76.5 L91.5 82.5 L89 79.5 Z"/>
+  </g>
+  <circle cx="56" cy="64" r="44" fill="url(#shine)"/>
+  <g fill="none" stroke="url(#gold)" stroke-linecap="round">
+    <path d="M29 89 C 21.5 84 15.5 77 11 69" stroke-width="1.9"/>
+    <path d="M19.5 82 C 16 77 14 71.5 13.5 66" stroke-width="1.368"/>
+    <path d="M45 68 C 38.5 60 34.5 51.5 33 42" stroke-width="1.8"/>
+    <path d="M38.5 59 C 36 53 35 47 35.5 40" stroke-width="1.296"/>
+    <path d="M62 50 C 57.5 41 56 31.5 56.5 23" stroke-width="1.6"/>
+    <path d="M57.5 39 C 56 33 55.5 27 56.5 21" stroke-width="1.152"/>
+    <path d="M52.5 60 C 61 56 68.5 50.5 74 43" stroke-width="1.7"/>
+    <path d="M66 51.5 C 70.5 47.5 74 42.5 77 38" stroke-width="1.224"/>
+  </g>
+  <g transform="translate(72,38) rotate(-36) scale(0.88)">
+    <path d="M0 0 C 9 -17 31 -25 52 -19 C 41 1 16 8 0 0 Z" fill="url(#leafLight)"/>
+    <path d="M2 -1 C 16 -6 33 -12 50 -18" fill="none" stroke="#FFFDF7" stroke-opacity=".20" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(26,95) rotate(-36) scale(0.52)">
+    <path d="M0 0 C 9 -17 31 -25 52 -19 C 41 1 16 8 0 0 Z" fill="url(#leafDeep)"/>
+    <path d="M2 -1 C 16 -6 33 -12 50 -18" fill="none" stroke="#FFFDF7" stroke-opacity=".20" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(42,66) rotate(-44) scale(0.32)" opacity="0.95">
+    <path d="M0 0 C 9 -17 31 -25 52 -19 C 41 1 16 8 0 0 Z" fill="url(#leafLight)"/>
+    <path d="M2 -1 C 16 -6 33 -12 50 -18" fill="none" stroke="#FFFDF7" stroke-opacity=".20" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
+  <g fill="none" stroke="url(#gold)" stroke-linecap="round">
+    <path d="M14 104 C 22 96.5 28.5 89 35 81" stroke-width="4"/>
+    <path d="M33 84 C 43 72 52 61 62 50" stroke-width="3.3"/>
+    <path d="M59.5 53 C 75 37 93 24.5 112 14" stroke-width="2.3"/>
+  </g>
+</g>
+
+<!-- ===== wordmark ===== -->
+<text x="392" y="286" class="wordmark" font-size="150" font-weight="600" fill="#1E4A22" letter-spacing="-1">Kim&#8217;s</text>
+<text x="398" y="352" class="label" font-size="46" font-weight="700" fill="#5C9A3A" letter-spacing="9">CLEANING SUPPLIES</text>
+<text x="401" y="392" class="label" font-size="21" font-weight="600" fill="#2F6B32" letter-spacing="5" opacity=".85">MADE IN USA</text>
+
+<!-- ===== tagline ===== -->
+<g>
+  <line x1="430" y1="452" x2="610" y2="452" stroke="url(#gold)" stroke-width="3" stroke-linecap="round"/>
+  <text x="520" y="500" text-anchor="middle" class="label" font-size="28" font-weight="700" fill="#2F6B32" letter-spacing="7">PREMIUM. SUSTAINABLE. PROVEN.</text>
+</g>
+</svg>

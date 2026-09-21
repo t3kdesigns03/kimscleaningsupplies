@@ -188,6 +188,8 @@ export const products: Product[] = [
     blurb: "Grabs dust instead of pushing it. Handle included.",
     images: [
       "/images/products/duster-hand.webp",
+      "/images/products/duster-hand-2.webp",
+      "/images/products/duster-hand-bag.webp",
       "/images/products/duster-hand.svg",
     ],
     desc: "The little one that lives in the glove box or the kitchen drawer. Microfiber holds a charge, so dust comes with it instead of lifting into the air and landing again an hour later. Shelves, blinds, baseboards, and the dash of a truck.",
@@ -225,7 +227,7 @@ export const products: Product[] = [
     category: "dusters",
     blurb: "Two washable sleeves plus a telescopic handle.",
     images: [
-      "/images/products/duster-round.webp",
+      "/images/products/duster-fluffy.webp",
       "/images/products/duster-fluffy.svg",
     ],
     desc: "Two fluffy sleeves and a telescopic handle. Use one while the other is in the wash. Good on lampshades, houseplants, tops of doors and anything that a rag would just knock the dust off of.",

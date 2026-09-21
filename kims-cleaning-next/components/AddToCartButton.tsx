@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCart } from "./CartProvider";
 import type { Product } from "@/lib/products";
 
@@ -13,6 +14,16 @@ export default function AddToCartButton({
   label?: string;
 }) {
   const { add, openDrawer } = useCart();
+
+  // products sold by color/option get chosen on their page, not quick-added
+  if (product.options && product.options.length > 1) {
+    return (
+      <Link href={`/product/${product.slug}`} className={className}>
+        Choose
+      </Link>
+    );
+  }
+
   const variant = product.options ? (product.options.find((o) => !o.soldOut)?.value ?? "") : "";
   return (
     <button

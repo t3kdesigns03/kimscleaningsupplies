@@ -1,27 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "./CartProvider";
+import { useVariant } from "./VariantProvider";
 import { money } from "@/lib/format";
-import type { Product } from "@/lib/products";
-
-const SWATCH: Record<string, string> = {
-  Regular: "#F3F2E8",
-  "Dark Blue": "#26456E",
-  "Light Blue": "#86B6D8",
-  Pink: "#E7A6BC",
-  "Dark Purple": "#5A3E77",
-  "Light Purple": "#B7A3D6",
-  Green: "#5C9A3A",
-  Gray: "#9AA0A6",
-};
+import { SWATCH, type Product } from "@/lib/products";
 
 export default function ProductBuy({ product }: { product: Product }) {
   const { add, openDrawer } = useCart();
+  const shared = useVariant();
   const [qty, setQty] = useState(1);
   const firstInStock = product.options?.find((o) => !o.soldOut)?.value ?? "";
   const [variant, setVariant] = useState(firstInStock);
   const hasSwatches = product.options?.every((o) => o.value in SWATCH) ?? false;
+
+  // keep the shared context (gallery) in sync with the chosen variant
+  useEffect(() => {
+    shared?.setVariant(variant);
+  }, [variant]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const clamp = (n: number) => Math.min(99, Math.max(1, Math.floor(n) || 1));
 

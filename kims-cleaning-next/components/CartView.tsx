@@ -8,6 +8,7 @@ import PayPalCheckout from "./PayPalCheckout";
 import VenmoBox from "./VenmoBox";
 import { config } from "@/lib/config";
 import { money } from "@/lib/format";
+import { SWATCH, imagesFor } from "@/lib/products";
 import { CheckIcon, EmptyCartIcon } from "./Icons";
 
 const SHIP_FIELDS: (keyof ReturnType<typeof useCart>["checkout"])[] = [
@@ -95,13 +96,20 @@ export default function CartView() {
           {lines.map((l) => (
             <div key={l.slug + l.variant} className="grid grid-cols-[84px_1fr] gap-3.5 border-b border-line py-4 md:grid-cols-[104px_1fr]">
               <div className="h-[84px] w-[84px] overflow-hidden rounded-xl border border-line md:h-[104px] md:w-[104px]" style={{ background: "linear-gradient(170deg,#FFFFFF,#EDF6DD)" }}>
-                <SmartImage sources={l.product.images} alt={l.name} className="h-full w-full object-cover" />
+                <SmartImage sources={imagesFor(l.product, l.variant)} alt={l.name} className="h-full w-full object-cover" />
               </div>
               <div>
                 <div className="font-bold leading-tight">
                   <Link href={`/product/${l.slug}`} className="text-forest-deep no-underline">{l.name}</Link>
                 </div>
-                {l.variant && <div className="text-[0.9rem] text-muted">{l.variant}</div>}
+                {l.variant && (
+                  <div className="mt-0.5 inline-flex items-center gap-1.5 text-[0.9rem] text-muted">
+                    {SWATCH[l.variant] && (
+                      <span className="h-3 w-3 rounded-full border border-black/10" style={{ background: SWATCH[l.variant] }} />
+                    )}
+                    {l.variant}
+                  </div>
+                )}
                 <div className="mt-2.5 flex flex-wrap items-center gap-3">
                   <div className="inline-flex items-stretch overflow-hidden rounded-full border-[1.5px] border-line bg-paper">
                     <button type="button" aria-label="One fewer" onClick={() => setQty(l.slug, l.variant, l.qty - 1)} className="h-[44px] w-[44px] text-[20px] text-forest-deep hover:bg-grass/10">&minus;</button>

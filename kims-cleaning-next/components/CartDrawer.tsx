@@ -13,6 +13,7 @@ import SmartImage from "./SmartImage";
 import { CloseIcon, EmptyCartIcon } from "./Icons";
 import { money } from "@/lib/format";
 import { config } from "@/lib/config";
+import { SWATCH, imagesFor } from "@/lib/products";
 
 export default function CartDrawer() {
   const {
@@ -92,7 +93,7 @@ export default function CartDrawer() {
                       style={{ background: "linear-gradient(170deg,#FFFDF8,#ECEAD2)" }}
                       aria-label={l.name}
                     >
-                      <SmartImage sources={l.product.images} alt={l.name} className="h-full w-full object-cover" />
+                      <SmartImage sources={imagesFor(l.product, l.variant)} alt={l.name} className="h-full w-full object-cover" />
                     </Link>
 
                     <div className="flex min-w-0 flex-1 flex-col">
@@ -103,7 +104,17 @@ export default function CartDrawer() {
                       >
                         {l.name}
                       </Link>
-                      {l.variant && <span className="text-[0.85rem] text-muted">{l.variant}</span>}
+                      {l.variant && (
+                        <span className="mt-0.5 inline-flex items-center gap-1.5 text-[0.85rem] text-muted">
+                          {SWATCH[l.variant] && (
+                            <span
+                              className="h-3 w-3 rounded-full border border-black/10"
+                              style={{ background: SWATCH[l.variant] }}
+                            />
+                          )}
+                          {l.variant}
+                        </span>
+                      )}
 
                       <div className="mt-auto flex items-center gap-2 pt-2">
                         <div className="inline-flex items-stretch overflow-hidden rounded-full border border-line">

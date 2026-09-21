@@ -2,15 +2,34 @@
 
 import { useEffect, useRef, useState } from "react";
 import { LeftIcon, RightIcon, CloseIcon } from "./Icons";
+import { useVariant } from "./VariantProvider";
 
 /* Resolves which candidate images actually exist, then shows a swipeable
    gallery on a clean white ground with a thumbnail strip and a tap-to-open
-   lightbox. Dots/thumbs match the real number of slides. */
-export default function ProductGallery({ sources, alt }: { sources: string[]; alt: string }) {
+   lightbox. Dots/thumbs match the real number of slides. When the product
+   is sold by color, picking a swatch jumps the gallery to that color. */
+export default function ProductGallery({
+  sources,
+  alt,
+  optionImages,
+}: {
+  sources: string[];
+  alt: string;
+  optionImages?: Record<string, string>;
+}) {
+  const shared = useVariant();
   const [slides, setSlides] = useState<string[]>([sources[0]]);
   const [at, setAt] = useState(0);
   const [zoom, setZoom] = useState(false);
   const x0 = useRef<number | null>(null);
+
+  // when the selected color changes, jump to that color's slide
+  useEffect(() => {
+    const want = shared?.variant && optionImages ? optionImages[shared.variant] : undefined;
+    if (!want) return;
+    const idx = slides.indexOf(want);
+    if (idx >= 0) setAt(idx);
+  }, [shared?.variant, slides, optionImages]);
 
   useEffect(() => {
     let live = true;

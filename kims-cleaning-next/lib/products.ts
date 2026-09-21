@@ -244,35 +244,62 @@ export const products: Product[] = [
     category: "hair",
     blurb: '24" × 38". Pulls the water, leaves the moisture.',
     images: [
-      "/images/products/hair-pink.webp",
+      "/images/products/hair-blue.webp",
       "/images/products/hair-lightblue.webp",
       "/images/products/hair-green.webp",
-      "/images/products/hair-darkpurple.webp",
+      "/images/products/hair-yellow.webp",
+      "/images/products/hair-pink.webp",
       "/images/products/hair-lightpurple.webp",
-      "/images/products/hair-darkblue.webp",
-      "/images/products/hair-regular.webp",
+      "/images/products/hair-darkpurple.webp",
       "/images/products/hair-towel.svg",
     ],
-    desc: "24 by 38 inches. It pulls the water out of your hair but leaves the moisture in, so hair dries faster without the roughed-up frizz a bath towel gives you. Works the same way on a wool sweater laid flat, and on a wet dog.",
+    desc: "24 by 38 inches. It pulls the water out of your hair but leaves the moisture in, so hair dries faster without the roughed-up frizz a bath towel gives you. Works the same way on a wool sweater laid flat, and on a wet dog. Seven colors to choose from.",
     bullets: [
       '24" × 38" — wraps and stays put',
       "Faster drying, less frizz",
-      "Also good on sweaters and wet pets",
+      "Seven colors — also good on sweaters and wet pets",
     ],
     care: "wet",
     optionLabel: "Color",
     options: [
-      { value: "Regular", label: "Regular (white)", image: "/images/products/hair-regular.webp" },
-      { value: "Dark Blue", label: "Dark Blue", image: "/images/products/hair-darkblue.webp" },
+      { value: "Blue", label: "Blue", image: "/images/products/hair-blue.webp" },
       { value: "Light Blue", label: "Light Blue", image: "/images/products/hair-lightblue.webp" },
-      { value: "Pink", label: "Pink", image: "/images/products/hair-pink.webp" },
-      { value: "Dark Purple", label: "Dark Purple", image: "/images/products/hair-darkpurple.webp" },
-      { value: "Light Purple", label: "Light Purple", image: "/images/products/hair-lightpurple.webp" },
       { value: "Green", label: "Green", image: "/images/products/hair-green.webp" },
-      { value: "Gray", label: "Gray", soldOut: true },
+      { value: "Yellow", label: "Yellow", image: "/images/products/hair-yellow.webp" },
+      { value: "Pink", label: "Pink", image: "/images/products/hair-pink.webp" },
+      { value: "Light Purple", label: "Light Purple", image: "/images/products/hair-lightpurple.webp" },
+      { value: "Dark Purple", label: "Dark Purple", image: "/images/products/hair-darkpurple.webp" },
     ],
   },
 ];
+
+/* Color swatch chips (hex) for products sold by color. Keyed by option value. */
+export const SWATCH: Record<string, string> = {
+  Blue: "#1E49C4",
+  "Light Blue": "#8FB8D8",
+  Green: "#2E8B72",
+  Yellow: "#ECC53F",
+  Pink: "#E88AA5",
+  "Light Purple": "#B4A0D6",
+  "Dark Purple": "#5B3F86",
+};
+
+/* The image for a chosen variant, if that option carries one. */
+export function variantImage(p: Product, variant?: string): string | undefined {
+  if (!variant) return undefined;
+  return p.options?.find((o) => o.value === variant)?.image;
+}
+
+/* Ordered image list with the chosen variant's photo pulled to the front. */
+export function imagesFor(p: Product, variant?: string): string[] {
+  const vi = variantImage(p, variant);
+  return vi ? [vi, ...p.images.filter((s) => s !== vi)] : p.images;
+}
+
+/* True when a product is sold in colors we can render as swatches. */
+export function hasSwatches(p: Product): boolean {
+  return !!p.options && p.options.every((o) => o.value in SWATCH);
+}
 
 export const CATEGORIES: { key: "all" | Category; label: string }[] = [
   { key: "all", label: "All" },

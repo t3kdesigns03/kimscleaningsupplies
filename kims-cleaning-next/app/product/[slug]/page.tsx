@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ProductGallery from "@/components/ProductGallery";
 import ProductBuy from "@/components/ProductBuy";
+import { VariantProvider } from "@/components/VariantProvider";
 import { money } from "@/lib/format";
 import {
   products, getProduct, CARE, CLOTH_FACTS, SURFACES, REMOVES,
@@ -29,6 +30,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const isCloth = p.category === "cloths";
   const care = CARE[p.care];
   const dryOnly = p.care === "dry";
+  const firstVariant = p.options?.find((o) => !o.soldOut)?.value ?? "";
+  const optionImages = Object.fromEntries(
+    (p.options ?? []).filter((o) => o.image).map((o) => [o.value, o.image as string])
+  );
 
   return (
     <section className="py-7">
@@ -37,8 +42,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <Link href="/shop">&larr; Back to the shop</Link>
         </p>
 
+        <VariantProvider initial={firstVariant}>
         <div className="grid items-start gap-6 pb-24 md:grid-cols-2 md:gap-9 lg:pb-5">
-          <ProductGallery sources={p.images} alt={p.name} />
+          <ProductGallery sources={p.images} alt={p.name} optionImages={optionImages} />
 
           <div>
             <h1 className="mb-0.5 text-[clamp(1.75rem,6vw,2.7rem)]">{p.name}</h1>
@@ -111,6 +117,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </p>
           </div>
         </div>
+        </VariantProvider>
       </div>
     </section>
   );

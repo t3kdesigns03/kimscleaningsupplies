@@ -1,3 +1,7 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+node_modules/
+.next/
+.netlify
+.env*.local

@@ -44,14 +44,14 @@ export default function Header() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-[60] border-b border-line bg-paper/95 backdrop-blur">
-      <div className="mx-auto flex min-h-[64px] max-w-site items-center gap-2.5 px-4 py-2 sm:px-7">
-        <Link href="/" className="mr-auto flex min-w-0 items-center gap-2.5 text-forest-deep no-underline">
+    <header className="sticky top-0 z-[60] border-b border-line bg-paper">
+      <div className="mx-auto flex min-h-[58px] max-w-site items-center gap-2 px-4 py-2 sm:px-7 md:min-h-[64px]">
+        <Link href="/" className="flex min-w-0 flex-1 items-center pr-2 text-forest-deep no-underline">
           <span className="flex min-w-0 flex-col leading-none">
-            <span className="whitespace-nowrap font-serif text-[22px] font-bold tracking-tight text-forest-deep">
+            <span className="block truncate font-serif text-[17px] font-bold tracking-tight text-forest-deep min-[380px]:text-[19px] min-[430px]:text-[20px] lg:text-[22px]">
               Kim&rsquo;s Cleaning Supplies
             </span>
-            <span className="mt-1 whitespace-nowrap text-[10px] uppercase tracking-[0.15em] text-leaf">
+            <span className="hidden truncate text-[10px] uppercase tracking-[0.15em] text-leaf min-[400px]:mt-1 min-[400px]:block">
               Eco Easy Microfiber
             </span>
           </span>
@@ -71,12 +71,12 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex flex-none items-center gap-1.5">
+        <div className="flex flex-none shrink-0 items-center gap-1.5">
           <button
             type="button"
             onClick={openDrawer}
             aria-label={ready && count > 0 ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart"}
-            className="relative inline-flex h-[46px] w-[46px] items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10"
+            className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10"
           >
             <CartIcon />
             {ready && count > 0 && (
@@ -94,7 +94,7 @@ export default function Header() {
             aria-label="Menu"
             aria-expanded={open}
             onClick={() => setOpen(true)}
-            className="inline-flex h-[46px] w-[46px] items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10 lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10 lg:hidden"
           >
             <MenuIcon />
           </button>

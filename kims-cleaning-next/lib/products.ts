@@ -168,7 +168,6 @@ export const products: Product[] = [
     category: "mops",
     blurb: "Hardwood floors. Fits a standard screw-on handle.",
     images: [
-      "/images/products/mop-pads.webp",
       "/images/products/mop-pads2.webp",
       "/images/products/mop-head.svg",
     ],
@@ -188,7 +187,7 @@ export const products: Product[] = [
     category: "dusters",
     blurb: "Grabs dust instead of pushing it. Handle included.",
     images: [
-      "/images/products/duster-round.webp",
+      "/images/products/duster-hand.webp",
       "/images/products/duster-hand.svg",
     ],
     desc: "The little one that lives in the glove box or the kitchen drawer. Microfiber holds a charge, so dust comes with it instead of lifting into the air and landing again an hour later. Shelves, blinds, baseboards, and the dash of a truck.",

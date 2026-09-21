@@ -29,7 +29,11 @@ export const metadata: Metadata = {
   },
   description:
     "Kim's Cleaning Cloth: microfiber that cleans glass, granite, screens and windshields with water only. Made in USA. Sold by Kim Schoch and Alice at Iowa and Illinois shows, and here.",
-  icons: { icon: "/images/brand/logo-mark.png" },
+  icons: {
+    icon: "/images/brand/logo-mark.png",
+    shortcut: "/images/brand/logo-mark.png",
+    apple: "/images/brand/logo-mark-512.png",
+  },
   openGraph: {
     title: "Kim's Cleaning Supplies",
     description: "Cleans with just water. Made in USA.",

@@ -60,6 +60,9 @@ export default function ProductBuy({ product }: { product: Product }) {
               );
             })}
           </div>
+          <p className="mt-2.5 text-[0.8rem] text-muted">
+            All {product.options.length} colors are in stock — some packaging still reads &ldquo;4 colors.&rdquo;
+          </p>
         </div>
       )}
       {product.options && !hasSwatches && (

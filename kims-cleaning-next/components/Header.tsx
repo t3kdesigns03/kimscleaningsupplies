@@ -56,16 +56,26 @@ export default function Header() {
           <MenuIcon />
         </button>
 
-        {/* wordmark — centered on mobile, left on desktop */}
+        {/* logo mark + wordmark — centered on mobile, left on desktop */}
         <Link
           href="/"
-          className="flex min-w-0 flex-1 flex-col items-center px-2 leading-none text-forest-deep no-underline lg:flex-none lg:mr-auto lg:items-start lg:px-0"
+          className="flex min-w-0 flex-1 items-center justify-center gap-2 px-2 text-forest-deep no-underline lg:flex-none lg:mr-auto lg:justify-start lg:px-0"
         >
-          <span className="block w-full truncate text-center font-serif text-[clamp(15px,4.4vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left">
-            Kim&rsquo;s Cleaning Supplies
-          </span>
-          <span className="mt-1 hidden w-full truncate text-center text-[10px] uppercase tracking-[0.15em] text-leaf lg:block lg:text-left">
-            Eco Easy Microfiber
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/brand/logo-mark.svg"
+            alt="Kim's Cleaning Supplies logo"
+            width={36}
+            height={36}
+            className="h-[30px] w-[30px] flex-none md:h-9 md:w-9"
+          />
+          <span className="flex min-w-0 flex-col leading-none">
+            <span className="block w-full truncate text-center font-serif text-[clamp(14px,3.9vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left">
+              Kim&rsquo;s Cleaning Supplies
+            </span>
+            <span className="mt-1 hidden w-full truncate text-[10px] uppercase tracking-[0.15em] text-leaf lg:block">
+              Eco Easy Microfiber
+            </span>
           </span>
         </Link>
 

@@ -2,8 +2,8 @@
 # GitHub Pages still serves the static HTML at the repo root.
 
 [build]
-  base = "kims-cleaning-next"
   command = "npm run build"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"

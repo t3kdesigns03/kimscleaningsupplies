@@ -208,7 +208,9 @@ export const products: Product[] = [
     category: "dusters",
     blurb: "Ceiling fans and the spots you need a ladder for.",
     images: [
-      "/images/products/duster-frame.webp",
+      "/images/products/duster-high.webp",
+      "/images/products/duster-high-2.webp",
+      "/images/products/duster-high-bag.webp",
       "/images/products/duster-high.svg",
     ],
     desc: "Extension handle and a head that bends, so you can do the ceiling fan, the top of the cabinets and the vent over the stove with both feet on the floor. The reason people buy this one is usually a ladder they would rather not climb anymore.",

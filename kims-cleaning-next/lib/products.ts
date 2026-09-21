@@ -86,7 +86,6 @@ export const products: Product[] = [
       "/images/products/cloths-colors.webp",
       "/images/products/cloths-card.webp",
       "/images/products/cloths-detail.webp",
-      "/images/products/cloths-2.svg",
     ],
     desc: "Two cloths, 15 inches square. Wet one under the tap, wring it out hard, wipe, and walk away — no spray, no paper towels, no streaks to chase. Most people keep one in the kitchen and one in the car and are surprised how long that lasts.",
     bullets: [
@@ -108,7 +107,6 @@ export const products: Product[] = [
       "/images/products/cloths-colors.webp",
       "/images/products/cloths-detail.webp",
       "/images/products/cloths-card.webp",
-      "/images/products/cloths-6.svg",
     ],
     desc: "Six cloths is the size most families settle on — kitchen, bathroom, glass, car, and two in the wash. It is also where the price per cloth drops by a third, which is why it is the one that sells out first at shows.",
     bullets: [
@@ -130,7 +128,6 @@ export const products: Product[] = [
       "/images/products/cloths-colors.webp",
       "/images/products/cloths-grey.webp",
       "/images/products/cloths-card.webp",
-      "/images/products/cloths-18.svg",
     ],
     desc: "Eighteen cloths at $3 each. This is the box cleaning crews, detail shops, churches and schools buy — and the one that turns into a dozen Christmas gifts every December, two cloths to a ribbon.",
     bullets: [
@@ -150,7 +147,6 @@ export const products: Product[] = [
     images: [
       "/images/products/grandmas-dry-mop.webp",
       "/images/products/grandmas-dry-mop-2.webp",
-      "/images/products/mop-grandma.svg",
     ],
     desc: "A dry dust mop that picks the dust up instead of pushing it into the corner. Hardwood, tile, laminate — run it down the hall in the morning and you are done. The head comes off and goes in the washer. Patent pending.",
     bullets: [
@@ -169,7 +165,6 @@ export const products: Product[] = [
     blurb: "Hardwood floors. Fits a standard screw-on handle.",
     images: [
       "/images/products/mop-pads2.webp",
-      "/images/products/mop-head.svg",
     ],
     desc: "The microfiber head on its own — it screws onto the standard handle you already own. Water is enough for most days. If you want soap on a hardwood floor, half a cup of Murphy's Oil Soap in the bucket is plenty.",
     bullets: [
@@ -190,7 +185,6 @@ export const products: Product[] = [
       "/images/products/duster-hand.webp",
       "/images/products/duster-hand-2.webp",
       "/images/products/duster-hand-bag.webp",
-      "/images/products/duster-hand.svg",
     ],
     desc: "The little one that lives in the glove box or the kitchen drawer. Microfiber holds a charge, so dust comes with it instead of lifting into the air and landing again an hour later. Shelves, blinds, baseboards, and the dash of a truck.",
     bullets: [
@@ -211,7 +205,6 @@ export const products: Product[] = [
       "/images/products/duster-high.webp",
       "/images/products/duster-high-2.webp",
       "/images/products/duster-high-bag.webp",
-      "/images/products/duster-high.svg",
     ],
     desc: "Extension handle and a head that bends, so you can do the ceiling fan, the top of the cabinets and the vent over the stove with both feet on the floor. The reason people buy this one is usually a ladder they would rather not climb anymore.",
     bullets: [
@@ -230,7 +223,6 @@ export const products: Product[] = [
     blurb: "Two washable sleeves plus a telescopic handle.",
     images: [
       "/images/products/duster-fluffy.webp",
-      "/images/products/duster-fluffy.svg",
     ],
     desc: "Two fluffy sleeves and a telescopic handle. Use one while the other is in the wash. Good on lampshades, houseplants, tops of doors and anything that a rag would just knock the dust off of.",
     bullets: [
@@ -255,7 +247,6 @@ export const products: Product[] = [
       "/images/products/hair-pink.webp",
       "/images/products/hair-lightpurple.webp",
       "/images/products/hair-darkpurple.webp",
-      "/images/products/hair-towel.svg",
     ],
     desc: "24 by 38 inches. It pulls the water out of your hair but leaves the moisture in, so hair dries faster without the roughed-up frizz a bath towel gives you. Works the same way on a wool sweater laid flat, and on a wet dog. Seven colors to choose from.",
     bullets: [

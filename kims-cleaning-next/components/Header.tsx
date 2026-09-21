@@ -59,12 +59,12 @@ export default function Header() {
         {/* wordmark — centered on mobile, left on desktop */}
         <Link
           href="/"
-          className="flex min-w-0 flex-1 flex-col items-center leading-none text-forest-deep no-underline lg:flex-none lg:mr-auto lg:items-start"
+          className="flex min-w-0 flex-1 flex-col items-center px-2 leading-none text-forest-deep no-underline lg:flex-none lg:mr-auto lg:items-start lg:px-0"
         >
-          <span className="block max-w-full truncate text-center font-serif text-[16px] font-bold tracking-tight text-forest-deep min-[380px]:text-[18px] lg:text-left lg:text-[22px]">
+          <span className="block w-full truncate text-center font-serif text-[clamp(15px,4.4vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left">
             Kim&rsquo;s Cleaning Supplies
           </span>
-          <span className="mt-1 hidden truncate text-[10px] uppercase tracking-[0.15em] text-leaf lg:block">
+          <span className="mt-1 hidden w-full truncate text-center text-[10px] uppercase tracking-[0.15em] text-leaf lg:block lg:text-left">
             Eco Easy Microfiber
           </span>
         </Link>

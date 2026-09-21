@@ -31,7 +31,6 @@ export default function Header() {
     prevCount.current = count;
   }, [count]);
 
-  // close the drawer on route change
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -45,18 +44,32 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-[60] border-b border-line bg-paper">
-      <div className="mx-auto flex min-h-[58px] max-w-site items-center gap-2 px-4 py-2 sm:px-7 md:min-h-[64px]">
-        <Link href="/" className="flex min-w-0 flex-1 items-center pr-2 text-forest-deep no-underline">
-          <span className="flex min-w-0 flex-col leading-none">
-            <span className="block truncate font-serif text-[17px] font-bold tracking-tight text-forest-deep min-[380px]:text-[19px] min-[430px]:text-[20px] lg:text-[22px]">
-              Kim&rsquo;s Cleaning Supplies
-            </span>
-            <span className="hidden truncate text-[10px] uppercase tracking-[0.15em] text-leaf min-[400px]:mt-1 min-[400px]:block">
-              Eco Easy Microfiber
-            </span>
+      <div className="mx-auto flex min-h-[56px] max-w-site items-center gap-2 px-4 sm:px-7 md:min-h-[64px]">
+        {/* hamburger — mobile only, far left */}
+        <button
+          type="button"
+          aria-label="Menu"
+          aria-expanded={open}
+          onClick={() => setOpen(true)}
+          className="flex h-11 w-11 flex-none items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10 lg:hidden"
+        >
+          <MenuIcon />
+        </button>
+
+        {/* wordmark — centered on mobile, left on desktop */}
+        <Link
+          href="/"
+          className="flex min-w-0 flex-1 flex-col items-center leading-none text-forest-deep no-underline lg:flex-none lg:mr-auto lg:items-start"
+        >
+          <span className="block max-w-full truncate text-center font-serif text-[16px] font-bold tracking-tight text-forest-deep min-[380px]:text-[18px] lg:text-left lg:text-[22px]">
+            Kim&rsquo;s Cleaning Supplies
+          </span>
+          <span className="mt-1 hidden truncate text-[10px] uppercase tracking-[0.15em] text-leaf lg:block">
+            Eco Easy Microfiber
           </span>
         </Link>
 
+        {/* nav — desktop only */}
         <nav className="mr-2 hidden items-center gap-1 lg:flex" aria-label="Main">
           {NAV.map((n) => (
             <Link
@@ -71,34 +84,24 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex flex-none shrink-0 items-center gap-1.5">
-          <button
-            type="button"
-            onClick={openDrawer}
-            aria-label={ready && count > 0 ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart"}
-            className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10"
-          >
-            <CartIcon />
-            {ready && count > 0 && (
-              <span
-                className={`absolute right-1 top-1.5 min-w-[20px] rounded-full bg-forest px-1.5 text-center text-[11.5px] font-bold leading-5 text-lime-bright transition-transform duration-200 ${
-                  bump ? "scale-125" : "scale-100"
-                }`}
-              >
-                {count}
-              </span>
-            )}
-          </button>
-          <button
-            type="button"
-            aria-label="Menu"
-            aria-expanded={open}
-            onClick={() => setOpen(true)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10 lg:hidden"
-          >
-            <MenuIcon />
-          </button>
-        </div>
+        {/* cart — far right */}
+        <button
+          type="button"
+          onClick={openDrawer}
+          aria-label={ready && count > 0 ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart"}
+          className="relative flex h-11 w-11 flex-none items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10"
+        >
+          <CartIcon />
+          {ready && count > 0 && (
+            <span
+              className={`absolute right-1 top-1.5 min-w-[20px] rounded-full bg-forest px-1.5 text-center text-[11.5px] font-bold leading-5 text-lime-bright transition-transform duration-200 ${
+                bump ? "scale-125" : "scale-100"
+              }`}
+            >
+              {count}
+            </span>
+          )}
+        </button>
       </div>
 
       {/* mobile drawer */}
@@ -114,16 +117,17 @@ export default function Header() {
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className={`absolute right-0 top-0 flex h-full w-[min(82vw,330px)] flex-col overflow-y-auto bg-paper px-4 pb-7 pt-3.5 transition-transform ${
-            open ? "translate-x-0" : "translate-x-full"
+          className={`absolute left-0 top-0 flex h-full w-[min(82vw,330px)] flex-col overflow-y-auto bg-paper px-4 pb-7 pt-3.5 transition-transform ${
+            open ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <div className="mb-2 flex justify-end">
+          <div className="mb-2 flex justify-between">
+            <span className="self-center font-serif text-[18px] font-bold text-forest-deep">Menu</span>
             <button
               type="button"
               aria-label="Close menu"
               onClick={() => setOpen(false)}
-              className="inline-flex h-[46px] w-[46px] items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10"
             >
               <CloseIcon />
             </button>

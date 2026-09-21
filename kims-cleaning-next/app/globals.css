@@ -63,8 +63,7 @@
            transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift;
   }
   .card-media {
-    @apply block aspect-square min-h-[240px];
-    background: linear-gradient(170deg, #FFFDF8, #ECEAD2);
+    @apply block aspect-square min-h-[240px] bg-white;
   }
   .price { @apply font-serif font-bold text-forest-deep; }
 
@@ -123,6 +122,14 @@
   /* gold rule accent */
   .accent-rule { height: 3px; width: 52px; border-radius: 999px;
     background: linear-gradient(90deg, #E3B400, #F6DB45); }
+
+  /* Koala-style product row: horizontal snap-scroll on phones, grid on desktop */
+  .scroll-row {
+    @apply -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 no-scrollbar
+           sm:-mx-7 sm:px-7
+           md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-3;
+  }
+  .scroll-card { @apply min-w-[80%] snap-start min-[440px]:min-w-[320px] md:min-w-0; }
 
   /* page-enter fade (app/template.tsx re-mounts this on navigation) */
   .page-enter { animation: pageIn .42s cubic-bezier(.2,.7,.2,1) both; }

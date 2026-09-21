@@ -102,14 +102,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      <section className="py-11 md:py-14">
-        <div className="wrap narrow text-center">
-          <h2>Want us at your school, church, or home party?</h2>
-          <p className="text-muted">Fundraisers, groups, and home shows — Kim brings the demo table.</p>
-          <Link href="/contact" className="btn btn-primary">Get in touch</Link>
-        </div>
-      </section>
     </>
   );
 }

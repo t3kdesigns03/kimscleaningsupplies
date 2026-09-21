@@ -7,9 +7,13 @@ import type { Product } from "@/lib/products";
 export default function ProductCard({ product }: { product: Product }) {
   const href = `/product/${product.slug}`;
   return (
-    <article className="card">
-      <Link href={href} className="card-media" aria-label={product.name}>
+    <article className="card group">
+      <Link href={href} className="card-media zoomwrap relative" aria-label={product.name}>
         <SmartImage sources={product.images} alt={product.name} className="h-full w-full object-cover" />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest-deep/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        />
       </Link>
       <div className="flex flex-1 flex-col p-4 pb-[18px]">
         <h3 className="mb-0.5 text-[1.22rem]">

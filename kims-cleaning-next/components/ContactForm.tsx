@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { config } from "@/lib/config";
 
-const TOPICS = ["Order question", "Event", "Fundraiser", "Home party", "Other"];
+const TOPICS = ["Order question", "Event", "Fundraiser", "Other"];
 
 function encode(data: Record<string, string>) {
   return Object.keys(data)

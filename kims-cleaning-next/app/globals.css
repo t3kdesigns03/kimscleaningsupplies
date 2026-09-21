@@ -35,11 +35,11 @@
 
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold text-center
-           min-h-[50px] px-6 py-3 border-2 border-transparent transition-transform;
+           min-h-[50px] px-6 py-3 border-2 border-transparent transition-all duration-200;
     font-size: 17px;
   }
-  .btn:active { transform: translateY(1px); }
-  .btn-primary { @apply bg-forest-deep text-lime-bright shadow-soft hover:bg-forest; }
+  .btn:active { transform: translateY(1px) scale(0.99); }
+  .btn-primary { @apply bg-forest-deep text-lime-bright shadow-soft hover:bg-forest hover:-translate-y-0.5 hover:shadow-lift; }
   .btn-lime { @apply bg-lime text-forest-deep hover:bg-leaf shadow-soft; }
   .btn-ghost { @apply bg-white/85 text-forest-deep border-forest/[0.25] hover:bg-white; }
   .btn-quiet { @apply bg-cream text-forest-deep border-line hover:bg-lime-bright/[0.4]; }
@@ -64,7 +64,7 @@
   }
   .card-media {
     @apply block aspect-square min-h-[240px];
-    background: linear-gradient(170deg, #FFFFFF, #EDF6DD);
+    background: linear-gradient(170deg, #FFFDF8, #ECEAD2);
   }
   .price { @apply font-serif font-bold text-forest-deep; }
 
@@ -105,10 +105,47 @@
   }
   .bg-botanical-soft {
     background:
-      radial-gradient(90% 70% at 90% 0%, rgba(198, 238, 126, 0.5) 0%, rgba(198, 238, 126, 0) 60%),
-      linear-gradient(180deg, #F2F8E4 0%, #FAFCF2 60%);
+      radial-gradient(90% 70% at 92% -10%, rgba(120, 170, 60, 0.28) 0%, rgba(120, 170, 60, 0) 62%),
+      linear-gradient(180deg, #EFEAD6 0%, #FAF4E6 62%);
   }
   .text-shadow-soft { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28); }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@layer utilities {
+  /* scroll-reveal */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
+  .reveal-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+  /* gold rule accent */
+  .accent-rule { height: 3px; width: 52px; border-radius: 999px;
+    background: linear-gradient(90deg, #E3B400, #F6DB45); }
+
+  /* page-enter fade (app/template.tsx re-mounts this on navigation) */
+  .page-enter { animation: pageIn .42s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* product-card image zoom on hover (no-op on touch, no hover) */
+  .zoomwrap { overflow: hidden; }
+  .zoomwrap img { transition: transform .5s cubic-bezier(.2,.7,.2,1); will-change: transform; }
+  @media (hover: hover) {
+    .group:hover .zoomwrap img { transform: scale(1.06); }
+  }
+
+  /* marquee for the fairs strip */
+  .marquee { display: flex; width: max-content; animation: marquee 34s linear infinite; }
+  @media (hover: hover) { .marquee:hover { animation-play-state: paused; } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-enter { animation: none !important; }
+    .zoomwrap img { transition: none !important; }
+    .marquee { animation: none !important; }
+  }
 }

@@ -8,16 +8,12 @@ export default function Footer() {
       <div className="wrap">
         <div className="grid gap-7 md:grid-cols-[1.6fr_1fr_1fr]">
           <div>
-            <div className="mb-3 flex items-center gap-2.5">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/brand/logo-mark.png" alt="" width={40} height={40} className="h-10 w-10 rounded-[10px] object-cover" />
-              <span>
-                <span className="block font-serif text-[20px] font-bold leading-tight text-paper">
-                  Kim&rsquo;s Cleaning Supplies
-                </span>
-                <span className="text-[11px] uppercase tracking-[0.09em] text-[#AFC4A0]">
-                  {config.tagline}
-                </span>
+            <div className="mb-3">
+              <span className="block font-serif text-[22px] font-bold leading-tight text-paper">
+                Kim&rsquo;s Cleaning Supplies
+              </span>
+              <span className="text-[11px] uppercase tracking-[0.12em] text-[#AFC4A0]">
+                {config.tagline}
               </span>
             </div>
             <p className="max-w-[38ch] text-[0.92rem]">
@@ -48,7 +44,7 @@ export default function Footer() {
             <ul className="m-0 list-none p-0 text-[0.95rem]">
               <li className="mb-2"><Link href="/about" className="text-[#E4EFD2] no-underline hover:underline">About Kim &amp; Alice</Link></li>
               <li className="mb-2"><Link href="/events" className="text-[#E4EFD2] no-underline hover:underline">Where to find us</Link></li>
-              <li className="mb-2"><Link href="/contact" className="text-[#E4EFD2] no-underline hover:underline">Fundraisers &amp; parties</Link></li>
+              <li className="mb-2"><Link href="/contact" className="text-[#E4EFD2] no-underline hover:underline">Fundraisers</Link></li>
               <li className="mb-2"><Link href="/contact" className="text-[#E4EFD2] no-underline hover:underline">Contact</Link></li>
             </ul>
           </div>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "./CartProvider";
 import { CartIcon, MenuIcon, CloseIcon } from "./Icons";
 
@@ -15,8 +15,21 @@ const NAV = [
 
 export default function Header() {
   const pathname = usePathname();
-  const { count, ready } = useCart();
+  const { count, ready, openDrawer } = useCart();
   const [open, setOpen] = useState(false);
+  const [bump, setBump] = useState(false);
+  const prevCount = useRef(count);
+
+  // pop the badge whenever the count grows
+  useEffect(() => {
+    if (count > prevCount.current) {
+      setBump(true);
+      const t = setTimeout(() => setBump(false), 320);
+      prevCount.current = count;
+      return () => clearTimeout(t);
+    }
+    prevCount.current = count;
+  }, [count]);
 
   // close the drawer on route change
   useEffect(() => setOpen(false), [pathname]);
@@ -34,12 +47,12 @@ export default function Header() {
     <header className="sticky top-0 z-[60] border-b border-line bg-paper/95 backdrop-blur">
       <div className="mx-auto flex min-h-[64px] max-w-site items-center gap-2.5 px-4 py-2 sm:px-7">
         <Link href="/" className="mr-auto flex min-w-0 items-center gap-2.5 text-forest-deep no-underline">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/brand/logo-mark.png" alt="" width={44} height={44} className="h-11 w-11 flex-none rounded-[11px] object-cover shadow-sm" />
           <span className="flex min-w-0 flex-col leading-none">
-            <span className="whitespace-nowrap font-serif text-[21px] font-bold tracking-tight">Kim&rsquo;s</span>
-            <span className="mt-0.5 whitespace-nowrap text-[10.5px] uppercase tracking-[0.09em] text-muted">
-              Cleaning Supplies
+            <span className="whitespace-nowrap font-serif text-[22px] font-bold tracking-tight text-forest-deep">
+              Kim&rsquo;s Cleaning Supplies
+            </span>
+            <span className="mt-1 whitespace-nowrap text-[10px] uppercase tracking-[0.15em] text-leaf">
+              Eco Easy Microfiber
             </span>
           </span>
         </Link>
@@ -59,18 +72,23 @@ export default function Header() {
         </nav>
 
         <div className="flex flex-none items-center gap-1.5">
-          <Link
-            href="/cart"
-            aria-label="Cart"
+          <button
+            type="button"
+            onClick={openDrawer}
+            aria-label={ready && count > 0 ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart"}
             className="relative inline-flex h-[46px] w-[46px] items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10"
           >
             <CartIcon />
             {ready && count > 0 && (
-              <span className="absolute right-1 top-1.5 min-w-[20px] rounded-full bg-forest px-1.5 text-center text-[11.5px] font-bold leading-5 text-lime-bright">
+              <span
+                className={`absolute right-1 top-1.5 min-w-[20px] rounded-full bg-forest px-1.5 text-center text-[11.5px] font-bold leading-5 text-lime-bright transition-transform duration-200 ${
+                  bump ? "scale-125" : "scale-100"
+                }`}
+              >
                 {count}
               </span>
             )}
-          </Link>
+          </button>
           <button
             type="button"
             aria-label="Menu"

@@ -5,6 +5,9 @@ import { products } from "@/lib/products";
 import { testimonials } from "@/lib/testimonials";
 import { splitEvents } from "@/lib/events";
 import { DropIcon, WringIcon, WipeIcon, WalkIcon } from "@/components/Icons";
+import Reveal from "@/components/Reveal";
+import TheMath from "@/components/TheMath";
+import FairsStrip from "@/components/FairsStrip";
 
 const STEPS = [
   { icon: DropIcon, title: "Wet it", body: "Plain tap water. Cold is fine." },
@@ -22,6 +25,8 @@ export default function Home() {
   return (
     <>
       <Hero />
+
+      <FairsStrip />
 
       {/* how it works */}
       <section className="bg-cream py-11 md:py-16">
@@ -45,13 +50,18 @@ export default function Home() {
         </div>
       </section>
 
+      <TheMath />
+
       {/* cloths */}
       <section className="py-11 md:py-16">
         <div className="wrap">
-          <h2>Start with the cloths</h2>
-          <p className="max-w-[54ch] text-muted">
-            One cloth. Just water. The same trick that works on a kitchen window works on a windshield.
-          </p>
+          <Reveal>
+            <div className="accent-rule mb-4" />
+            <h2>Start with the cloths</h2>
+            <p className="max-w-[54ch] text-muted">
+              One cloth. Just water. The same trick that works on a kitchen window works on a windshield.
+            </p>
+          </Reveal>
           <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {cloths.map((p) => (
               <ProductCard key={p.slug} product={p} />
@@ -63,6 +73,7 @@ export default function Home() {
       {/* tools */}
       <section className="bg-cream py-11 md:py-16">
         <div className="wrap">
+          <div className="accent-rule mb-4" />
           <h2>Mops, dusters and the hair towel</h2>
           <p className="max-w-[54ch] text-muted">
             Same fiber, different jobs. The dusters are dry-use only — that is how they hold a charge
@@ -125,18 +136,6 @@ export default function Home() {
           <div className="mt-6">
             <Link href="/events" className="btn btn-quiet">Full fall schedule</Link>
           </div>
-        </div>
-      </section>
-
-      {/* fundraiser */}
-      <section className="bg-cream py-11 md:py-16">
-        <div className="wrap narrow text-center">
-          <h2>School, church, or a party at your place</h2>
-          <p className="text-muted">
-            Fundraisers do well with these because people actually use them up and come back. Home-show
-            parties work the same way — you host, Kim brings the demo table.
-          </p>
-          <Link href="/contact" className="btn btn-primary">Get in touch</Link>
         </div>
       </section>
     </>

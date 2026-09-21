@@ -5,7 +5,7 @@ import { config } from "@/lib/config";
 export const metadata = {
   title: "Contact",
   description:
-    "Order questions, event bookings, school and church fundraisers, and home-show parties. Email Kim Schoch in Quincy, IL.",
+    "Order questions, school and church fundraisers, and how to reach Kim. Email Kim Schoch in Quincy, IL.",
 };
 
 export default function ContactPage() {
@@ -17,8 +17,7 @@ export default function ContactPage() {
             <span className="eyebrow">We read everything</span>
             <h1>Get in touch</h1>
             <p className="max-w-[52ch] text-muted">
-              Schools, churches, clubs and home-show parties are welcome — fundraisers do well with
-              these. Order questions get answered the same week.
+              Schools, churches and clubs are welcome, and fundraisers do well with these. Order questions get answered the same week.
             </p>
             <div className="mt-4">
               <ContactForm />

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useCart } from "./CartProvider";
+import { toast } from "./Toast";
 import { money } from "@/lib/format";
 import type { Product } from "@/lib/products";
 
@@ -17,7 +18,7 @@ const SWATCH: Record<string, string> = {
 };
 
 export default function ProductBuy({ product }: { product: Product }) {
-  const { add, openDrawer } = useCart();
+  const { add } = useCart();
   const [qty, setQty] = useState(1);
   const firstInStock = product.options?.find((o) => !o.soldOut)?.value ?? "";
   const [variant, setVariant] = useState(firstInStock);
@@ -27,7 +28,7 @@ export default function ProductBuy({ product }: { product: Product }) {
 
   function addToCart() {
     add(product.slug, qty, variant);
-    openDrawer();
+    toast(qty > 1 ? `${qty} added to cart` : `${product.name} added to cart`);
   }
 
   return (

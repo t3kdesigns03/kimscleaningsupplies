@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         // Brighter botanical palette — spring/lime greens grounded by deep forest.
-        cream: "#FAFCF2",
-        paper: "#FFFFFF",
+        cream: "#FAF4E6",
+        paper: "#FFFDF8",
         ink: "#16301A",
-        muted: "#55614F",
-        line: "#E3E8D3",
+        muted: "#5A5647",
+        line: "#E7E0CC",
         forest: {
           deep: "#153F1A",
           DEFAULT: "#2F6B32",

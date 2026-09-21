@@ -6,8 +6,6 @@ export default function NotFound() {
   return (
     <section className="py-10">
       <div className="wrap narrow py-5 text-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/brand/logo-mark.png" alt="" width={96} height={96} className="mx-auto mb-5 h-24 w-24 rounded-2xl object-cover shadow-soft" />
         <h1>That page went missing</h1>
         <p className="mx-auto mb-6 max-w-[44ch] text-muted">
           Wrong link, or something we moved. Everything Kim sells is two taps away.

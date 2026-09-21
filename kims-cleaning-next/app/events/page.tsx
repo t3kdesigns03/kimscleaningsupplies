@@ -77,17 +77,6 @@ export default function EventsPage() {
           )}
         </div>
       </section>
-
-      <section className="bg-cream py-11 md:py-14">
-        <div className="wrap narrow text-center">
-          <h2>Want us at your school, church, or home party?</h2>
-          <p className="text-muted">
-            Fundraisers work well with these because people use them up and come back for more. Tell us
-            the date and how many people you expect.
-          </p>
-          <Link href="/contact" className="btn btn-primary">Get in touch</Link>
-        </div>
-      </section>
     </>
   );
 }

@@ -8,7 +8,7 @@ const TRUST = ["Water only", "Made in USA", "Free Quincy pickup", "Washable 100s
 export const metadata = {
   title: "Shop",
   description:
-    "Microfiber cleaning cloths in 2, 6 and 18 packs, dry dust mops, hand and high dusters, and the hair towel. Water only. Made in USA.",
+    "Microfiber cleaning cloths in 2, 6 and 18 packs, wet and dry mops, hand and high dusters, and the hair towel. Water only. Made in USA.",
 };
 
 export default function ShopPage() {
@@ -19,7 +19,7 @@ export default function ShopPage() {
           <span className="eyebrow">Everything Kim sells</span>
           <h1>Shop</h1>
           <p className="max-w-[54ch] text-muted">
-            Nine things. All of them microfiber, all of them washable, and none of them need a bottle
+            Ten things. All of them microfiber, all of them washable, and none of them need a bottle
             of anything. Pickup in Quincy is free at checkout.
           </p>
           <ul className="mt-5 flex flex-wrap gap-2 p-0">

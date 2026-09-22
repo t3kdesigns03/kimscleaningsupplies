@@ -154,6 +154,25 @@ export const products: Product[] = [
     care: "dry",
   },
   {
+    slug: "wet-mop",
+    name: "Microfiber Wet Mop",
+    short: "Soaks up spills, wrings out dry",
+    price: 22.0,
+    category: "mops",
+    blurb: "Thirsty microfiber strands on a standard screw-on handle.",
+    images: [
+      "/images/products/wet-mop.webp",
+      "/images/products/wet-mop-2.webp",
+    ],
+    desc: "A wet mop that holds the water instead of pushing it around the floor. The strands drink up a spill and wring out almost dry, so the floor is walkable in minutes rather than an hour. Water does most of the work — add a splash of your own cleaner when a job calls for it.",
+    bullets: [
+      "Soaks up what a paper towel just smears around",
+      "Fits the standard screw-on handle you already own",
+      "Rinse, wring, and it is ready for the next room",
+    ],
+    care: "wet",
+  },
+  {
     slug: "mop-head",
     name: "Microfiber Mop Head",
     short: "Screw-on refill pad",

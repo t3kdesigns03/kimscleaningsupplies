@@ -30,3 +30,6 @@ yarn-error.log*
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+# Raw source photos kept for reprocessing, never served or shipped
+/_product-source/

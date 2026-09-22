@@ -26,6 +26,11 @@ export const config = {
   pickupLabel: "Pickup — Quincy, IL",
   pickupAddress: "2922 Lincoln Hill SW, Quincy, IL",
 
+  // Canonical production URL — no trailing slash. ONE place to change at
+  // cutover: metadataBase, the sitemap, robots.txt and the structured data
+  // all read from here. See CUTOVER.md.
+  siteUrl: "https://kimscleaningproducts.t3kdesigns.app",
+
   brand: "Kim's Cleaning Products",
   tagline: "Eco Easy Microfiber · Made in USA",
   town: "Quincy, Illinois",

@@ -81,11 +81,12 @@ Do these in order. Steps 1–3 are reversible; step 4 is the switch.
 2. **Pick the canonical host** (`www` or apex) and set the other to redirect to
    it in Netlify. Squarespace served `www`, so staying on `www` is one fewer
    redirect hop and one fewer thing to get wrong.
-3. **Update `metadataBase`** in `kims-cleaning-next/app/layout.tsx` to the
-   canonical production URL. It currently points at
-   `https://kimscleaningproducts.t3kdesigns.app`. This value generates the
-   canonical and Open Graph URLs; if it is wrong, Google sees the preview
-   subdomain as the real site.
+3. **Update `siteUrl`** in `kims-cleaning-next/lib/config.ts` to the canonical
+   production URL — one line, no trailing slash. It currently reads
+   `https://kimscleaningproducts.t3kdesigns.app`. `metadataBase`, the sitemap,
+   robots.txt and every structured-data URL all derive from it, so this is the
+   only place the domain is written down. Get it wrong and Google treats the
+   preview subdomain as the real site.
 4. **Porkbun DNS.** Point the records at Netlify, then wait out TTL:
    - `www` → CNAME → `<site-name>.netlify.app`
    - apex → ALIAS/ANAME → `<site-name>.netlify.app` (Porkbun supports ALIAS; do
@@ -150,15 +151,28 @@ looking. In order:
 6. **Google Business Profile**, Facebook, and any fair/home-show listings still
    point at Squarespace URLs. Update the ones you control.
 
-### Open SEO items (not blockers, but do them)
+### Done
 
-- **No sitemap or robots.txt in the Next app.** Add `app/sitemap.ts` and
-  `app/robots.ts` — Next generates both from the product list.
-- **No structured data.** `Product` + `Offer` JSON-LD on each product page is
-  what produces price and availability in search results. High value for a shop
-  this size.
+- **Sitemap and robots.txt** — `app/sitemap.ts` and `app/robots.ts` generate
+  `/sitemap.xml` (14 absolute URLs: 5 pages + 9 products) and `/robots.txt`.
+  `/cart` is disallowed; it is per-visitor and only spends crawl budget.
+- **Structured data** — `Store` on every page, plus `Product` + `Offer` and
+  `BreadcrumbList` on each product page. This is what puts a price and
+  "In stock" under the search result. No `aggregateRating`: we have
+  testimonials but no rating data, and invented review markup gets penalised.
+- **Per-product canonical and OG tags**, with the product photo as the share
+  image and the full description rather than the one-line card caption.
+
+### Still open
+
+- **OG images are `.webp`.** Facebook renders them; X/Twitter has been
+  inconsistent about WebP in link previews. If shares matter, generate a JPEG
+  copy of the lead photo per product and point `openGraph.images` at that.
 - **The printed package label** still reads `www.kimseco-ezmicrofibers.com`.
   Fine until Kim reprints; note it for the next print run.
+- **Online payments are not live.** `paypalClientId` and `venmoHandle` in
+  `kims-cleaning-next/lib/config.ts` are both `REPLACE_ME`. This is the real
+  gate on cutover — do not move DNS until checkout works end to end.
 
 ---
 

@@ -7,6 +7,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import { Toaster } from "@/components/Toast";
+import JsonLd from "@/components/JsonLd";
+import { config } from "@/lib/config";
+import { organizationSchema } from "@/lib/schema";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -22,7 +25,7 @@ const source = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kimscleaningproducts.t3kdesigns.app"),
+  metadataBase: new URL(config.siteUrl),
   title: {
     default: "Kim's Cleaning Products — cleans with just water",
     template: "%s — Kim's Cleaning Products",
@@ -45,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${fraunces.variable} ${source.variable}`}>
       <body>
+        <JsonLd data={organizationSchema()} />
         <CartProvider>
           <PromoBar />
           <Header />

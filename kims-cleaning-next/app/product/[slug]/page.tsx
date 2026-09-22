@@ -9,6 +9,8 @@ import {
   products, getProduct, CARE, CLOTH_FACTS, SURFACES, REMOVES,
 } from "@/lib/products";
 import { config } from "@/lib/config";
+import JsonLd from "@/components/JsonLd";
+import { productSchema, breadcrumbSchema } from "@/lib/schema";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -18,7 +20,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const p = getProduct(slug);
   if (!p) return { title: "Not found" };
-  return { title: p.name, description: p.blurb };
+
+  // `blurb` is a one-line card caption and reads as a stub in a search
+  // result. `desc` is the real copy — trimmed to roughly what Google shows.
+  const description = p.desc.length > 160 ? `${p.desc.slice(0, 157).trimEnd()}…` : p.desc;
+  const url = `/product/${p.slug}`;
+
+  return {
+    title: p.name,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "website",
+      url,
+      title: `${p.name} — ${money(p.price)}`,
+      description,
+      images: p.images.slice(0, 1),
+    },
+  };
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -37,6 +56,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <section className="py-7">
+      <JsonLd data={productSchema(p)} />
+      <JsonLd data={breadcrumbSchema(p)} />
       <div className="wrap">
         <p className="mb-4 text-[0.92rem]">
           <Link href="/shop">&larr; Back to the shop</Link>

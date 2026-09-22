@@ -83,9 +83,8 @@ export const products: Product[] = [
     packOf: 2,
     blurb: '15" × 15". Cleans any surface with just water.',
     images: [
-      "/images/products/cloths-colors.webp",
-      "/images/products/cloths-card.webp",
-      "/images/products/cloths-detail.webp",
+      "/images/products/cloth-2-pack.webp",
+      "/images/products/cloth-label.webp",
     ],
     desc: "Two cloths, 15 inches square. Wet one under the tap, wring it out hard, wipe, and walk away — no spray, no paper towels, no streaks to chase. Most people keep one in the kitchen and one in the car and are surprised how long that lasts.",
     bullets: [
@@ -104,9 +103,8 @@ export const products: Product[] = [
     packOf: 6,
     blurb: 'Best household bundle. Same 15" cloth, better per-cloth price.',
     images: [
-      "/images/products/cloths-colors.webp",
-      "/images/products/cloths-detail.webp",
-      "/images/products/cloths-card.webp",
+      "/images/products/cloth-6-pack.webp",
+      "/images/products/cloth-label.webp",
     ],
     desc: "Six cloths is the size most families settle on — kitchen, bathroom, glass, car, and two in the wash. It is also where the price per cloth drops by a third, which is why it is the one that sells out first at shows.",
     bullets: [
@@ -125,9 +123,8 @@ export const products: Product[] = [
     packOf: 18,
     blurb: "Stock-up, gift, and commercial pack.",
     images: [
-      "/images/products/cloths-colors.webp",
-      "/images/products/cloths-grey.webp",
-      "/images/products/cloths-card.webp",
+      "/images/products/cloth-18-pack.webp",
+      "/images/products/cloth-label.webp",
     ],
     desc: "Eighteen cloths at $3 each. This is the box cleaning crews, detail shops, churches and schools buy — and the one that turns into a dozen Christmas gifts every December, two cloths to a ribbon.",
     bullets: [
@@ -241,6 +238,7 @@ export const products: Product[] = [
     blurb: '24" × 38". Pulls the water, leaves the moisture.',
     images: [
       "/images/products/hair-blue.webp",
+      "/images/products/cloths-colors.webp",
       "/images/products/hair-lightblue.webp",
       "/images/products/hair-green.webp",
       "/images/products/hair-yellow.webp",

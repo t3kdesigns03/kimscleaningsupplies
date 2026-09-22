@@ -1,0 +1,36 @@
+# Legacy Squarespace URLs -> new Next.js routes.
+# Netlify serves these before hitting the Next router. 301 = permanent, which
+# is what passes ranking signal. Do not downgrade these to 302.
+#
+# Source list: https://www.kimseco-ezmicrofibers.com/sitemap.xml (pulled 2026-09-21)
+# Full context and the cutover runbook: /CUTOVER.md in the repo root.
+
+# --- Pages -------------------------------------------------------------
+/about                                      /about                  301
+/calendar-of-events                         /events                 301
+/contact-us                                 /contact                301
+/testimonials                               /about#testimonials     301
+/s/shop                                     /shop                   301
+
+# --- Products ----------------------------------------------------------
+# Squarespace pattern: /product/<slugified-name>/<numeric-id>
+/product/kim-s-cleaning-cloths-qty-2/2      /product/cloth-2        301
+/product/kim-s-cleaning-cloths-qty-6/3      /product/cloth-6        301
+/product/kim-s-cleaning-cloths-qty-18/4     /product/cloth-18       301
+/product/grandma-s-dry-dust-mop/1           /product/grandma-mop    301
+/product/microfiber-mop-head/5              /product/mop-head       301
+/product/microfiber-high-duster/6           /product/high-duster    301
+/product/microfiber-hand-duster/7           /product/hand-duster    301
+/product/kim-s-hair-towel/8                 /product/hair-towel     301
+/product/microfiber-fluffy-duster/10        /product/fluffy-duster  301
+
+# --- Safety nets -------------------------------------------------------
+# Anything else under Squarespace's /s/ namespace, plus any product URL still
+# carrying Squarespace's trailing numeric id, lands on the shop rather than a
+# 404. Keep these LAST: Netlify matches top-down and the first hit wins.
+#
+# NOTE: the product net is deliberately TWO segments (/product/:slug/:id).
+# A bare /product/* splat would also swallow our own /product/cloth-2 routes,
+# because user redirects are evaluated before the Next.js handler.
+/s/*                                        /shop                   301
+/product/:slug/:id                          /shop                   301

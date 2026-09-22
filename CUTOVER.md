@@ -35,8 +35,8 @@ Google the move is temporary and holds the ranking signal on the dead URL.
 
 | Squarespace | New | Note |
 |---|---|---|
-| `/` | `/` | home |
-| `/about` | `/about` | unchanged path |
+| `/` | `/` | unchanged — **no rule** |
+| `/about` | `/about` | unchanged — **no rule** |
 | `/calendar-of-events` | `/events` | renamed |
 | `/contact-us` | `/contact` | renamed |
 | `/testimonials` | `/about#testimonials` | folded into About |
@@ -58,6 +58,13 @@ clean single-segment slug.
 | `/product/microfiber-hand-duster/7` | `/product/hand-duster` |
 | `/product/kim-s-hair-towel/8` | `/product/hair-towel` |
 | `/product/microfiber-fluffy-duster/10` | `/product/fluffy-duster` |
+
+### Paths that did not change
+
+`/` and `/about` keep their paths, so they get **no rule at all**. A redirect
+whose source equals its destination is an infinite loop, not a no-op: Netlify
+serves it as `ERR_TOO_MANY_REDIRECTS`. This shipped once and took the live
+About page down. `npm run check:redirects` now fails the build on it.
 
 ### Safety nets
 
@@ -120,6 +127,12 @@ for p in /about /calendar-of-events /contact-us /testimonials /s/shop \
     "https://www.kimseco-ezmicrofibers.com$p"
 done
 ```
+
+The rules file is also checked at build time — `npm run build` runs
+`scripts/check-redirects.mjs` first, which fails on self-referential loops,
+non-301 statuses, rules that shadow a real route, splats that swallow real
+routes, and destinations that do not exist. Run it alone with
+`npm run check:redirects`.
 
 Then by hand:
 

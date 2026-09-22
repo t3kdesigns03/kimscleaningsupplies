@@ -2,12 +2,13 @@
   "name": "kims-cleaning-supplies",
   "version": "1.0.0",
   "private": true,
-  "description": "Kim's Cleaning Products storefront — Next.js + Tailwind, deployed on Netlify.",
+  "description": "Kim's Cleaning Products storefront \u2014 Next.js + Tailwind, deployed on Netlify.",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/check-redirects.mjs && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check:redirects": "node scripts/check-redirects.mjs"
   },
   "dependencies": {
     "next": "16.3.5",

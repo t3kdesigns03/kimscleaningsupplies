@@ -6,7 +6,10 @@
 # Full context and the cutover runbook: /CUTOVER.md in the repo root.
 
 # --- Pages -------------------------------------------------------------
-/about                                      /about                  301
+# NOTE: /about and / are intentionally absent. Their paths did not change, and
+# a rule whose source equals its destination is an infinite redirect loop, not
+# a no-op — Netlify serves it as ERR_TOO_MANY_REDIRECTS. Only list a path here
+# when the destination actually differs. `npm run check:redirects` enforces it.
 /calendar-of-events                         /events                 301
 /contact-us                                 /contact                301
 /testimonials                               /about#testimonials     301

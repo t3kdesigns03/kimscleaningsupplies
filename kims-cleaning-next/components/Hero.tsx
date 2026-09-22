@@ -6,7 +6,7 @@ import { FlagIcon, LoopIcon, DropIcon } from "./Icons";
    visible on the right. One copy block, rendered once, at every size. */
 export default function Hero() {
   return (
-    <section aria-label="Kim's Cleaning Supplies" className="relative isolate overflow-hidden bg-forest-deep">
+    <section aria-label="Kim's Cleaning Products" className="relative isolate overflow-hidden bg-forest-deep">
       {/* apex image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img

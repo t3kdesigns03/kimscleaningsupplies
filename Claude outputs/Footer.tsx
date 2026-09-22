@@ -13,7 +13,7 @@ export default function Footer() {
               <img src="/images/brand/logo-mark.svg" alt="" width={40} height={40} className="h-10 w-10" />
               <span>
                 <span className="block font-serif text-[20px] font-bold leading-tight text-paper">
-                  Kim&rsquo;s Cleaning Supplies
+                  Kim&rsquo;s Cleaning Products
                 </span>
                 <span className="text-[11px] uppercase tracking-[0.09em] text-[#AFC4A0]">
                   {config.tagline}
@@ -55,7 +55,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-7 flex flex-wrap gap-x-[18px] gap-y-2 border-t border-white/20 pt-4 text-[0.85rem] text-[#A8BC99]">
-          <span>&copy; {year} Kim&rsquo;s Cleaning Supplies</span>
+          <span>&copy; {year} Kim&rsquo;s Cleaning Products</span>
           <span>{config.town}</span>
           <span>PayPal and Venmo accepted</span>
         </div>

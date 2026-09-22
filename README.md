@@ -1,4 +1,4 @@
-# Kim's Cleaning Supplies
+# Kim's Cleaning Products
 
 A plain HTML/CSS/JS storefront for Kim Schoch and Alice — Eco Easy microfiber cloths,
 mops, dusters and hair towels, sold at Iowa and Illinois shows and online. No build

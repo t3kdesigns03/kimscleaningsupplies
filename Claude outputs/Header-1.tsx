@@ -49,7 +49,7 @@ export default function Header() {
         <Link href="/" className="flex min-w-0 flex-1 items-center pr-2 text-forest-deep no-underline">
           <span className="flex min-w-0 flex-col leading-none">
             <span className="block truncate font-serif text-[17px] font-bold tracking-tight text-forest-deep min-[380px]:text-[19px] min-[430px]:text-[20px] lg:text-[22px]">
-              Kim&rsquo;s Cleaning Supplies
+              Kim&rsquo;s Cleaning Products
             </span>
             <span className="hidden truncate text-[10px] uppercase tracking-[0.15em] text-leaf min-[400px]:mt-1 min-[400px]:block">
               Eco Easy Microfiber

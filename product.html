@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kim's Cleaning Supplies</title>
+<title>Kim's Cleaning Products</title>
 <meta name="description" content="Microfiber that cleans with water only. Made in USA.">
 <link rel="icon" href="images/brand/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,11 +49,11 @@
         '<p class="muted">It may have been renamed. Everything Kim sells is on the shop page.</p>' +
         '<a class="btn btn-primary" href="shop.html">Go to the shop</a>' +
       "</div>";
-    document.title = "Not found — Kim's Cleaning Supplies";
+    document.title = "Not found — Kim's Cleaning Products";
     return;
   }
 
-  document.title = p.name + " — Kim's Cleaning Supplies";
+  document.title = p.name + " — Kim's Cleaning Products";
   var metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) metaDesc.setAttribute("content", p.blurb);
 

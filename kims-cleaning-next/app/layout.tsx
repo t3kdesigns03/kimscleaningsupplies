@@ -22,10 +22,10 @@ const source = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kimscleaningsupplies.netlify.app"),
+  metadataBase: new URL("https://kimscleaningproducts.t3kdesigns.app"),
   title: {
-    default: "Kim's Cleaning Supplies — cleans with just water",
-    template: "%s — Kim's Cleaning Supplies",
+    default: "Kim's Cleaning Products — cleans with just water",
+    template: "%s — Kim's Cleaning Products",
   },
   description:
     "Kim's Cleaning Cloth: microfiber that cleans glass, granite, screens and windshields with water only. Made in USA. Sold by Kim Schoch and Alice at Iowa and Illinois shows, and here.",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     apple: "/images/brand/logo-mark-512.png",
   },
   openGraph: {
-    title: "Kim's Cleaning Supplies",
+    title: "Kim's Cleaning Products",
     description: "Cleans with just water. Made in USA.",
     images: ["/images/brand/hero-earth-full.jpg"],
   },

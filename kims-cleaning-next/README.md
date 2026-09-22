@@ -1,4 +1,4 @@
-# Kim's Cleaning Supplies — Next.js store
+# Kim's Cleaning Products — Next.js store
 
 Next.js (App Router) + Tailwind, deployed on Netlify. Same shop as the
 static version — nine products, localStorage cart, PayPal + Venmo checkout —

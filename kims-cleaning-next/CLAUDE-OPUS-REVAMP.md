@@ -1,4 +1,4 @@
-# OPUS 4.8 — Kim’s Cleaning Supplies visual revamp
+# OPUS 4.8 — Kim’s Cleaning Products visual revamp
 
 Paste into Claude Code.
 
@@ -31,7 +31,7 @@ Not a subscription brand. No accounts. No “subscribe and save.” No first-loa
 
 ## Do not change
 
-- Logo / wordmark. Same “Kim’s Cleaning Supplies” + Eco Easy Microfiber. No new mark in this pass.
+- Logo / wordmark. Same “Kim’s Cleaning Products” + Eco Easy Microfiber. No new mark in this pass.
 - Palette: earth `#2F6B32`, earth-dark `#1E4A22`, leaf `#5C9A3A`, wash `#E7F4C8`, cream `#F7F3E8`, paper white, packaging yellow `#E6C200`.
 - Product names, prices, slugs, hair-towel colors, events data, PayPal/Venmo, pickup in Quincy.
 - Stack: Next + Tailwind already in this folder.
@@ -52,7 +52,7 @@ Koala structure in Kim’s green.
 This is the “announcement bar” those three sites have. Events are the announcement.
 
 **Header.**  
-Mobile (<768): `hamburger | wordmark | cart`. Centered name. Subline hidden. Type small enough that “Kim’s Cleaning Supplies” never hits the bag. Opaque cream bar, z-index above the hero. 56–64px tall. 44px tap targets.
+Mobile (<768): `hamburger | wordmark | cart`. Centered name. Subline hidden. Type small enough that “Kim’s Cleaning Products” never hits the bag. Opaque cream bar, z-index above the hero. 56–64px tall. 44px tap targets.
 
 Desktop: optional promo bar + cream header, wordmark left or centered (Koala-centered is preferred), Shop About Events Contact, cart. No overlap.
 

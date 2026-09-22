@@ -26,7 +26,7 @@ function Copy() {
 
 export default function Hero() {
   return (
-    <section aria-label="Kim's Cleaning Supplies" className="bg-botanical">
+    <section aria-label="Kim's Cleaning Products" className="bg-botanical">
       {/* Mobile: art band on top, copy below */}
       <div className="md:hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -26,7 +26,7 @@ export const config = {
   pickupLabel: "Pickup — Quincy, IL",
   pickupAddress: "2922 Lincoln Hill SW, Quincy, IL",
 
-  brand: "Kim's Cleaning Supplies",
+  brand: "Kim's Cleaning Products",
   tagline: "Eco Easy Microfiber · Made in USA",
   town: "Quincy, Illinois",
 };

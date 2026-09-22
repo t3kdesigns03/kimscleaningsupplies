@@ -39,7 +39,7 @@ export default function Header() {
           <span className="flex min-w-0 flex-col leading-none">
             <span className="whitespace-nowrap font-serif text-[21px] font-bold tracking-tight">Kim&rsquo;s</span>
             <span className="mt-0.5 whitespace-nowrap text-[10.5px] uppercase tracking-[0.09em] text-muted">
-              Cleaning Supplies
+              Cleaning Products
             </span>
           </span>
         </Link>

@@ -2,7 +2,7 @@
   "name": "kims-cleaning-supplies",
   "version": "1.0.0",
   "private": true,
-  "description": "Kim's Cleaning Supplies storefront — Next.js + Tailwind, deployed on Netlify.",
+  "description": "Kim's Cleaning Products storefront — Next.js + Tailwind, deployed on Netlify.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

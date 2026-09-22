@@ -12,7 +12,7 @@ This is the **Next.js** site. Do not touch the static HTML at the repo root.
 
 On a real phone (~360–400px) the sticky header is:
 
-`[ Kim's Cleaning Supplies ] [cart] [hamburger]`
+`[ Kim's Cleaning Products ] [cart] [hamburger]`
 
 The wordmark is too wide. **“Supplies” runs under the cart icon.** Cart and title occupy the same pixels. The hamburger is fine. The cream header also sits tight on the green globe hero so the earth graphic shows through the header gap.
 
@@ -29,7 +29,7 @@ Do not redesign the brand. Do not change copy, cart logic, or the desktop header
    - Right cluster: cart + hamburger, **fixed width**, `flex-shrink: 0`, gap 8–12px
 2. Wordmark must **shrink**, not collide:
    - Hide the “ECO EASY MICROFIBER” subline below ~400px, or make it `truncate`
-   - Scale the title: ~1.05–1.15rem on a 360px screen so “Kim’s Cleaning Supplies” fits on **one line** in the left column
+   - Scale the title: ~1.05–1.15rem on a 360px screen so “Kim’s Cleaning Products” fits on **one line** in the left column
    - `overflow: hidden; text-overflow: ellipsis; white-space: nowrap` as a last resort — prefer a slightly smaller type so the full name still shows
 3. Cart button:
    - Own 44×44 tap target

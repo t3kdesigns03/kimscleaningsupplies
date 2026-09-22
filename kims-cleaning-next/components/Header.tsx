@@ -64,14 +64,14 @@ export default function Header() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/brand/logo-mark.svg"
-            alt="Kim's Cleaning Supplies logo"
+            alt="Kim's Cleaning Products logo"
             width={36}
             height={36}
             className="h-[30px] w-[30px] flex-none md:h-9 md:w-9"
           />
           <span className="flex min-w-0 flex-col leading-none">
             <span className="block w-full truncate text-center font-serif text-[clamp(14px,3.9vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left">
-              Kim&rsquo;s Cleaning Supplies
+              Kim&rsquo;s Cleaning Products
             </span>
             <span className="mt-1 hidden w-full truncate text-[10px] uppercase tracking-[0.15em] text-leaf lg:block">
               Eco Easy Microfiber

@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   Kim's Cleaning Supplies — all site content lives here.
+   Kim's Cleaning Products — all site content lives here.
 
    TO CHANGE A PRICE: edit the `price` number.
    TO ADD A PRODUCT:  copy a block, give it a new `slug`, add an image.

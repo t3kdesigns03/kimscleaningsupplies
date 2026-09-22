@@ -115,7 +115,7 @@
             '<img src="images/brand/logo-mark.svg" alt="" width="44" height="44">' +
             '<span class="brand-name">' +
               '<span class="b1">Kim&rsquo;s</span>' +
-              '<span class="b2">Cleaning Supplies</span>' +
+              '<span class="b2">Cleaning Products</span>' +
             '</span>' +
           '</a>' +
           '<nav class="nav-desktop" aria-label="Main">' + navLinks + '</nav>' +
@@ -164,7 +164,7 @@
           '<div>' +
             '<div class="footer-brand">' +
               '<img src="images/brand/logo-mark.svg" alt="" width="40" height="40">' +
-              '<span><span class="fb1">Kim&rsquo;s Cleaning Supplies</span><br>' +
+              '<span><span class="fb1">Kim&rsquo;s Cleaning Products</span><br>' +
               '<span class="fb2">' + KIMS.esc(CFG.tagline || "") + '</span></span>' +
             '</div>' +
             '<p class="small" style="max-width:38ch">Kim Schoch and Alice sell Eco Easy microfiber at fairs and home shows across Iowa and Illinois — and here, all year.</p>' +
@@ -191,7 +191,7 @@
           '</div>' +
         '</div>' +
         '<div class="footer-bottom">' +
-          '<span>&copy; ' + year + ' Kim&rsquo;s Cleaning Supplies</span>' +
+          '<span>&copy; ' + year + ' Kim&rsquo;s Cleaning Products</span>' +
           '<span>' + KIMS.esc(CFG.town || "") + '</span>' +
           '<span>PayPal and Venmo accepted</span>' +
         '</div></div>';

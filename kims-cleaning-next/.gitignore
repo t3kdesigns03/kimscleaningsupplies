@@ -26,3 +26,7 @@ yarn-error.log*
 
 # netlify
 .netlify
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+*.tsbuildinfo

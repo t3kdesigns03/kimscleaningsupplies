@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SURFACES, REMOVES } from "@/lib/products";
 import { testimonials } from "@/lib/testimonials";
+import { pickupAddress } from "@/lib/config";
 
 export const metadata = {
   title: "About Kim & Alice",
@@ -27,7 +28,7 @@ export default function AboutPage() {
             </p>
             <p>
               Ordering here ships anywhere. If you are near Quincy, choose pickup at checkout and save
-              the shipping — Kim is at <strong>2922 Lincoln Hill SW, Quincy, IL</strong>.
+              the shipping — Kim is at <strong>{pickupAddress}</strong>.
             </p>
             <div className="mt-2 flex flex-wrap gap-3">
               <Link href="/shop" className="btn btn-primary">See what they sell</Link>

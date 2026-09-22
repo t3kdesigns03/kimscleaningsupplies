@@ -24,7 +24,7 @@ window.KIMS_CONFIG = {
   flatShipping: 8.00,
 
   pickupLabel: "Pickup — Quincy, IL",
-  pickupAddress: "2922 Lincoln Hill SW, Quincy, IL",
+  pickupAddress: "1324 Springdale North, Quincy, IL 62305",
 
   brand: "Kim's Cleaning Products",
   tagline: "Eco Easy Microfiber · Made in USA",

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { config } from "@/lib/config";
+import { config, pickupAddress } from "@/lib/config";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -25,7 +25,7 @@ export default function Footer() {
                 {config.contactEmail}
               </a>
               <br />
-              {config.pickupAddress}
+              {pickupAddress}
             </p>
           </div>
 

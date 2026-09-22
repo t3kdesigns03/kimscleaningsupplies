@@ -6,7 +6,7 @@ import { useCart, type Fulfillment } from "./CartProvider";
 import SmartImage from "./SmartImage";
 import PayPalCheckout from "./PayPalCheckout";
 import VenmoBox from "./VenmoBox";
-import { config } from "@/lib/config";
+import { config, pickupAddress } from "@/lib/config";
 import { money } from "@/lib/format";
 import { SWATCH, imagesFor } from "@/lib/products";
 import { CheckIcon, EmptyCartIcon } from "./Icons";
@@ -151,7 +151,7 @@ export default function CartView() {
             {checkout.fulfillment === "pickup" && (
               <div className="mb-4 rounded-2xl border border-[#C9DCAE] bg-[#EFF4E7] p-4 text-forest-deep">
                 <strong className="mb-1 block">Free pickup in Quincy.</strong>
-                Kim will email you to arrange a time. Pickup is at 2922 Lincoln Hill SW, Quincy, IL.
+                Kim will email you to arrange a time. Pickup is at {pickupAddress}.
               </div>
             )}
 

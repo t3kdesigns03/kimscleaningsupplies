@@ -33,7 +33,7 @@ export default function ContactPage() {
               </div>
               <div className="flex justify-between gap-3 py-2.5 text-[0.96rem]">
                 <span>Pickup</span>
-                <b className="text-right font-serif">2922 Lincoln Hill SW<br />Quincy, IL</b>
+                <b className="text-right font-serif">{config.pickupStreet}<br />{config.pickupCityState}</b>
               </div>
               <p className="mt-3.5 mb-0 text-[0.9rem] text-muted">
                 Pickup is free — choose it at checkout and Kim will email you to arrange a time.

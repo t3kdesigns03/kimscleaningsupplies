@@ -29,9 +29,10 @@ export function organizationSchema() {
     email: config.contactEmail,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "2922 Lincoln Hill SW",
+      streetAddress: config.pickupStreet,
       addressLocality: "Quincy",
       addressRegion: "IL",
+      postalCode: "62305",
       addressCountry: "US",
     },
     areaServed: "US",

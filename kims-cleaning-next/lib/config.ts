@@ -24,7 +24,10 @@ export const config = {
   flatShipping: 8.0,
 
   pickupLabel: "Pickup — Quincy, IL",
-  pickupAddress: "2922 Lincoln Hill SW, Quincy, IL",
+  // Split so the contact page can stack it on two lines. `pickupAddress`
+  // below joins them — change the address HERE and nowhere else.
+  pickupStreet: "1324 Springdale North",
+  pickupCityState: "Quincy, IL 62305",
 
   // Canonical production URL — no trailing slash. ONE place to change at
   // cutover: metadataBase, the sitemap, robots.txt and the structured data
@@ -35,5 +38,8 @@ export const config = {
   tagline: "Eco Easy Microfiber · Made in USA",
   town: "Quincy, Illinois",
 };
+
+/** One-line postal address, e.g. for the footer and the cart. */
+export const pickupAddress = `${config.pickupStreet}, ${config.pickupCityState}`;
 
 export type SiteConfig = typeof config;

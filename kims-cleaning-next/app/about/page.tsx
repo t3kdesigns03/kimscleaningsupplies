@@ -78,13 +78,13 @@ export default function AboutPage() {
         <div className="wrap grid gap-12 md:grid-cols-2">
           <div>
             <h2>Where it works</h2>
-            <ul className="facts [column-gap:28px] sm:columns-2">
+            <ul className="facts columns-2 [column-gap:20px] sm:[column-gap:28px]">
               {SURFACES.map((s) => <li key={s}>{s}</li>)}
             </ul>
           </div>
           <div>
             <h2>What comes off</h2>
-            <ul className="facts [column-gap:28px] sm:columns-2">
+            <ul className="facts columns-2 [column-gap:20px] sm:[column-gap:28px]">
               {REMOVES.map((s) => <li key={s}>{s}</li>)}
             </ul>
             <p className="text-[0.92rem] text-muted">Water only. No sprays.</p>

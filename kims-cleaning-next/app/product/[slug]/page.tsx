@@ -10,6 +10,7 @@ import {
 } from "@/lib/products";
 import { config } from "@/lib/config";
 import JsonLd from "@/components/JsonLd";
+import PackName from "@/components/PackName";
 import { productSchema, breadcrumbSchema } from "@/lib/schema";
 
 /* "a, b, and c" — house style uses the Oxford comma. */
@@ -64,7 +65,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <JsonLd data={breadcrumbSchema(p)} />
       <div className="wrap">
         <p className="mb-4 text-[0.92rem]">
-          <Link href="/shop">&larr; Back to the shop</Link>
+          <Link href="/shop" className="inline-flex min-h-[44px] items-center">&larr; Back to the shop</Link>
         </p>
 
         <VariantProvider initial={firstVariant}>
@@ -72,9 +73,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <ProductGallery sources={p.images} alt={p.name} optionImages={optionImages} />
 
           <div>
-            <h1 className="mb-0.5 text-[clamp(1.75rem,6vw,2.7rem)]">{p.name}</h1>
+            <h1 className="mb-0.5 text-[clamp(1.75rem,6vw,2.7rem)]"><PackName name={p.name} /></h1>
             <span className="price block text-[2rem]">{money(p.price)}</span>
-            <p className="mt-2.5 text-muted">{p.blurb}</p>
+            <p className="mt-3 text-muted">{p.blurb}</p>
             <p>{p.desc}</p>
 
             <ul className="facts">
@@ -104,7 +105,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       return (
                         <tr key={c.slug} className={cur ? "bg-lime/10" : ""}>
                           <td className="border-b border-line py-2.5 pr-2 text-[0.95rem]">
-                            {cur ? <strong>{c.packOf}-Pack</strong> : <Link href={`/product/${c.slug}`}>{c.packOf}-Pack</Link>}
+                            {cur ? <strong>{c.packOf}-Pack</strong> : <Link href={`/product/${c.slug}`} className="-my-2 inline-block py-2">{c.packOf}-Pack</Link>}
                           </td>
                           <td className="border-b border-line py-2.5 px-2 text-[0.95rem]">{money(c.price)}</td>
                           <td className="border-b border-line py-2.5 pl-2 text-right text-[0.95rem]">

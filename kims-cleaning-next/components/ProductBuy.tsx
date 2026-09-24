@@ -46,7 +46,7 @@ export default function ProductBuy({ product }: { product: Product }) {
                   aria-pressed={sel}
                   disabled={o.soldOut}
                   onClick={() => !o.soldOut && setVariant(o.value)}
-                  className={`relative h-9 w-9 rounded-full border transition
+                  className={`relative h-11 w-11 rounded-full border transition sm:h-9 sm:w-9
                     ${sel ? "ring-2 ring-forest ring-offset-2 ring-offset-paper border-transparent" : "border-line"}
                     ${o.soldOut ? "cursor-not-allowed opacity-50" : "hover:scale-105"}`}
                   style={{ background: SWATCH[o.value] }}

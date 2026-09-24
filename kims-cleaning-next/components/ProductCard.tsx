@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SmartImage from "./SmartImage";
 import AddToCartButton from "./AddToCartButton";
+import PackName from "./PackName";
 import { money } from "@/lib/format";
 import { SWATCH, hasSwatches, type Product } from "@/lib/products";
 
@@ -18,7 +19,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="flex flex-1 flex-col p-4 pb-[18px]">
         <h3 className="mb-0.5 font-sans text-[1.18rem] font-normal tracking-normal text-ink">
           <Link href={href} className="text-inherit no-underline hover:underline">
-            {product.name}
+            <PackName name={product.name} />
           </Link>
         </h3>
         <p className="mb-3 text-[0.94rem] text-muted">{product.blurb}</p>

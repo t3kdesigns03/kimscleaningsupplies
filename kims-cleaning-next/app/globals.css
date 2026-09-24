@@ -19,6 +19,7 @@
   }
   h1, h2, h3, h4 {
     @apply font-serif font-semibold text-forest-deep;
+    text-wrap: balance; /* no one-word orphans like "air." */
     line-height: 1.12;
     letter-spacing: -0.01em;
   }
@@ -27,6 +28,9 @@
   h2 { font-size: clamp(2.05rem, 6.2vw, 3.6rem); font-weight: 600; line-height: 1.06; letter-spacing: -0.018em; }
   h3 { font-size: clamp(1.15rem, 3.6vw, 1.5rem); }
   a { @apply text-grass; }
+  /* running copy: paragraphs and lists need air between them (preflight zeroes it) */
+  main p + p { margin-top: 0.85em; }
+  main p + .facts, main h2 + .facts { margin-top: 1.1rem; }
   ::selection { background: #C6EE7E; color: #153F1A; }
 }
 
@@ -35,7 +39,7 @@
   .narrow { max-width: 760px; }
 
   /* Air. One vertical rhythm for every full-width band. */
-  .section { @apply py-20 md:py-32; }
+  .section { @apply py-14 sm:py-20 md:py-32; }
   /* Sub-copy under a headline: smaller and calmer than the heading it serves. */
   .lede { @apply mt-4 max-w-[46ch] text-[1.02rem] leading-relaxed text-muted; }
 
@@ -52,7 +56,7 @@
   .btn-block { @apply flex w-full; }
   /* Secondary action: a text link, so each section has one pill at most. */
   .btn-link {
-    @apply inline-flex items-center gap-1.5 font-semibold text-forest-deep underline decoration-2
+    @apply inline-flex min-h-[44px] items-center gap-1.5 font-semibold text-forest-deep underline decoration-2
            underline-offset-[6px] decoration-leaf hover:decoration-forest-deep;
   }
   .btn-sm { @apply min-h-[42px] px-4 py-2 text-[15px]; }

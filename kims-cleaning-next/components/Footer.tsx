@@ -32,20 +32,20 @@ export default function Footer() {
           <div>
             <p className="mb-3 font-serif text-[1.05rem] text-paper">Shop</p>
             <ul className="m-0 list-none p-0 text-[0.95rem]">
-              <li className="mb-2"><Link href="/shop?filter=cloths" className="text-[#E4EFD2] no-underline hover:underline">Cleaning cloths</Link></li>
-              <li className="mb-2"><Link href="/shop?filter=mops" className="text-[#E4EFD2] no-underline hover:underline">Mops</Link></li>
-              <li className="mb-2"><Link href="/shop?filter=dusters" className="text-[#E4EFD2] no-underline hover:underline">Dusters</Link></li>
-              <li className="mb-2"><Link href="/shop?filter=hair" className="text-[#E4EFD2] no-underline hover:underline">Hair towel</Link></li>
+              <li className="mb-0.5 md:mb-2"><Link href="/shop?filter=cloths" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Cleaning cloths</Link></li>
+              <li className="mb-0.5 md:mb-2"><Link href="/shop?filter=mops" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Mops</Link></li>
+              <li className="mb-0.5 md:mb-2"><Link href="/shop?filter=dusters" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Dusters</Link></li>
+              <li className="mb-0.5 md:mb-2"><Link href="/shop?filter=hair" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Hair towel</Link></li>
             </ul>
           </div>
 
           <div>
             <p className="mb-3 font-serif text-[1.05rem] text-paper">Kim&rsquo;s</p>
             <ul className="m-0 list-none p-0 text-[0.95rem]">
-              <li className="mb-2"><Link href="/about" className="text-[#E4EFD2] no-underline hover:underline">About Kim &amp; Alice</Link></li>
-              <li className="mb-2"><Link href="/events" className="text-[#E4EFD2] no-underline hover:underline">Where to find us</Link></li>
-              <li className="mb-2"><Link href="/contact" className="text-[#E4EFD2] no-underline hover:underline">Fundraisers</Link></li>
-              <li className="mb-2"><Link href="/contact" className="text-[#E4EFD2] no-underline hover:underline">Contact</Link></li>
+              <li className="mb-0.5 md:mb-2"><Link href="/about" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">About Kim &amp; Alice</Link></li>
+              <li className="mb-0.5 md:mb-2"><Link href="/events" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Where to find us</Link></li>
+              <li className="mb-0.5 md:mb-2"><Link href="/contact" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Fundraisers</Link></li>
+              <li className="mb-0.5 md:mb-2"><Link href="/contact" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Contact</Link></li>
             </ul>
           </div>
         </div>

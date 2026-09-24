@@ -12,7 +12,7 @@ function Row({ e, isNext, dim }: { e: KEvent; isNext?: boolean; dim?: boolean })
   const where = [e.venue, `${e.city}, ${e.state}`].filter(Boolean).join(" · ");
   return (
     <li className={`flex items-start gap-3.5 rounded-2xl bg-white p-5 shadow-soft ${dim ? "opacity-50" : ""}`}>
-      <span className="w-[84px] flex-none font-serif text-[1.02rem] font-bold leading-tight text-forest-deep lg:w-24">
+      <span className="w-[100px] flex-none whitespace-nowrap font-serif text-[1rem] font-bold leading-tight text-forest-deep lg:w-28">
         {e.date}
       </span>
       <span className="min-w-0">

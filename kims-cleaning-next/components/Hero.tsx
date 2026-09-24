@@ -1,30 +1,44 @@
 import Link from "next/link";
 
-/* Full-bleed photographic apex. The glass-globe banner is the background and
-   the globe is the one object on the right; a forest scrim on the left keeps
-   the headline crisp. Left column is deliberately sparse: eyebrow, headline,
-   one line, one pill. */
+/* Homepage apex: a short banner, text left, the whole glass globe on the right.
+   hero-globe-wide.jpg is a 2560x600 banner built from hero-globe.jpg with the
+   globe at ~67% across and the full sphere inside the frame, so the band can
+   be ~300px tall at 1280 without cropping the globe.
+
+   Phones: text first on the dark field, the globe below it — it never sits
+   behind the headline. */
+const FIELD = "#0b1c0e"; // the photo's own dark foliage, so edges disappear
+
 export default function Hero() {
   return (
-    <section aria-label="Kim's Cleaning Products" className="relative isolate overflow-hidden bg-forest-deep">
+    <section
+      aria-label="Kim's Cleaning Products"
+      className="relative isolate overflow-hidden"
+      style={{ backgroundColor: FIELD }}
+    >
+      {/* tablet + desktop: banner behind the text */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/images/brand/hero-globe.jpg"
+        src="/images/brand/hero-globe-wide.jpg"
         alt="A glass globe of the Earth resting among green ferns"
         fetchPriority="high"
-        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-[100%_43%]"
+        className="pointer-events-none absolute inset-0 -z-20 hidden h-full w-full object-cover object-[64%_50%] md:block lg:object-[50%_50%]"
       />
-      {/* scrims: horizontal for desktop text, vertical lift for phones */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-forest-deep/95 via-forest-deep/62 to-forest-deep/10" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-forest-deep/80 to-forest-deep/20 md:from-forest-deep/15 md:to-transparent" />
+      {/* left scrim for the type; clears well before the globe */}
+      <div
+        className="absolute inset-0 -z-10 hidden md:block"
+        style={{
+          background: `linear-gradient(90deg, ${FIELD}e6 0%, ${FIELD}99 30%, ${FIELD}00 55%)`,
+        }}
+      />
 
-      <div className="mx-auto flex min-h-[440px] max-w-site items-center px-4 py-16 sm:px-7 md:min-h-[460px] md:py-14 lg:min-h-[clamp(520px,44vw,680px)]">
-        <div className="w-full animate-rise md:max-w-[60%] lg:max-w-[48%]">
-          <h1 className="mb-4 text-paper drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
+      <div className="mx-auto flex max-w-site items-center px-4 pt-12 sm:px-7 md:min-h-[340px] md:py-10 lg:min-h-[clamp(300px,24vw,440px)] lg:py-6">
+        <div className="w-full animate-rise md:max-w-[56%] lg:max-w-[48%]">
+          <h1 className="mb-3 text-paper drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] lg:text-[clamp(3.6rem,5.1vw,4.6rem)]">
             {/* fixed break: always "Cleans with / just water." at every width */}
             <span className="whitespace-nowrap">Cleans with</span><br /><span className="whitespace-nowrap">just water.</span>
           </h1>
-          <p className="mb-8 max-w-[36ch] text-balance text-[1.15rem] font-medium text-paper sm:text-[1.35rem]">
+          <p className="mb-6 max-w-[36ch] text-balance text-[1.15rem] font-medium text-paper sm:text-[1.3rem]">
             Wet it. Wring it. Wipe it. Walk away.
           </p>
           <div className="flex flex-wrap items-center gap-3.5">
@@ -34,6 +48,21 @@ export default function Hero() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* phones: the globe sits below the buttons, full width */}
+      <div className="relative mt-10 h-[230px] md:hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/brand/hero-globe-wide.jpg"
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover object-[79%_50%]"
+        />
+        <div
+          className="absolute inset-x-0 top-0 h-16"
+          style={{ background: `linear-gradient(180deg, ${FIELD} 0%, ${FIELD}00 100%)` }}
+        />
       </div>
     </section>
   );

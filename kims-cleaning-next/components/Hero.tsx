@@ -12,13 +12,13 @@ export default function Hero() {
         src="/images/brand/hero-globe.jpg"
         alt="A glass globe of the Earth resting among green ferns"
         fetchPriority="high"
-        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-[72%_50%]"
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-[100%_43%]"
       />
       {/* scrims: horizontal for desktop text, vertical lift for phones */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-forest-deep/95 via-forest-deep/62 to-forest-deep/10" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-forest-deep/80 to-forest-deep/20 md:from-forest-deep/15 md:to-transparent" />
 
-      <div className="mx-auto flex min-h-[440px] max-w-site items-center px-4 py-16 sm:px-7 md:min-h-[440px] md:py-14 lg:min-h-[460px]">
+      <div className="mx-auto flex min-h-[440px] max-w-site items-center px-4 py-16 sm:px-7 md:min-h-[460px] md:py-14 lg:min-h-[clamp(520px,44vw,680px)]">
         <div className="w-full animate-rise md:max-w-[60%] lg:max-w-[48%]">
           <h1 className="mb-4 text-paper drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
             {/* fixed break: always "Cleans with / just water." at every width */}

@@ -21,7 +21,7 @@ export default function PageHero({
         src="/images/brand/hero-globe.jpg"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-[72%_52%]"
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-[100%_45%]"
       />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-forest-deep/95 via-forest-deep/72 to-forest-deep/25" />
       {/* phones: copy runs full width over the globe, so dim it a little more */}

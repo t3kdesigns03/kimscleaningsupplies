@@ -61,20 +61,18 @@ export default function Header() {
           href="/"
           className="flex min-w-0 flex-1 items-center justify-center gap-2 px-1 text-forest-deep no-underline lg:mr-auto lg:flex-none lg:justify-start lg:gap-4 lg:px-0"
         >
-          {/* The mark is a round window onto the homepage hero photo itself —
-              same file, so header, inner-page bands and hero always match and
-              the browser downloads it once. 77.6% puts the window on the globe
-              (hero-globe.jpg is 2336x930; globe centre is x~1555). If that
-              image is ever replaced, re-aim this. */}
+          {/* Square crop of the globe in hero-globe.jpg, so the mark, the hero
+              and the inner-page bands always show the same globe. 144px source
+              covers the 68px desktop mark on retina screens. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/brand/hero-globe.jpg"
+            src="/images/brand/header-globe.png"
             alt=""
             aria-hidden="true"
             width={40}
             height={40}
             decoding="async"
-            className="h-9 w-9 flex-none rounded-full object-cover object-[77.6%_50%] shadow-soft ring-2 ring-forest-deep/20 md:h-10 md:w-10 lg:h-[68px] lg:w-[68px]"
+            className="h-9 w-9 flex-none rounded-full object-cover shadow-soft ring-2 ring-forest-deep/20 md:h-10 md:w-10 lg:h-[68px] lg:w-[68px]"
           />
           <span className="flex min-w-0 flex-col leading-none">
             <span className="block w-full truncate text-center font-serif text-[clamp(12.5px,3.6vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left lg:text-[32px] lg:font-semibold lg:tracking-[-0.015em]">

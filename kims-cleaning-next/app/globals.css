@@ -23,8 +23,8 @@
     letter-spacing: -0.01em;
   }
   /* Big, heavy, tight headlines; one idea per heading. */
-  h1 { font-size: clamp(2.5rem, 8.2vw, 4.75rem); font-weight: 700; line-height: 1.02; letter-spacing: -0.028em; }
-  h2 { font-size: clamp(2.05rem, 6.2vw, 3.6rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.024em; }
+  h1 { font-size: clamp(2.5rem, 8.2vw, 4.75rem); font-weight: 600; line-height: 1.04; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(2.05rem, 6.2vw, 3.6rem); font-weight: 600; line-height: 1.06; letter-spacing: -0.018em; }
   h3 { font-size: clamp(1.15rem, 3.6vw, 1.5rem); }
   a { @apply text-grass; }
   ::selection { background: #C6EE7E; color: #153F1A; }
@@ -70,12 +70,12 @@
   .chip svg { @apply w-4 h-4 text-grass; }
 
   .card {
-    @apply flex flex-col overflow-hidden rounded-xl2 border border-line bg-white shadow-soft
+    @apply flex h-full flex-col overflow-hidden rounded-xl2 border border-line bg-white shadow-soft
            transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift;
   }
   /* Product as object: white tile, generous padding, photo floats uncropped. */
   .card-media {
-    @apply block aspect-square min-h-[240px] bg-white p-7;
+    @apply block aspect-[4/3] min-h-[220px] bg-gradient-to-b from-[#F6F6F3] to-[#EBEBE5] p-6;
   }
   .price { @apply font-serif font-bold text-forest-deep; }
 

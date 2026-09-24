@@ -92,7 +92,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section id="testimonials" className="section scroll-mt-20 bg-wash">
+      <section id="testimonials" className="section scroll-mt-20 bg-wash lg:scroll-mt-28">
         <div className="wrap">
           <h2>What customers tell us</h2>
           <p className="lede">Collected at booths, mostly on the second visit.</p>

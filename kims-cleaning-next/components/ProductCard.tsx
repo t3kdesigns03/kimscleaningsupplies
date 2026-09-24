@@ -16,7 +16,7 @@ export default function ProductCard({ product }: { product: Product }) {
         />
       </Link>
       <div className="flex flex-1 flex-col p-4 pb-[18px]">
-        <h3 className="mb-0.5 text-[1.22rem]">
+        <h3 className="mb-0.5 font-sans text-[1.18rem] font-normal tracking-normal text-ink">
           <Link href={href} className="text-inherit no-underline hover:underline">
             {product.name}
           </Link>
@@ -36,9 +36,9 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
         )}
         <div className="mt-auto flex items-center gap-3">
-          <span className="price text-[1.6rem]">{money(product.price)}</span>
+          <span className="font-sans text-[1.3rem] font-medium text-ink">{money(product.price)}</span>
           <span className="ml-auto">
-            <AddToCartButton product={product} />
+            <AddToCartButton product={product} className="btn btn-lime btn-sm min-w-[84px]" />
           </span>
         </div>
       </div>

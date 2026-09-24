@@ -27,10 +27,8 @@ export default function Home() {
     <>
       <Hero />
 
-      <FairsStrip />
-
-      {/* how it works — white */}
-      <section className="section bg-white">
+      {/* how it works — mint, straight under the hero; flows into the cloths */}
+      <section className="section bg-wash pb-0 md:pb-0">
         <div className="wrap">
           <h2 className="mx-auto max-w-[16ch] text-center">Four steps. No bottle.</h2>
           <p className="lede mx-auto text-center">
@@ -39,7 +37,7 @@ export default function Home() {
           </p>
           <ol className="mt-14 grid list-none grid-cols-2 gap-x-6 gap-y-10 p-0 md:mt-20 md:grid-cols-4 md:gap-8">
             {STEPS.map((s, i) => (
-              <li key={s.title} className="border-t-2 border-forest-deep/15 pt-5">
+              <li key={s.title} className="border-t-2 border-forest-deep/20 pt-5">
                 <span className="block font-serif text-[clamp(2.6rem,6vw,3.6rem)] font-bold leading-none text-leaf">
                   {i + 1}
                 </span>
@@ -51,8 +49,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* cloths — mint field, products as objects */}
-      <section className="section bg-wash">
+      {/* cloths — same mint field, products as objects */}
+      <section className="section bg-wash pt-16 md:pt-24">
         <div className="wrap">
           <Reveal>
             <h2>Start with the cloths</h2>
@@ -116,6 +114,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <FairsStrip />
 
       {/* events — mint */}
       <section className="section bg-wash">

@@ -44,7 +44,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-[60] border-b border-line bg-paper">
-      <div className="mx-auto flex min-h-[56px] max-w-site items-center gap-2 px-4 sm:px-7 md:min-h-[64px]">
+      <div className="mx-auto flex min-h-[56px] max-w-site items-center gap-2 px-4 sm:px-7 md:min-h-[64px] lg:min-h-[96px]">
         {/* hamburger — mobile only, far left */}
         <button
           type="button"
@@ -59,7 +59,7 @@ export default function Header() {
         {/* logo mark + wordmark — centered on mobile, left on desktop */}
         <Link
           href="/"
-          className="flex min-w-0 flex-1 items-center justify-center gap-2 px-1 text-forest-deep no-underline lg:flex-none lg:mr-auto lg:justify-start lg:px-0"
+          className="flex min-w-0 flex-1 items-center justify-center gap-2 px-1 text-forest-deep no-underline lg:mr-auto lg:flex-none lg:justify-start lg:gap-4 lg:px-0"
         >
           {/* The mark is a round window onto the homepage hero photo itself —
               same file, so header, inner-page bands and hero always match and
@@ -74,13 +74,13 @@ export default function Header() {
             width={40}
             height={40}
             decoding="async"
-            className="h-9 w-9 flex-none rounded-full object-cover object-[80.6%_50%] shadow-sm ring-1 ring-forest-deep/15 md:h-10 md:w-10"
+            className="h-9 w-9 flex-none rounded-full object-cover object-[80.6%_50%] shadow-soft ring-2 ring-forest-deep/20 md:h-10 md:w-10 lg:h-[68px] lg:w-[68px]"
           />
           <span className="flex min-w-0 flex-col leading-none">
-            <span className="block w-full truncate text-center font-serif text-[clamp(12.5px,3.6vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left">
+            <span className="block w-full truncate text-center font-serif text-[clamp(12.5px,3.6vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left lg:text-[32px] lg:font-semibold lg:tracking-[-0.015em]">
               Kim&rsquo;s Cleaning Products
             </span>
-            <span className="mt-1 hidden w-full truncate text-[10px] uppercase tracking-[0.15em] text-leaf lg:block">
+            <span className="mt-1.5 hidden w-full truncate text-[12.5px] font-semibold uppercase tracking-[0.3em] text-forest-deep lg:block">
               Eco Easy Microfiber
             </span>
           </span>
@@ -93,7 +93,7 @@ export default function Header() {
               key={n.href}
               href={n.href}
               aria-current={isCur(n.href) ? "page" : undefined}
-              className={`rounded-full px-4 py-2.5 text-base font-semibold no-underline hover:bg-grass/10
+              className={`rounded-full px-4 py-2.5 text-[17px] font-medium no-underline hover:bg-grass/10
                 ${isCur(n.href) ? "text-leaf" : "text-forest-deep"}`}
             >
               {n.label}
@@ -106,12 +106,13 @@ export default function Header() {
           type="button"
           onClick={openDrawer}
           aria-label={ready && count > 0 ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart"}
-          className="relative flex h-11 w-11 flex-none items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10"
+          className="relative flex h-11 w-11 flex-none items-center justify-center rounded-xl text-forest-deep hover:bg-grass/10 lg:w-auto lg:px-2"
         >
           <CartIcon />
+          <span className="ml-1.5 hidden text-[17px] font-medium lg:inline">({ready ? count : 0})</span>
           {ready && count > 0 && (
             <span
-              className={`absolute right-1 top-1.5 min-w-[20px] rounded-full bg-forest px-1.5 text-center text-[11.5px] font-bold leading-5 text-lime-bright transition-transform duration-200 ${
+              className={`absolute right-1 top-1.5 min-w-[20px] lg:hidden rounded-full bg-forest px-1.5 text-center text-[11.5px] font-bold leading-5 text-lime-bright transition-transform duration-200 ${
                 bump ? "scale-125" : "scale-100"
               }`}
             >

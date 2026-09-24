@@ -9,10 +9,10 @@ export default function Hero() {
     <section aria-label="Kim's Cleaning Products" className="relative isolate overflow-hidden bg-forest-deep">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/images/brand/hero-banner.jpg"
-        alt="A glass globe of the Earth resting among ferns and green moss"
+        src="/images/brand/hero-globe.jpg"
+        alt="A glass globe of the Earth resting among green ferns"
         fetchPriority="high"
-        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-[82%_50%]"
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-[72%_50%]"
       />
       {/* scrims: horizontal for desktop text, vertical lift for phones */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-forest-deep/95 via-forest-deep/62 to-forest-deep/10" />

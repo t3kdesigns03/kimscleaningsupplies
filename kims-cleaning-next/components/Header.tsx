@@ -63,18 +63,18 @@ export default function Header() {
         >
           {/* The mark is a round window onto the homepage hero photo itself —
               same file, so header, inner-page bands and hero always match and
-              the browser downloads it once. 80.6% puts the window on the globe
-              (hero-banner.jpg is 2530x338; globe centre is x~1935). If that
+              the browser downloads it once. 77.6% puts the window on the globe
+              (hero-globe.jpg is 2336x930; globe centre is x~1555). If that
               image is ever replaced, re-aim this. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/brand/hero-banner.jpg"
+            src="/images/brand/hero-globe.jpg"
             alt=""
             aria-hidden="true"
             width={40}
             height={40}
             decoding="async"
-            className="h-9 w-9 flex-none rounded-full object-cover object-[80.6%_50%] shadow-soft ring-2 ring-forest-deep/20 md:h-10 md:w-10 lg:h-[68px] lg:w-[68px]"
+            className="h-9 w-9 flex-none rounded-full object-cover object-[77.6%_50%] shadow-soft ring-2 ring-forest-deep/20 md:h-10 md:w-10 lg:h-[68px] lg:w-[68px]"
           />
           <span className="flex min-w-0 flex-col leading-none">
             <span className="block w-full truncate text-center font-serif text-[clamp(12.5px,3.6vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left lg:text-[32px] lg:font-semibold lg:tracking-[-0.015em]">

@@ -2,7 +2,7 @@
    /about, /events and /contact carry the same photographed globe as the
    homepage hero instead of a blank cream gradient.
 
-   It reuses the homepage hero image (hero-banner.jpg): the globe sits on
+   It reuses the homepage hero image (hero-globe.jpg): the globe sits on
    the right, a forest wash on the left keeps white type crisp. This is a
    band, not the hero — no CTAs, no proof chips (see Hero.tsx for those). */
 export default function PageHero({
@@ -18,10 +18,10 @@ export default function PageHero({
     <section aria-label={title} className="relative isolate overflow-hidden bg-forest-deep">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/images/brand/hero-banner.jpg"
+        src="/images/brand/hero-globe.jpg"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-[88%_50%]"
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-[72%_52%]"
       />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-forest-deep/95 via-forest-deep/72 to-forest-deep/25" />
       {/* phones: copy runs full width over the globe, so dim it a little more */}

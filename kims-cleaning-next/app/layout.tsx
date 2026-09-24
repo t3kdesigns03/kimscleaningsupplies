@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s — Kim's Cleaning Products",
   },
   description:
-    "Kim's Cleaning Cloth: microfiber that cleans glass, granite, screens and windshields with water only. Made in USA. Sold by Kim Schoch and Alice at Iowa and Illinois shows, and here.",
+    "Kim's Cleaning Cloth: microfiber that cleans glass, granite, screens, and windshields with water only. Made in USA. Sold by Kim Schoch and Alice at Iowa and Illinois shows, and here.",
   icons: {
     icon: "/images/brand/logo-mark.png",
     shortcut: "/images/brand/logo-mark.png",

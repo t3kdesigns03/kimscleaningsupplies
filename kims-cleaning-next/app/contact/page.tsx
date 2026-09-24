@@ -13,9 +13,9 @@ export default function ContactPage() {
   return (
     <>
     <PageHero
-      eyebrow="We read everything"
+      eyebrow="Kim and Alice"
       title="Get in touch"
-      blurb="Schools, churches and clubs are welcome, and fundraisers do well with these. Order questions get answered the same week."
+      blurb="Schools, churches, and clubs are welcome. Fundraisers do well with these. We answer order questions the same week."
     />
     <section className="py-8">
       <div className="wrap">

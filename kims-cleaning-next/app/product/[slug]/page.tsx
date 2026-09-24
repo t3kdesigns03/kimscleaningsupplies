@@ -12,6 +12,10 @@ import { config } from "@/lib/config";
 import JsonLd from "@/components/JsonLd";
 import { productSchema, breadcrumbSchema } from "@/lib/schema";
 
+/* "a, b, and c" — house style uses the Oxford comma. */
+const oxford = (xs: string[]) =>
+  xs.length < 3 ? xs.join(" and ") : `${xs.slice(0, -1).join(", ")}, and ${xs[xs.length - 1]}`;
+
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
 }
@@ -100,7 +104,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       return (
                         <tr key={c.slug} className={cur ? "bg-lime/10" : ""}>
                           <td className="border-b border-line py-2.5 pr-2 text-[0.95rem]">
-                            {cur ? <strong>{c.packOf} pack</strong> : <Link href={`/product/${c.slug}`}>{c.packOf} pack</Link>}
+                            {cur ? <strong>{c.packOf}-Pack</strong> : <Link href={`/product/${c.slug}`}>{c.packOf}-Pack</Link>}
                           </td>
                           <td className="border-b border-line py-2.5 px-2 text-[0.95rem]">{money(c.price)}</td>
                           <td className="border-b border-line py-2.5 pl-2 text-right text-[0.95rem]">
@@ -128,8 +132,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <ul className="facts">
                   {CLOTH_FACTS.map((f) => <li key={f}>{f}</li>)}
                 </ul>
-                <p className="mt-3 text-[0.9rem] text-muted"><strong>Cleans:</strong> {SURFACES.join(", ")}.</p>
-                <p className="mt-1.5 text-[0.9rem] text-muted"><strong>Removes:</strong> {REMOVES.join(", ")}.</p>
+                <p className="mt-3 text-[0.9rem] text-muted"><strong>Cleans:</strong> {oxford(SURFACES)}.</p>
+                <p className="mt-1.5 text-[0.9rem] text-muted"><strong>Removes:</strong> {oxford(REMOVES)}.</p>
               </div>
             )}
 

@@ -1,9 +1,9 @@
 import Reveal from "./Reveal";
 
 const STATS = [
-  { big: "$0", small: "on sprays, ever again", note: "Water does the work — the bottle was just theater." },
-  { big: "1", small: "cloth vs. rolls of paper towels", note: "One cloth outlasts a pantry full of paper." },
-  { big: "100s", small: "of washes per cloth", note: "Washer or dishwasher, back in service the same day." },
+  { big: "$0", small: "on sprays", note: "Nothing to spray, ever again." },
+  { big: "1", small: "cloth vs. rolls of paper towels", note: "One cloth outlasts a pantry of paper towels." },
+  { big: "Hundreds", small: "of washes per cloth", note: "Washer or dishwasher, back in service the same day." },
 ];
 
 export default function TheMath() {

@@ -5,7 +5,7 @@ import PageHero from "@/components/PageHero";
 export const metadata = {
   title: "Where to find us",
   description:
-    "Fall 2026 schedule: fairs, home shows and festivals across Iowa and Illinois where Kim and Alice have a booth.",
+    "Fall 2026 schedule: fairs, home shows, and festivals across Iowa and Illinois where Kim and Alice have a booth.",
 };
 
 function Row({ e, isNext, dim }: { e: KEvent; isNext?: boolean; dim?: boolean }) {
@@ -38,7 +38,7 @@ export default function EventsPage() {
       <PageHero
         eyebrow="Fall schedule 2026"
         title="Where to find us"
-        blurb="Kim and Alice are on the road most weekends from August through early December. There is always a demo table — bring your worst window, or your phone screen."
+        blurb="Kim and Alice are on the road most weekends from August through early December. There is always a demo table. Bring your worst window — or your phone screen."
       />
 
       <section className="py-8">

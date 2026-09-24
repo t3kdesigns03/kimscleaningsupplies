@@ -11,8 +11,8 @@ import FairsStrip from "@/components/FairsStrip";
 const STEPS = [
   { title: "Wet it", body: "Plain tap water. Cold is fine." },
   { title: "Wring it", body: "Hard. Damp, not dripping." },
-  { title: "Wipe it", body: "One pass. No circles, no spray." },
-  { title: "Walk away", body: "It dries clear on its own. No buffing." },
+  { title: "Wipe it", body: "One pass. No circles. No spray." },
+  { title: "Walk away", body: "It dries clear. No buffing." },
 ];
 
 export default function Home() {
@@ -30,10 +30,10 @@ export default function Home() {
       {/* how it works */}
       <section className="bg-cream py-11 md:py-16">
         <div className="wrap">
-          <h2 className="text-center">Four steps, no bottle</h2>
+          <h2 className="text-center">Four steps. No bottle.</h2>
           <p className="mx-auto mb-7 max-w-[52ch] text-center text-muted">
-            The fiber is split so fine it lifts dirt off the surface and holds it. That is the whole
-            trick — the spray was never doing the work.
+            The fiber is split so fine it lifts dirt off the surface and holds it. Water does the
+            work — not a spray.
           </p>
           <ol className="grid list-none grid-cols-2 gap-3 p-0 md:grid-cols-4">
             {STEPS.map((s, i) => (
@@ -58,7 +58,7 @@ export default function Home() {
             <div className="accent-rule mb-4" />
             <h2>Start with the cloths</h2>
             <p className="max-w-[54ch] text-muted">
-              One cloth. Just water. The same trick that works on a kitchen window works on a windshield.
+              One cloth. Just water. The same cloth that cleans a kitchen window cleans a windshield.
             </p>
           </Reveal>
           <div className="scroll-row mt-5">
@@ -75,10 +75,10 @@ export default function Home() {
       <section className="bg-cream py-11 md:py-16">
         <div className="wrap">
           <div className="accent-rule mb-4" />
-          <h2>Mops, dusters and the hair towel</h2>
+          <h2>Mops, dusters, and the hair towel</h2>
           <p className="max-w-[54ch] text-muted">
-            Same fiber, different jobs. The dusters are dry-use only — that is how they hold a charge
-            and pull dust off instead of pushing it around.
+            Same fiber, different jobs. Use the dusters dry so they hold a charge and pull dust
+            instead of pushing it around.
           </p>
           <div className="scroll-row mt-5">
             {tools.map((p) => (
@@ -96,7 +96,7 @@ export default function Home() {
       {/* testimonials */}
       <section className="py-11 md:py-16">
         <div className="wrap">
-          <h2>What people tell us at the booth</h2>
+          <h2>What customers tell us</h2>
           <div className="mt-5 grid gap-3.5 md:grid-cols-2 lg:grid-cols-3">
             {[0, 1, 2].map((i) => {
               const t = testimonials[i];
@@ -120,10 +120,10 @@ export default function Home() {
       {/* events */}
       <section className="bg-forest-deep py-11 text-[#EFEDE2] md:py-16">
         <div className="wrap">
-          <h2 className="text-paper">Come say hi</h2>
+          <h2 className="text-paper">See us this weekend</h2>
           <p className="max-w-[54ch] text-[#D3E0C6]">
-            Kim and Alice are on the road most weekends from August through December. Bring your worst
-            window — there is a demo table.
+            Kim and Alice are on the road most weekends from August through December. There is always
+            a demo table. Bring your worst window.
           </p>
           <ul className="mt-5 grid list-none gap-3 p-0 md:grid-cols-3">
             {next.map((e, i) => (

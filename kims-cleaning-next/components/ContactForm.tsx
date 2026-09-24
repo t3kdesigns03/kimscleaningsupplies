@@ -108,8 +108,7 @@ export default function ContactForm() {
         {busy ? "Sending…" : "Send"}
       </button>
       <p className="mt-3 text-[0.82rem] text-muted">
-        Goes straight to Kim. If your browser blocks the send, it opens your email app with the
-        message already written.
+        Goes to Kim. If your browser blocks send, it opens your email app with the message ready.
       </p>
     </form>
   );

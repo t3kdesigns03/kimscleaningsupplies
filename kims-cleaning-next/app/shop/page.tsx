@@ -4,7 +4,7 @@ import Filters from "@/components/Filters";
 import { CheckIcon } from "@/components/Icons";
 import PageHero from "@/components/PageHero";
 
-const TRUST = ["Water only", "Made in USA", "Free Quincy pickup", "Washable 100s of times"];
+const TRUST = ["Water only", "Made in USA", "Free Quincy pickup", "Washes hundreds of times"];
 
 export const metadata = {
   title: "Shop",
@@ -16,9 +16,9 @@ export default function ShopPage() {
   return (
     <>
       <PageHero
-        eyebrow="Everything Kim sells"
+        eyebrow="The catalog"
         title="Shop"
-        blurb="Ten things. All of them microfiber, all of them washable, and none of them need a bottle of anything. Pickup in Quincy is free at checkout."
+        blurb="Ten products. All microfiber. All washable. None of them need a bottle. Pickup in Quincy is free at checkout."
       />
 
       <section className="border-b border-line bg-botanical-soft py-4">
@@ -49,7 +49,7 @@ export default function ShopPage() {
             Two cloths is enough to prove it to yourself. Six is what most families end up keeping.
             Eighteen is the one that turns into Christmas presents.
           </p>
-          <Link href="/product/cloth-6" className="btn btn-ghost">Look at the 6-pack</Link>
+          <Link href="/product/cloth-6" className="btn btn-ghost">Look at the 6-Pack</Link>
         </div>
       </section>
     </>

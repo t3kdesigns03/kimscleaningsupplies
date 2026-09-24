@@ -23,7 +23,7 @@ export function organizationSchema() {
     name: config.brand,
     url: config.siteUrl,
     description:
-      "Eco Easy microfiber cloths, dust mops, dusters and hair towels that clean with water only. Made in USA.",
+      "Eco Easy microfiber cloths, dust mops, dusters, and hair towels that clean with water only. Made in USA.",
     logo: abs("/images/brand/logo-mark-512.png"),
     image: abs("/images/brand/hero-earth-full.jpg"),
     email: config.contactEmail,

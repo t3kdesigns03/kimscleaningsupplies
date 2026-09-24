@@ -56,7 +56,7 @@ export const SURFACES = [
 
 export const REMOVES = [
   "Oil", "Tar", "Grease", "Dust", "Film", "Fingerprints",
-  "Bugs", "Soap scum", "Dirt", "Hair spray", "and bacteria — with water",
+  "Bugs", "Soap scum", "Dirt", "Hair spray", "Bacteria",
 ];
 
 export const CARE: Record<Care, string[]> = {
@@ -76,7 +76,7 @@ export const CARE: Record<Care, string[]> = {
 export const products: Product[] = [
   {
     slug: "cloth-2",
-    name: "Kim’s Cleaning Cloths — 2 pack",
+    name: "Kim’s Cleaning Cloths, 2-Pack",
     short: "The starter pair",
     price: 12.0,
     category: "cloths",
@@ -86,17 +86,17 @@ export const products: Product[] = [
       "/images/products/cloth-2-pack.webp",
       "/images/products/cloth-label.webp",
     ],
-    desc: "Two cloths, 15 inches square. Wet one under the tap, wring it out hard, wipe, and walk away — no spray, no paper towels, no streaks to chase. Most people keep one in the kitchen and one in the car and are surprised how long that lasts.",
+    desc: "Two 15-inch cloths. Wet one under the tap, wring it hard, wipe, and walk away. No spray, no paper towels, no streaks. Most people keep one in the kitchen and one in the car, and are surprised how long that lasts.",
     bullets: [
       "Enough to try it on your worst window",
-      "Same cloth works on glass, granite and a windshield",
+      "Same cloth works on glass, granite, and a windshield",
       "Washes and comes back to life hundreds of times",
     ],
     care: "wet",
   },
   {
     slug: "cloth-6",
-    name: "Kim’s Cleaning Cloths — 6 pack",
+    name: "Kim’s Cleaning Cloths, 6-Pack",
     short: "The household bundle",
     price: 24.0,
     category: "cloths",
@@ -116,20 +116,20 @@ export const products: Product[] = [
   },
   {
     slug: "cloth-18",
-    name: "Kim’s Cleaning Cloths — 18 pack",
+    name: "Kim’s Cleaning Cloths, 18-Pack",
     short: "Stock up, gift, or outfit a crew",
     price: 54.0,
     category: "cloths",
     packOf: 18,
-    blurb: "Stock-up, gift, and commercial pack.",
+    blurb: "Stock-up, gift, or commercial pack.",
     images: [
       "/images/products/cloth-18-pack.webp",
       "/images/products/cloth-label.webp",
     ],
-    desc: "Eighteen cloths at $3 each. This is the box cleaning crews, detail shops, churches and schools buy — and the one that turns into a dozen Christmas gifts every December, two cloths to a ribbon.",
+    desc: "Eighteen cloths at $3 each. This is the box cleaning crews, detail shops, churches, and schools buy — and the one that turns into a dozen Christmas gifts every December, two cloths to a ribbon.",
     bullets: [
       "$3 a cloth — the best price we do",
-      "Bought by detail shops, churches and school groups",
+      "Bought by detail shops, churches, and school groups",
       "Splits into nine two-cloth gifts",
     ],
     care: "wet",
@@ -140,14 +140,14 @@ export const products: Product[] = [
     short: "Dry floors, no chemicals",
     price: 32.0,
     category: "mops",
-    blurb: "Hardwood, tile and laminate. Washable. Patent pending.",
+    blurb: "Hardwood, tile, and laminate. Washable. Patent pending.",
     images: [
       "/images/products/grandmas-dry-mop.webp",
       "/images/products/grandmas-dry-mop-2.webp",
     ],
     desc: "A dry dust mop that picks the dust up instead of pushing it into the corner. Hardwood, tile, laminate — run it down the hall in the morning and you are done. The head comes off and goes in the washer. Patent pending.",
     bullets: [
-      "Hardwood, tile, laminate and sealed floors",
+      "Hardwood, tile, laminate, and sealed floors",
       "Washable head — no disposable pads to buy",
       "No sprays, no bucket, no waiting for the floor to dry",
     ],
@@ -205,7 +205,7 @@ export const products: Product[] = [
     desc: "The little one that lives in the glove box or the kitchen drawer. Microfiber holds a charge, so dust comes with it instead of lifting into the air and landing again an hour later. Shelves, blinds, baseboards, and the dash of a truck.",
     bullets: [
       "Handle included",
-      "Vehicle dashes, blinds, shelves, picture frames",
+      "Vehicle dashes, blinds, shelves, and picture frames",
       "Use dry only",
     ],
     care: "dry",
@@ -222,7 +222,7 @@ export const products: Product[] = [
       "/images/products/duster-high-2.webp",
       "/images/products/duster-high-bag.webp",
     ],
-    desc: "Extension handle and a head that bends, so you can do the ceiling fan, the top of the cabinets and the vent over the stove with both feet on the floor. The reason people buy this one is usually a ladder they would rather not climb anymore.",
+    desc: "Extension handle and a head that bends, so you can do the ceiling fan, the top of the cabinets, and the vent over the stove with both feet on the floor. The reason people buy this one is usually a ladder they would rather not climb anymore.",
     bullets: [
       "Telescoping extension handle",
       "Flexible head bends over and around fan blades",
@@ -240,7 +240,7 @@ export const products: Product[] = [
     images: [
       "/images/products/duster-fluffy.webp",
     ],
-    desc: "Two fluffy sleeves and a telescopic handle. Use one while the other is in the wash. Good on lampshades, houseplants, tops of doors and anything that a rag would just knock the dust off of.",
+    desc: "Two fluffy sleeves and a telescopic handle. Use one while the other is in the wash. Good on lampshades, houseplants, tops of doors, and anything that a rag would just knock the dust off of.",
     bullets: [
       "Two sleeves included",
       "Telescopic handle for high shelves",

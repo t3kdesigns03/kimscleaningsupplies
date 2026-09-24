@@ -9,7 +9,8 @@ const FAIRS = events
   .filter((e) => (seen.has(e.name) ? false : (seen.add(e.name), true)))
   .map((e) => ({ name: e.name, place: `${e.city}, ${e.state}` }));
 
-const states = Array.from(new Set(events.map((e) => e.state)));
+const STATE_NAMES: Record<string, string> = { IA: "Iowa", IL: "Illinois", MO: "Missouri", WI: "Wisconsin" };
+const states = Array.from(new Set(events.map((e) => e.state))).map((s) => STATE_NAMES[s] ?? s);
 
 export default function FairsStrip() {
   const loop = [...FAIRS, ...FAIRS]; // duplicated for a seamless track
@@ -21,7 +22,7 @@ export default function FairsStrip() {
             You&rsquo;ve probably seen the booth
           </span>
           <span className="text-[0.9rem] text-[#C9D8BC]">
-            {events.length} shows this season across {states.join(" & ")}
+            {events.length} shows this season across {states.join(" and ")}
           </span>
         </div>
       </div>

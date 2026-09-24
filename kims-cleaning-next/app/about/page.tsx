@@ -23,8 +23,8 @@ export default function AboutPage() {
         <div className="wrap grid items-center gap-6 md:grid-cols-2">
           <div>
             <p className="text-[1.12rem]">
-              Kim Schoch and Alice sell Eco Easy microfiber — cloths, mops, dusters and the hair towel
-              — at fairs, home shows and school fundraisers across Iowa and Illinois. They have been
+              Kim Schoch and Alice sell Eco Easy microfiber — cloths, mops, dusters, and the hair towel
+              — at fairs, home shows, and school fundraisers across Iowa and Illinois. They have been
               doing it long enough that people find the booth on purpose.
             </p>
             <p>
@@ -63,7 +63,7 @@ export default function AboutPage() {
             {[
               ["Time", "One pass, no spray, no buffing, no second cloth to dry with. The kitchen and the bathroom mirrors stop being a project."],
               ["Money", "No more bottles of blue liquid and no more paper towels. A cloth goes through hundreds of washes before it gives up."],
-              ["Energy", "Nothing sprayed into the air you are breathing, and nothing to keep up out of reach of the kids or the dog."],
+              ["Energy", "Nothing sprayed into the air you are breathing, and nothing to keep out of reach of kids or dogs."],
             ].map(([h, b]) => (
               <div className="panel" key={h}>
                 <h3 className="text-[1.1rem]">{h}</h3>
@@ -87,14 +87,14 @@ export default function AboutPage() {
             <ul className="facts [column-gap:28px] sm:columns-2">
               {REMOVES.map((s) => <li key={s}>{s}</li>)}
             </ul>
-            <p className="text-[0.92rem] text-muted">Water only. No sprays on any of it.</p>
+            <p className="text-[0.92rem] text-muted">Water only. No sprays.</p>
           </div>
         </div>
       </section>
 
       <section id="testimonials" className="scroll-mt-20 bg-cream py-11 md:py-14">
         <div className="wrap">
-          <h2>What people tell us</h2>
+          <h2>What customers tell us</h2>
           <p className="max-w-[54ch] text-muted">Collected at booths, mostly on the second visit.</p>
           <div className="mt-5 grid gap-3.5 md:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((t, i) => (

@@ -1,6 +1,7 @@
 import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
 import { config } from "@/lib/config";
+import PageHero from "@/components/PageHero";
 
 export const metadata = {
   title: "Contact",
@@ -10,16 +11,17 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
+    <>
+    <PageHero
+      eyebrow="We read everything"
+      title="Get in touch"
+      blurb="Schools, churches and clubs are welcome, and fundraisers do well with these. Order questions get answered the same week."
+    />
     <section className="py-8">
       <div className="wrap">
         <div className="grid items-start gap-6 md:grid-cols-[1.25fr_1fr]">
           <div>
-            <span className="eyebrow">We read everything</span>
-            <h1>Get in touch</h1>
-            <p className="max-w-[52ch] text-muted">
-              Schools, churches and clubs are welcome, and fundraisers do well with these. Order questions get answered the same week.
-            </p>
-            <div className="mt-4">
+            <div>
               <ContactForm />
             </div>
           </div>
@@ -58,5 +60,6 @@ export default function ContactPage() {
         </div>
       </div>
     </section>
+    </>
   );
 }

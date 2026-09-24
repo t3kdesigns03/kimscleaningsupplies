@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { splitEvents, type KEvent } from "@/lib/events";
+import PageHero from "@/components/PageHero";
 
 export const metadata = {
   title: "Where to find us",
@@ -34,16 +35,11 @@ export default function EventsPage() {
 
   return (
     <>
-      <section className="bg-botanical-soft py-8 md:py-11">
-        <div className="wrap">
-          <span className="eyebrow">Fall schedule 2026</span>
-          <h1>Where to find us</h1>
-          <p className="max-w-[56ch] text-muted">
-            Kim and Alice are on the road most weekends from August through early December. There is
-            always a demo table — bring your worst window, or your phone screen.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Fall schedule 2026"
+        title="Where to find us"
+        blurb="Kim and Alice are on the road most weekends from August through early December. There is always a demo table — bring your worst window, or your phone screen."
+      />
 
       <section className="py-8">
         <div className="wrap">

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Filters from "@/components/Filters";
 import { CheckIcon } from "@/components/Icons";
+import PageHero from "@/components/PageHero";
 
 const TRUST = ["Water only", "Made in USA", "Free Quincy pickup", "Washable 100s of times"];
 
@@ -14,15 +15,15 @@ export const metadata = {
 export default function ShopPage() {
   return (
     <>
-      <section className="bg-botanical-soft py-9 md:py-12">
+      <PageHero
+        eyebrow="Everything Kim sells"
+        title="Shop"
+        blurb="Ten things. All of them microfiber, all of them washable, and none of them need a bottle of anything. Pickup in Quincy is free at checkout."
+      />
+
+      <section className="border-b border-line bg-botanical-soft py-4">
         <div className="wrap">
-          <span className="eyebrow">Everything Kim sells</span>
-          <h1>Shop</h1>
-          <p className="max-w-[54ch] text-muted">
-            Ten things. All of them microfiber, all of them washable, and none of them need a bottle
-            of anything. Pickup in Quincy is free at checkout.
-          </p>
-          <ul className="mt-5 flex flex-wrap gap-2 p-0">
+          <ul className="m-0 flex flex-wrap gap-2 p-0">
             {TRUST.map((t) => (
               <li key={t} className="chip">
                 <CheckIcon className="h-4 w-4 text-grass" />

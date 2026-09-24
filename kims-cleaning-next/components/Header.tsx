@@ -59,18 +59,25 @@ export default function Header() {
         {/* logo mark + wordmark — centered on mobile, left on desktop */}
         <Link
           href="/"
-          className="flex min-w-0 flex-1 items-center justify-center gap-2 px-2 text-forest-deep no-underline lg:flex-none lg:mr-auto lg:justify-start lg:px-0"
+          className="flex min-w-0 flex-1 items-center justify-center gap-2 px-1 text-forest-deep no-underline lg:flex-none lg:mr-auto lg:justify-start lg:px-0"
         >
+          {/* The mark is a round window onto the homepage hero photo itself —
+              same file, so header, inner-page bands and hero always match and
+              the browser downloads it once. 80.6% puts the window on the globe
+              (hero-banner.jpg is 2530x338; globe centre is x~1935). If that
+              image is ever replaced, re-aim this. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/brand/logo-mark.svg"
-            alt="Kim's Cleaning Products logo"
-            width={36}
-            height={36}
-            className="h-[30px] w-[30px] flex-none md:h-9 md:w-9"
+            src="/images/brand/hero-banner.jpg"
+            alt=""
+            aria-hidden="true"
+            width={40}
+            height={40}
+            decoding="async"
+            className="h-9 w-9 flex-none rounded-full object-cover object-[80.6%_50%] shadow-sm ring-1 ring-forest-deep/15 md:h-10 md:w-10"
           />
           <span className="flex min-w-0 flex-col leading-none">
-            <span className="block w-full truncate text-center font-serif text-[clamp(14px,3.9vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left">
+            <span className="block w-full truncate text-center font-serif text-[clamp(12.5px,3.6vw,22px)] font-bold tracking-tight text-forest-deep lg:text-left">
               Kim&rsquo;s Cleaning Products
             </span>
             <span className="mt-1 hidden w-full truncate text-[10px] uppercase tracking-[0.15em] text-leaf lg:block">

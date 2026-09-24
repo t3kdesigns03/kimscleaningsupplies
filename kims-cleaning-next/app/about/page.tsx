@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SURFACES, REMOVES } from "@/lib/products";
 import { testimonials } from "@/lib/testimonials";
 import { pickupAddress } from "@/lib/config";
+import PageHero from "@/components/PageHero";
 
 export const metadata = {
   title: "About Kim & Alice",
@@ -12,11 +13,15 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <>
+      <PageHero
+        eyebrow="Quincy, Illinois"
+        title="Kim and Alice"
+        blurb="Eco Easy microfiber, sold face to face at fairs and home shows across Iowa and Illinois."
+      />
+
       <section className="bg-botanical-soft py-8 md:py-11">
         <div className="wrap grid items-center gap-6 md:grid-cols-2">
           <div>
-            <span className="eyebrow">Quincy, Illinois</span>
-            <h1>Kim and Alice</h1>
             <p className="text-[1.12rem]">
               Kim Schoch and Alice sell Eco Easy microfiber — cloths, mops, dusters and the hair towel
               — at fairs, home shows and school fundraisers across Iowa and Illinois. They have been

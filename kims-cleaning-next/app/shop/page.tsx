@@ -21,20 +21,17 @@ export default function ShopPage() {
         blurb="Ten products. All microfiber. All washable. None of them need a bottle. Pickup in Quincy is free at checkout."
       />
 
-      <section className="border-b border-line bg-botanical-soft py-4">
+      <section className="bg-wash pb-24 pt-10 md:pb-32 md:pt-14">
         <div className="wrap">
-          <ul className="m-0 flex flex-wrap gap-2 p-0">
+          <ul className="m-0 mb-8 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 text-[0.95rem] font-semibold text-forest-deep md:mb-10">
             {TRUST.map((t) => (
-              <li key={t} className="chip">
+              <li key={t} className="inline-flex items-center gap-1.5">
                 <CheckIcon className="h-4 w-4 text-grass" />
                 {t}
               </li>
             ))}
           </ul>
         </div>
-      </section>
-
-      <section className="py-8">
         <div className="wrap">
           <Suspense fallback={<p className="text-muted">Loading…</p>}>
             <Filters />
@@ -42,14 +39,14 @@ export default function ShopPage() {
         </div>
       </section>
 
-      <section className="bg-cream py-11 md:py-14">
+      <section className="section bg-white">
         <div className="wrap narrow text-center">
           <h2>Not sure which pack?</h2>
-          <p className="text-muted">
+          <p className="lede mx-auto mb-10">
             Two cloths is enough to prove it to yourself. Six is what most families end up keeping.
             Eighteen is the one that turns into Christmas presents.
           </p>
-          <Link href="/product/cloth-6" className="btn btn-ghost">Look at the 6-Pack</Link>
+          <Link href="/product/cloth-6" className="btn btn-primary">Look at the 6-Pack</Link>
         </div>
       </section>
     </>

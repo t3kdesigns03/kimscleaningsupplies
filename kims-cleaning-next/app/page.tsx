@@ -15,6 +15,8 @@ const STEPS = [
   { title: "Walk away", body: "It dries clear. No buffing." },
 ];
 
+/* Rhythm below the dark photo hero: white and mint bands alternate, big type,
+   lots of air, at most one pill per band. Products sit on mint as objects. */
 export default function Home() {
   const cloths = products.filter((p) => p.category === "cloths");
   const tools = products.filter((p) => p.category !== "cloths");
@@ -27,41 +29,38 @@ export default function Home() {
 
       <FairsStrip />
 
-      {/* how it works */}
-      <section className="bg-cream py-11 md:py-16">
+      {/* how it works — white */}
+      <section className="section bg-white">
         <div className="wrap">
-          <h2 className="text-center">Four steps. No bottle.</h2>
-          <p className="mx-auto mb-7 max-w-[52ch] text-center text-muted">
+          <h2 className="mx-auto max-w-[16ch] text-center">Four steps. No bottle.</h2>
+          <p className="lede mx-auto text-center">
             The fiber is split so fine it lifts dirt off the surface and holds it. Water does the
             work — not a spray.
           </p>
-          <ol className="grid list-none grid-cols-2 gap-3 p-0 md:grid-cols-4">
+          <ol className="mt-14 grid list-none grid-cols-2 gap-x-6 gap-y-10 p-0 md:mt-20 md:grid-cols-4 md:gap-8">
             {STEPS.map((s, i) => (
-              <li key={s.title} className="rounded-2xl border border-line bg-paper p-5">
-                <span className="font-serif text-[2.4rem] font-semibold leading-none text-leaf">
+              <li key={s.title} className="border-t-2 border-forest-deep/15 pt-5">
+                <span className="block font-serif text-[clamp(2.6rem,6vw,3.6rem)] font-bold leading-none text-leaf">
                   {i + 1}
                 </span>
-                <h3 className="mb-1 mt-2 text-[1.12rem]">{s.title}</h3>
-                <p className="m-0 text-[0.9rem] text-muted">{s.body}</p>
+                <h3 className="mb-1 mt-3 text-[1.3rem] font-bold">{s.title}</h3>
+                <p className="m-0 text-[0.95rem] text-muted">{s.body}</p>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      <TheMath />
-
-      {/* cloths */}
-      <section className="py-11 md:py-16">
+      {/* cloths — mint field, products as objects */}
+      <section className="section bg-wash">
         <div className="wrap">
           <Reveal>
-            <div className="accent-rule mb-4" />
             <h2>Start with the cloths</h2>
-            <p className="max-w-[54ch] text-muted">
+            <p className="lede">
               One cloth. Just water. The same cloth that cleans a kitchen window cleans a windshield.
             </p>
           </Reveal>
-          <div className="scroll-row mt-5">
+          <div className="scroll-row mt-12 md:mt-16">
             {cloths.map((p) => (
               <div key={p.slug} className="scroll-card">
                 <ProductCard product={p} />
@@ -71,38 +70,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* tools */}
-      <section className="bg-cream py-11 md:py-16">
+      <TheMath />
+
+      {/* tools — mint field */}
+      <section className="section bg-wash">
         <div className="wrap">
-          <div className="accent-rule mb-4" />
-          <h2>Mops, dusters, and the hair towel</h2>
-          <p className="max-w-[54ch] text-muted">
+          <h2 className="max-w-[16ch]">Mops, dusters, and the hair towel</h2>
+          <p className="lede">
             Same fiber, different jobs. Use the dusters dry so they hold a charge and pull dust
             instead of pushing it around.
           </p>
-          <div className="scroll-row mt-5">
+          <div className="scroll-row mt-12 md:mt-16">
             {tools.map((p) => (
               <div key={p.slug} className="scroll-card">
                 <ProductCard product={p} />
               </div>
             ))}
           </div>
-          <div className="mt-6">
-            <Link href="/shop" className="btn btn-ghost">See everything</Link>
+          <div className="mt-12">
+            <Link href="/shop" className="btn btn-primary">See everything</Link>
           </div>
         </div>
       </section>
 
-      {/* testimonials */}
-      <section className="py-11 md:py-16">
+      {/* testimonials — white, quiet */}
+      <section className="section bg-white">
         <div className="wrap">
           <h2>What customers tell us</h2>
-          <div className="mt-5 grid gap-3.5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-3 md:gap-8">
             {[0, 1, 2].map((i) => {
               const t = testimonials[i];
               return (
-                <blockquote key={i} className="rounded-2xl border border-l-[5px] border-line border-l-leaf bg-paper p-[18px]">
-                  <p className="mb-2 font-serif text-[1.1rem] leading-snug text-forest-deep">&ldquo;{t.text}&rdquo;</p>
+                <blockquote key={i} className="m-0 border-t-2 border-leaf pt-6">
+                  <p className="mb-4 font-serif text-[1.25rem] leading-snug text-forest-deep">&ldquo;{t.text}&rdquo;</p>
                   <cite className="text-[0.92rem] font-bold not-italic">
                     {t.who}
                     {t.where && <span className="font-normal text-muted"> — {t.where}</span>}
@@ -111,33 +111,33 @@ export default function Home() {
               );
             })}
           </div>
-          <div className="mt-6">
-            <Link href="/about#testimonials" className="btn btn-quiet">Read more of them</Link>
+          <div className="mt-12">
+            <Link href="/about#testimonials" className="btn-link">Read more of them</Link>
           </div>
         </div>
       </section>
 
-      {/* events */}
-      <section className="bg-forest-deep py-11 text-[#EFEDE2] md:py-16">
+      {/* events — mint */}
+      <section className="section bg-wash">
         <div className="wrap">
-          <h2 className="text-paper">See us this weekend</h2>
-          <p className="max-w-[54ch] text-[#D3E0C6]">
+          <h2>See us this weekend</h2>
+          <p className="lede">
             Kim and Alice are on the road most weekends from August through December. There is always
             a demo table. Bring your worst window.
           </p>
-          <ul className="mt-5 grid list-none gap-3 p-0 md:grid-cols-3">
+          <ul className="mt-12 grid list-none gap-4 p-0 md:mt-16 md:grid-cols-3">
             {next.map((e, i) => (
-              <li key={i} className="rounded-2xl border border-white/20 bg-white/[0.07] p-4">
-                <div className="font-serif text-[1.02rem] font-bold text-[#E9C93E]">{e.date}</div>
-                <strong className="mt-1 block text-paper">{e.name}</strong>
-                <span className="text-[0.93rem] text-[#BDCFAE]">
+              <li key={i} className="rounded-2xl bg-white p-6 shadow-soft">
+                <div className="font-serif text-[1.1rem] font-bold text-grass">{e.date}</div>
+                <strong className="mt-1 block text-[1.08rem] text-forest-deep">{e.name}</strong>
+                <span className="text-[0.93rem] text-muted">
                   {[e.venue, `${e.city}, ${e.state}`].filter(Boolean).join(" · ")}
                 </span>
               </li>
             ))}
           </ul>
-          <div className="mt-6">
-            <Link href="/events" className="btn btn-quiet">Full fall schedule</Link>
+          <div className="mt-12">
+            <Link href="/events" className="btn btn-primary">Full fall schedule</Link>
           </div>
         </div>
       </section>

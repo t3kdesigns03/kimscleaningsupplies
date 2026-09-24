@@ -10,9 +10,9 @@ export default function NotFound() {
         <p className="mx-auto mb-6 max-w-[44ch] text-muted">
           Wrong link, or something we moved. Everything Kim sells is two taps away.
         </p>
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
           <Link href="/shop" className="btn btn-primary">Go to the shop</Link>
-          <Link href="/" className="btn btn-ghost">Home</Link>
+          <Link href="/" className="btn-link">Home</Link>
         </div>
         <p className="mt-7 text-[0.92rem] text-muted">
           Still stuck? Email <a href="mailto:streakfreeks@yahoo.com">streakfreeks@yahoo.com</a>.

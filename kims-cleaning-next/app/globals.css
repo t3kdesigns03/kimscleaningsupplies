@@ -22,8 +22,9 @@
     line-height: 1.12;
     letter-spacing: -0.01em;
   }
-  h1 { font-size: clamp(2.1rem, 7.4vw, 3.7rem); }
-  h2 { font-size: clamp(1.6rem, 5.2vw, 2.5rem); }
+  /* Big, heavy, tight headlines; one idea per heading. */
+  h1 { font-size: clamp(2.5rem, 8.2vw, 4.75rem); font-weight: 700; line-height: 1.02; letter-spacing: -0.028em; }
+  h2 { font-size: clamp(2.05rem, 6.2vw, 3.6rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.024em; }
   h3 { font-size: clamp(1.15rem, 3.6vw, 1.5rem); }
   a { @apply text-grass; }
   ::selection { background: #C6EE7E; color: #153F1A; }
@@ -32,6 +33,11 @@
 @layer components {
   .wrap { @apply w-full max-w-site mx-auto px-4 sm:px-7; }
   .narrow { max-width: 760px; }
+
+  /* Air. One vertical rhythm for every full-width band. */
+  .section { @apply py-20 md:py-32; }
+  /* Sub-copy under a headline: smaller and calmer than the heading it serves. */
+  .lede { @apply mt-4 max-w-[46ch] text-[1.02rem] leading-relaxed text-muted; }
 
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold text-center
@@ -44,6 +50,11 @@
   .btn-ghost { @apply bg-white/85 text-forest-deep border-forest/[0.25] hover:bg-white; }
   .btn-quiet { @apply bg-cream text-forest-deep border-line hover:bg-lime-bright/[0.4]; }
   .btn-block { @apply flex w-full; }
+  /* Secondary action: a text link, so each section has one pill at most. */
+  .btn-link {
+    @apply inline-flex items-center gap-1.5 font-semibold text-forest-deep underline decoration-2
+           underline-offset-[6px] decoration-leaf hover:decoration-forest-deep;
+  }
   .btn-sm { @apply min-h-[42px] px-4 py-2 text-[15px]; }
   .btn[aria-disabled="true"], .btn:disabled { @apply opacity-45 pointer-events-none; }
 
@@ -59,11 +70,12 @@
   .chip svg { @apply w-4 h-4 text-grass; }
 
   .card {
-    @apply flex flex-col overflow-hidden rounded-xl2 border border-line bg-paper shadow-soft
+    @apply flex flex-col overflow-hidden rounded-xl2 border border-line bg-white shadow-soft
            transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift;
   }
+  /* Product as object: white tile, generous padding, photo floats uncropped. */
   .card-media {
-    @apply block aspect-square min-h-[240px] bg-white;
+    @apply block aspect-square min-h-[240px] bg-white p-7;
   }
   .price { @apply font-serif font-bold text-forest-deep; }
 

@@ -19,8 +19,8 @@ export default function AboutPage() {
         blurb="Eco Easy microfiber, sold face to face at fairs and home shows across Iowa and Illinois."
       />
 
-      <section className="bg-botanical-soft py-8 md:py-11">
-        <div className="wrap grid items-center gap-6 md:grid-cols-2">
+      <section className="section bg-white">
+        <div className="wrap grid items-center gap-10 md:grid-cols-2 md:gap-16">
           <div>
             <p className="text-[1.12rem]">
               Kim Schoch and Alice sell Eco Easy microfiber — cloths, mops, dusters, and the hair towel
@@ -35,9 +35,9 @@ export default function AboutPage() {
               Ordering here ships anywhere. If you are near Quincy, choose pickup at checkout and save
               the shipping — Kim is at <strong>{pickupAddress}</strong>.
             </p>
-            <div className="mt-2 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
               <Link href="/shop" className="btn btn-primary">See what they sell</Link>
-              <Link href="/events" className="btn btn-ghost">Where they&rsquo;ll be</Link>
+              <Link href="/events" className="btn-link">Where they&rsquo;ll be</Link>
             </div>
           </div>
           <div className="overflow-hidden rounded-2xl border border-line shadow-lift">
@@ -47,10 +47,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-cream py-11 md:py-14">
+      <section className="section bg-wash">
         <div className="wrap">
-          <h2>What makes the cloth different</h2>
-          <div className="panel">
+          <h2 className="max-w-[16ch]">What makes the cloth different</h2>
+          <div className="panel mt-10 border-0 bg-white p-7 shadow-soft md:p-9">
             <p className="mb-0">
               It is <strong>70% polyester and 30% polyamide</strong>, heat-melded rather than woven
               loose. Dry, it feels almost like paper. Wet, it goes soft and lint-free. The fiber is
@@ -59,13 +59,13 @@ export default function AboutPage() {
               softener ruins it — softener fills in the split fiber and the cloth stops grabbing.
             </p>
           </div>
-          <div className="mt-5 grid gap-3.5 md:grid-cols-3">
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
             {[
               ["Time", "One pass, no spray, no buffing, no second cloth to dry with. The kitchen and the bathroom mirrors stop being a project."],
               ["Money", "No more bottles of blue liquid and no more paper towels. A cloth goes through hundreds of washes before it gives up."],
               ["Energy", "Nothing sprayed into the air you are breathing, and nothing to keep out of reach of kids or dogs."],
             ].map(([h, b]) => (
-              <div className="panel" key={h}>
+              <div className="panel border-0 bg-white p-7 shadow-soft" key={h}>
                 <h3 className="text-[1.1rem]">{h}</h3>
                 <p className="mb-0 text-[0.95rem]">{b}</p>
               </div>
@@ -74,8 +74,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-11 md:py-14">
-        <div className="wrap grid gap-6 md:grid-cols-2">
+      <section className="section bg-white">
+        <div className="wrap grid gap-12 md:grid-cols-2">
           <div>
             <h2>Where it works</h2>
             <ul className="facts [column-gap:28px] sm:columns-2">
@@ -92,13 +92,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section id="testimonials" className="scroll-mt-20 bg-cream py-11 md:py-14">
+      <section id="testimonials" className="section scroll-mt-20 bg-wash">
         <div className="wrap">
           <h2>What customers tell us</h2>
-          <p className="max-w-[54ch] text-muted">Collected at booths, mostly on the second visit.</p>
-          <div className="mt-5 grid gap-3.5 md:grid-cols-2 lg:grid-cols-3">
+          <p className="lede">Collected at booths, mostly on the second visit.</p>
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((t, i) => (
-              <blockquote key={i} className="rounded-2xl border border-l-[5px] border-line border-l-leaf bg-paper p-[18px]">
+              <blockquote key={i} className="m-0 rounded-2xl border-l-[5px] border-l-leaf bg-white p-6 shadow-soft">
                 <p className="mb-2 font-serif text-[1.1rem] leading-snug text-forest-deep">&ldquo;{t.text}&rdquo;</p>
                 <cite className="text-[0.92rem] font-bold not-italic">
                   {t.who}{t.where && <span className="font-normal text-muted"> — {t.where}</span>}

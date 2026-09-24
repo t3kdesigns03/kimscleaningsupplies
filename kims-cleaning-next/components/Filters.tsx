@@ -26,7 +26,7 @@ export default function Filters() {
 
   return (
     <>
-      <div className="no-scrollbar sticky top-[56px] z-40 -mx-4 mb-5 flex gap-2 overflow-x-auto border-b border-line bg-paper/95 px-4 py-2.5 backdrop-blur sm:-mx-7 sm:px-7 md:top-[64px]"
+      <div className="no-scrollbar sticky top-[56px] z-40 -mx-4 mb-5 flex gap-2 overflow-x-auto border-b border-forest-deep/10 bg-wash/95 px-4 py-2.5 backdrop-blur sm:-mx-7 sm:px-7 md:top-[64px]"
         role="group" aria-label="Filter products">
         {CATEGORIES.map((c) => {
           const on = active === c.key;

@@ -17,17 +17,15 @@ export default function ContactPage() {
       title="Get in touch"
       blurb="Schools, churches, and clubs are welcome. Fundraisers do well with these. We answer order questions the same week."
     />
-    <section className="py-8">
+    <section className="section bg-wash">
       <div className="wrap">
-        <div className="grid items-start gap-6 md:grid-cols-[1.25fr_1fr]">
-          <div>
-            <div>
-              <ContactForm />
-            </div>
+        <div className="grid items-start gap-6 md:grid-cols-[1.25fr_1fr] md:gap-8">
+          <div className="rounded-2xl bg-white p-6 shadow-soft md:p-9">
+            <ContactForm />
           </div>
 
           <aside className="space-y-4">
-            <div className="rounded-2xl border border-line bg-paper p-[18px] shadow-soft">
+            <div className="rounded-2xl bg-white p-6 shadow-soft">
               <h3 className="mt-0">Kim Schoch</h3>
               <div className="flex justify-between gap-3 border-b border-dashed border-line py-2.5 text-[0.96rem]">
                 <span>Email</span>
@@ -42,7 +40,7 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-line bg-paper p-[18px] shadow-soft">
+            <div className="rounded-2xl bg-white p-6 shadow-soft">
               <h3 className="mt-0">Fundraisers</h3>
               <p className="mb-0 text-[0.95rem]">
                 Groups take orders on paper, we fill them in one batch, and the group keeps a cut. It
@@ -51,10 +49,10 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-line bg-paper p-[18px] shadow-soft">
+            <div className="rounded-2xl bg-white p-6 shadow-soft">
               <h3 className="mt-0">Catch us in person</h3>
               <p className="text-[0.95rem]">Most weekends, August through December, across Iowa and Illinois.</p>
-              <Link href="/events" className="btn btn-quiet btn-sm">See the schedule</Link>
+              <Link href="/events" className="btn-link">See the schedule</Link>
             </div>
           </aside>
         </div>

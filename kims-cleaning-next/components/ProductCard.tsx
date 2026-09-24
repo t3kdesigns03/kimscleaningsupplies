@@ -9,7 +9,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <article className="card group">
       <Link href={href} className="card-media zoomwrap relative" aria-label={product.name}>
-        <SmartImage sources={product.images} alt={product.name} className="h-full w-full object-cover" />
+        <SmartImage sources={product.images} alt={product.name} className="h-full w-full object-contain" />
         <span
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest-deep/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"

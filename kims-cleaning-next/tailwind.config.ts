@@ -11,6 +11,8 @@ const config: Config = {
       colors: {
         // Brighter botanical palette — spring/lime greens grounded by deep forest.
         cream: "#FAF4E6",
+        // Mint field. Alternates with white in big bands below the dark hero.
+        wash: "#E7F4C8",
         paper: "#FFFDF8",
         ink: "#16301A",
         muted: "#5A5647",

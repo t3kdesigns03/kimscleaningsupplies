@@ -19,9 +19,10 @@ export default function Hero() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-forest-deep/80 to-forest-deep/20 md:from-forest-deep/15 md:to-transparent" />
 
       <div className="mx-auto flex min-h-[440px] max-w-site items-center px-4 py-16 sm:px-7 md:min-h-[440px] md:py-14 lg:min-h-[460px]">
-        <div className="w-full animate-rise md:max-w-[48%]">
+        <div className="w-full animate-rise md:max-w-[60%] lg:max-w-[48%]">
           <h1 className="mb-4 text-paper drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
-            Cleans with just water.
+            {/* fixed break: always "Cleans with / just water." at every width */}
+            <span className="whitespace-nowrap">Cleans with</span><br /><span className="whitespace-nowrap">just water.</span>
           </h1>
           <p className="mb-8 max-w-[36ch] text-balance text-[1.15rem] font-medium text-paper sm:text-[1.35rem]">
             Wet it. Wring it. Wipe it. Walk away.

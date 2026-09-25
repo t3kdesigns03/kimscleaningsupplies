@@ -35,13 +35,18 @@ export default function Home() {
             The fiber is split so fine it lifts dirt off the surface and holds it. Water does the
             work — not a spray.
           </p>
-          <ol className="mt-14 grid list-none grid-cols-2 gap-x-6 gap-y-10 p-0 md:mt-20 md:grid-cols-4 md:gap-8">
+          {/* Under 480 the steps stack 1–4, number beside the words, so no step copy
+              gets squeezed or clipped. 2×2 from 480, 4-up from md. */}
+          <ol className="mt-10 grid list-none grid-cols-1 gap-y-6 p-0 min-[480px]:mt-14 min-[480px]:grid-cols-2 min-[480px]:gap-x-6 min-[480px]:gap-y-10 md:mt-20 md:grid-cols-4 md:gap-8">
             {STEPS.map((s, i) => (
-              <li key={s.title} className="border-t-2 border-forest-deep/20 pt-5">
-                <span className="block font-serif text-[clamp(2.6rem,6vw,3.6rem)] font-bold leading-none text-leaf">
+              <li
+                key={s.title}
+                className="grid min-w-0 grid-cols-[2.75rem_minmax(0,1fr)] gap-x-3 border-t-2 border-forest-deep/20 pt-4 min-[480px]:block min-[480px]:pt-5"
+              >
+                <span className="row-span-2 block font-serif text-[clamp(2.6rem,6vw,3.6rem)] font-bold leading-none text-leaf">
                   {i + 1}
                 </span>
-                <h3 className="mb-1 mt-3 text-[1.3rem] font-bold">{s.title}</h3>
+                <h3 className="mb-1 mt-0.5 text-[1.3rem] font-bold min-[480px]:mt-3">{s.title}</h3>
                 <p className="m-0 text-[0.95rem] text-muted">{s.body}</p>
               </li>
             ))}
@@ -58,9 +63,9 @@ export default function Home() {
               One cloth. Just water. The same cloth that cleans a kitchen window cleans a windshield.
             </p>
           </Reveal>
-          <div className="scroll-row mt-12 md:mt-16">
+          <div className="product-row mt-12 md:mt-16">
             {cloths.map((p) => (
-              <div key={p.slug} className="scroll-card">
+              <div key={p.slug}>
                 <ProductCard product={p} />
               </div>
             ))}
@@ -78,9 +83,9 @@ export default function Home() {
             Same fiber, different jobs. Use the dusters dry so they hold a charge and pull dust
             instead of pushing it around.
           </p>
-          <div className="scroll-row mt-12 md:mt-16">
+          <div className="product-row mt-12 md:mt-16">
             {tools.map((p) => (
-              <div key={p.slug} className="scroll-card">
+              <div key={p.slug}>
                 <ProductCard product={p} />
               </div>
             ))}

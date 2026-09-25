@@ -180,7 +180,8 @@ export const products: Product[] = [
     category: "mops",
     blurb: "Cleans the inside and outside of the windshield, even where you can't reach.",
     images: [
-      "/images/products/windshield-mop.webp",
+      "/images/products/windshield-mop-1.webp",
+      "/images/products/windshield-mop-2.webp",
     ],
     desc: "For the part of the windshield nobody can reach. The long handle and pivoting head get the inside and the outside of the glass, right down to where it meets the dash, without climbing across the front seat.",
     bullets: [

@@ -2,13 +2,14 @@
 
 /* ------------------------------------------------------------------
    /admin order inbox. Built for Kim's phone at a booth, dressed like the
-   store: cream header with the globe, mint field, white order cards,
+   store: the store header (AdminHeader), mint field, white order cards,
    earth-green chips, lime for the next thing to do. Print stays plain.
    Everything goes through /api/admin/* — no keys in the browser.
    ------------------------------------------------------------------ */
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { money } from "@/lib/format";
+import AdminHeader from "./AdminHeader";
 import {
   ACTION_STATUSES,
   FULFILLMENT_LABEL,
@@ -222,48 +223,32 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
 
       {/* ---------- screen ---------- */}
       <div className="print:hidden">
-        {/* cream bar with the globe — same DNA as the store header */}
-        <header className="sticky top-0 z-30 border-b border-line bg-paper">
-          <div className="mx-auto flex min-h-[60px] max-w-site items-center gap-2 px-2 py-1.5 md:min-h-[76px] md:gap-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/brand/header-globe.png"
-              alt=""
-              aria-hidden="true"
-              width={44}
-              height={44}
-              className="h-10 w-10 flex-none rounded-full object-cover shadow-soft ring-2 ring-forest-deep/20 md:h-12 md:w-12"
-            />
-            <div className="mr-auto min-w-0 leading-none">
-              <span className="block truncate font-serif text-[12.5px] font-bold tracking-tight text-forest-deep md:text-[15px]">
-                Kim&rsquo;s Cleaning Products
+        {/* the store header: promo bar + cream nav with the globe and wordmark */}
+        <AdminHeader mode="inbox" loading={loading} onRefresh={refresh} onPrint={printPackList} onSignOut={signOut} />
+
+        <div className="mx-auto max-w-site px-2 pb-10 md:px-4">
+          {/* page title on the mint field, under the store header */}
+          <div className="flex items-center gap-2 pb-1 pt-4 md:pt-7">
+            <h1 className="m-0 mr-auto flex items-baseline gap-2.5 font-serif text-[2rem] font-semibold leading-none text-forest-deep md:text-[2.6rem]">
+              Orders
+              <span className="rounded-full bg-forest px-2.5 py-0.5 font-sans text-[0.85rem] font-bold leading-snug text-lime-bright">
+                {orders.length}
               </span>
-              <h1 className="m-0 mt-1 flex items-baseline gap-2 font-serif text-[1.55rem] font-semibold leading-none text-forest-deep md:text-[2rem]">
-                Orders
-                <span className="rounded-full bg-forest px-2 py-0.5 font-sans text-[0.8rem] font-bold leading-snug text-lime-bright">
-                  {orders.length}
-                </span>
-              </h1>
-            </div>
+            </h1>
+            {/* phone: Refresh + Print live here; md+ they're in the header */}
             <button
               type="button"
               onClick={refresh}
               aria-label="Refresh orders"
-              className="flex h-11 w-11 flex-none items-center justify-center rounded-full text-forest-deep hover:bg-grass/10 md:w-auto md:gap-2 md:px-4 md:text-[15px] md:font-semibold"
+              className="flex h-11 w-11 flex-none items-center justify-center rounded-full border-[1.5px] border-line bg-paper text-forest-deep md:hidden"
             >
               <RefreshIcon spin={loading} />
-              <span className="hidden md:inline">{loading ? "Loading…" : "Refresh"}</span>
             </button>
-            <button type="button" onClick={printPackList} className="btn btn-lime btn-sm flex-none px-4">
+            <button type="button" onClick={printPackList} className="btn btn-lime btn-sm flex-none md:hidden">
               Print list
             </button>
-            <button type="button" onClick={signOut} className="hidden flex-none px-2 text-[14px] font-semibold text-forest-deep underline decoration-leaf decoration-2 underline-offset-4 md:inline">
-              Sign out
-            </button>
           </div>
-        </header>
 
-        <div className="mx-auto max-w-site px-2 pb-10 md:px-4">
           {/* filters — same chips as /shop */}
           <section className="pt-3" aria-label="Filters">
             <div className="flex flex-wrap gap-1.5 md:gap-2">
@@ -364,9 +349,6 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
             })}
           </ul>
 
-          <div className="mt-8 text-center md:hidden">
-            <button type="button" onClick={signOut} className="btn-link text-[15px]">Sign out</button>
-          </div>
         </div>
       </div>
 

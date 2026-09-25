@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import AdminHeader from "./AdminHeader";
 
 export default function AdminLogin({ configured }: { configured: boolean }) {
   const [pw, setPw] = useState("");
@@ -9,6 +10,10 @@ export default function AdminLogin({ configured }: { configured: boolean }) {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (!pw) {
+      setErr("Enter the staff password.");
+      return;
+    }
     setBusy(true);
     setErr("");
     try {
@@ -29,44 +34,34 @@ export default function AdminLogin({ configured }: { configured: boolean }) {
   }
 
   return (
-    <div className="flex min-h-[100dvh] items-center justify-center bg-wash px-2">
-      <form onSubmit={submit} className="w-full max-w-sm rounded-2xl border border-line bg-paper p-6 shadow-lift">
-        <div className="mb-5 flex items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/brand/header-globe.png"
-            alt=""
-            aria-hidden="true"
-            width={52}
-            height={52}
-            className="h-[52px] w-[52px] flex-none rounded-full object-cover shadow-soft ring-2 ring-forest-deep/20"
-          />
-          <div className="leading-none">
-            <span className="block font-serif text-[14px] font-bold tracking-tight text-forest-deep">Kim&rsquo;s Cleaning Products</span>
-            <h1 className="m-0 mt-1 font-serif text-[2rem] font-semibold leading-none text-forest-deep">Orders</h1>
-          </div>
-        </div>
-        <p className="eyebrow m-0 mb-3">Staff only</p>
-        {!configured && (
-          <p className="mb-4 rounded-xl border border-line bg-cream p-3 text-[0.95rem] text-warn">
-            ADMIN_PASSWORD isn&rsquo;t set on the server, so nobody can sign in yet.
-          </p>
-        )}
-        <label className="field">
-          <span>Password</span>
-          <input
-            type="password"
-            autoComplete="current-password"
-            value={pw}
-            onChange={(e) => setPw(e.target.value)}
-            autoFocus
-          />
-        </label>
-        {err && <p className="mb-3 text-[0.95rem] font-semibold text-warn" role="alert">{err}</p>}
-        <button type="submit" className="btn btn-primary btn-block" disabled={busy || !pw}>
-          {busy ? "Checking…" : "Open orders"}
-        </button>
-      </form>
+    <div className="flex min-h-[100dvh] flex-col bg-wash">
+      <AdminHeader mode="login" />
+      <div className="flex flex-1 items-start justify-center px-2 pb-16 pt-10 md:items-center md:pt-0">
+        <form onSubmit={submit} className="w-full max-w-sm rounded-2xl border border-line bg-paper p-6 shadow-lift">
+          <p className="eyebrow m-0">Staff only</p>
+          <h1 className="m-0 mb-5 mt-1 font-serif text-[2.2rem] font-semibold leading-none text-forest-deep">Orders</h1>
+          {!configured && (
+            <p className="mb-4 rounded-xl border border-line bg-cream p-3 text-[0.95rem] text-warn">
+              ADMIN_PASSWORD isn&rsquo;t set on the server, so nobody can sign in yet.
+            </p>
+          )}
+          <label className="field">
+            <span>Password</span>
+            <input
+              type="password"
+              autoComplete="current-password"
+              value={pw}
+              onChange={(e) => setPw(e.target.value)}
+              autoFocus
+            />
+          </label>
+          {err && <p className="mb-3 text-[0.95rem] font-semibold text-warn" role="alert">{err}</p>}
+          {/* store lime CTA — stays lime (not greyed) until it's actually working */}
+          <button type="submit" className="btn btn-lime btn-block" disabled={busy}>
+            {busy ? "Checking…" : "Open orders"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

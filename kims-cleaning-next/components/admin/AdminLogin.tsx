@@ -29,13 +29,27 @@ export default function AdminLogin({ configured }: { configured: boolean }) {
   }
 
   return (
-    <div className="flex min-h-[100dvh] items-center justify-center bg-forest-deep px-4">
-      <form onSubmit={submit} className="w-full max-w-sm rounded-2xl bg-paper p-6 shadow-lift">
-        <p className="eyebrow m-0">Staff only</p>
-        <h1 className="mb-5 mt-1 text-[2rem]">Orders</h1>
+    <div className="flex min-h-[100dvh] items-center justify-center bg-wash px-2">
+      <form onSubmit={submit} className="w-full max-w-sm rounded-2xl border border-line bg-paper p-6 shadow-lift">
+        <div className="mb-5 flex items-center gap-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/brand/header-globe.png"
+            alt=""
+            aria-hidden="true"
+            width={52}
+            height={52}
+            className="h-[52px] w-[52px] flex-none rounded-full object-cover shadow-soft ring-2 ring-forest-deep/20"
+          />
+          <div className="leading-none">
+            <span className="block font-serif text-[14px] font-bold tracking-tight text-forest-deep">Kim&rsquo;s Cleaning Products</span>
+            <h1 className="m-0 mt-1 font-serif text-[2rem] font-semibold leading-none text-forest-deep">Orders</h1>
+          </div>
+        </div>
+        <p className="eyebrow m-0 mb-3">Staff only</p>
         {!configured && (
-          <p className="mb-4 rounded-lg bg-cream p-3 text-[0.95rem] text-warn">
-            ADMIN_PASSWORD isn’t set on the server, so nobody can sign in yet.
+          <p className="mb-4 rounded-xl border border-line bg-cream p-3 text-[0.95rem] text-warn">
+            ADMIN_PASSWORD isn&rsquo;t set on the server, so nobody can sign in yet.
           </p>
         )}
         <label className="field">

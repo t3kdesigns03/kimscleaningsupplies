@@ -16,5 +16,26 @@
     <textarea name="message"></textarea>
     <input name="bot-field" />
   </form>
+
+  <!--
+    "order" — checkout posts a copy of every saved order here so Netlify can
+    email it (Site configuration > Notifications > Form submission
+    notifications). Supabase / /admin stays the real record.
+  -->
+  <form name="order" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="order" />
+    <input type="text" name="subject" />
+    <input type="text" name="order_ref" />
+    <input type="text" name="name" />
+    <input type="tel" name="phone" />
+    <input type="email" name="email" />
+    <input type="text" name="fulfillment" />
+    <input type="text" name="deliver_to" />
+    <textarea name="items"></textarea>
+    <input type="text" name="total" />
+    <input type="text" name="payment" />
+    <input type="text" name="admin" />
+    <input name="bot-field" />
+  </form>
 </body>
 </html>

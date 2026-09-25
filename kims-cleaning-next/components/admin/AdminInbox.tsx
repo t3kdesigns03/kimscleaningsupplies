@@ -1,8 +1,9 @@
 "use client";
 
 /* ------------------------------------------------------------------
-   /admin order inbox. Built for Kim's phone at a booth: full-bleed rows,
-   filters that wrap, big status buttons, and a print pack list.
+   /admin order inbox. Built for Kim's phone at a booth, dressed like the
+   store: cream header with the globe, mint field, white order cards,
+   earth-green chips, lime for the next thing to do. Print stays plain.
    Everything goes through /api/admin/* — no keys in the browser.
    ------------------------------------------------------------------ */
 
@@ -32,14 +33,23 @@ const fullFmt = new Intl.DateTimeFormat("en-US", {
   timeZone: TZ, weekday: "short", month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit",
 });
 
+/* Status pills in the store's palette: cream → lime → gold → leaf → forest. */
 const STATUS_STYLE: Record<OrderStatus, string> = {
-  Received: "bg-[#EFEBDD] text-[#4A4538] border-[#DDD5BD]",
+  Received: "bg-cream text-forest-deep border-line",
   Paid: "bg-lime-bright text-forest-deep border-lime",
-  Packed: "bg-[#FFF1B8] text-[#6B5600] border-gold-soft",
-  "Picked up": "bg-[#D8EEC6] text-forest-deep border-leaf",
-  Shipped: "bg-[#D8EEC6] text-forest-deep border-leaf",
+  Packed: "bg-[#FFF3C4] text-[#5C4A00] border-gold-soft",
+  "Picked up": "bg-wash text-forest-deep border-leaf",
+  Shipped: "bg-wash text-forest-deep border-leaf",
   Done: "bg-forest-deep text-lime-bright border-forest-deep",
 };
+
+/** The one step that usually comes next, shown in lime on the ticket. */
+function nextStep(o: OrderRow): OrderStatus | null {
+  const flow: OrderStatus[] = o.fulfillment === "ship" ? ["Packed", "Shipped", "Done"] : ["Packed", "Picked up", "Done"];
+  const i = flow.indexOf(o.status);
+  if (i === -1) return o.status === "Received" || o.status === "Paid" ? "Packed" : null;
+  return flow[i + 1] ?? null;
+}
 
 function Pill({ status }: { status: OrderStatus }) {
   return (
@@ -51,23 +61,34 @@ function Pill({ status }: { status: OrderStatus }) {
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex max-w-full items-center truncate whitespace-nowrap rounded-full border border-line bg-white px-2.5 py-0.5 text-[0.8rem] font-semibold text-forest-deep">
+    <span className="inline-flex max-w-full items-center truncate whitespace-nowrap rounded-full border border-forest/[0.12] bg-paper px-2.5 py-0.5 text-[0.8rem] font-semibold text-forest-deep">
       {children}
     </span>
   );
 }
 
-function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
+/* Same chip as the /shop filters: filled earth green = on, cream outline = off. */
+function Chip({ on, onClick, count, children }: { on: boolean; onClick: () => void; count: number; children: React.ReactNode }) {
   return (
     <button
       type="button"
       aria-pressed={on}
       onClick={onClick}
-      className={`inline-flex min-h-[44px] items-center gap-1.5 rounded-full border-[1.5px] px-3.5 text-[15px] font-semibold transition active:scale-95
-        ${on ? "border-forest bg-forest text-lime-bright" : "border-line bg-white text-forest-deep"}`}
+      className={`flex min-h-[44px] flex-none items-center gap-1.5 whitespace-nowrap rounded-full border-[1.5px] px-[16px] py-2 text-[15px] font-semibold transition active:scale-95
+        ${on ? "border-forest bg-forest text-lime-bright" : "border-line bg-paper text-forest-deep hover:border-grass"}`}
     >
       {children}
+      <span className={`text-[0.8rem] font-bold ${on ? "text-lime-bright/80" : "text-muted"}`}>{count}</span>
     </button>
+  );
+}
+
+function RefreshIcon({ spin }: { spin: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={spin ? "animate-spin" : ""}>
+      <path d="M20 11a8 8 0 1 0-2.3 5.7" />
+      <path d="M20 4v7h-7" />
+    </svg>
   );
 }
 
@@ -188,8 +209,10 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
     return Array.from(m.entries()).sort((a, b) => a[0].localeCompare(b[0]));
   }, [shown]);
 
+  const COLS = "md:grid md:grid-cols-[112px_minmax(0,1.1fr)_minmax(0,2fr)_84px_minmax(0,1.3fr)_104px] md:items-center md:gap-4";
+
   return (
-    <div className="admin min-h-[100dvh] bg-paper text-ink">
+    <div className="admin min-h-[100dvh] bg-wash text-ink print:bg-white">
       <style>{`
         @media print {
           @page { margin: 0; }
@@ -199,113 +222,155 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
 
       {/* ---------- screen ---------- */}
       <div className="print:hidden">
-        <header className="sticky top-0 z-30 flex items-center gap-1 whitespace-nowrap bg-forest-deep px-3 py-2 text-lime-bright">
-          <h1 className="m-0 mr-auto whitespace-nowrap text-[1.3rem] font-bold text-lime-bright">
-            Orders <span className="font-sans text-[0.95rem] font-semibold text-lime-bright/70">{orders.length}</span>
-          </h1>
-          <button type="button" onClick={refresh} className="min-h-[44px] rounded-full px-2.5 text-[14px] font-semibold text-lime-bright hover:bg-white/10" aria-label="Refresh">
-            {loading ? "Loading…" : "Refresh"}
-          </button>
-          <button type="button" onClick={printPackList} className="min-h-[44px] rounded-full bg-lime px-3.5 text-[14px] font-bold text-forest-deep">
-            Print list
-          </button>
-          <button type="button" onClick={signOut} className="min-h-[44px] rounded-full px-2 text-[13px] text-lime-bright/80 hover:bg-white/10">
-            Sign out
-          </button>
+        {/* cream bar with the globe — same DNA as the store header */}
+        <header className="sticky top-0 z-30 border-b border-line bg-paper">
+          <div className="mx-auto flex min-h-[60px] max-w-site items-center gap-2 px-2 py-1.5 md:min-h-[76px] md:gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/brand/header-globe.png"
+              alt=""
+              aria-hidden="true"
+              width={44}
+              height={44}
+              className="h-10 w-10 flex-none rounded-full object-cover shadow-soft ring-2 ring-forest-deep/20 md:h-12 md:w-12"
+            />
+            <div className="mr-auto min-w-0 leading-none">
+              <span className="block truncate font-serif text-[12.5px] font-bold tracking-tight text-forest-deep md:text-[15px]">
+                Kim&rsquo;s Cleaning Products
+              </span>
+              <h1 className="m-0 mt-1 flex items-baseline gap-2 font-serif text-[1.55rem] font-semibold leading-none text-forest-deep md:text-[2rem]">
+                Orders
+                <span className="rounded-full bg-forest px-2 py-0.5 font-sans text-[0.8rem] font-bold leading-snug text-lime-bright">
+                  {orders.length}
+                </span>
+              </h1>
+            </div>
+            <button
+              type="button"
+              onClick={refresh}
+              aria-label="Refresh orders"
+              className="flex h-11 w-11 flex-none items-center justify-center rounded-full text-forest-deep hover:bg-grass/10 md:w-auto md:gap-2 md:px-4 md:text-[15px] md:font-semibold"
+            >
+              <RefreshIcon spin={loading} />
+              <span className="hidden md:inline">{loading ? "Loading…" : "Refresh"}</span>
+            </button>
+            <button type="button" onClick={printPackList} className="btn btn-lime btn-sm flex-none px-4">
+              Print list
+            </button>
+            <button type="button" onClick={signOut} className="hidden flex-none px-2 text-[14px] font-semibold text-forest-deep underline decoration-leaf decoration-2 underline-offset-4 md:inline">
+              Sign out
+            </button>
+          </div>
         </header>
 
-        <section className="border-b border-line bg-wash/60 px-3 py-3" aria-label="Filters">
-          <div className="flex flex-wrap gap-2">
-            {(["all", "pickup", "ship", "event"] as FFilter[]).map((k) => (
-              <Chip key={k} on={ff === k} onClick={() => { setFf(k); if (k !== "event" && k !== "all") setEv(""); }}>
-                {k === "all" ? "All" : FULFILLMENT_LABEL[k]}
-                <span className="text-[0.8rem] opacity-70">{fCount(k)}</span>
-              </Chip>
-            ))}
-          </div>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {(["all", ...STATUSES] as SFilter[]).map((k) => (
-              <Chip key={k} on={sf === k} onClick={() => setSf(k)}>
-                {k === "all" ? "Any status" : k}
-                <span className="text-[0.8rem] opacity-70">{sCount(k)}</span>
-              </Chip>
-            ))}
-          </div>
-          {eventNames.length > 0 && (
-            <label className="mt-2 block">
-              <span className="sr-only">Show</span>
-              <select
-                value={ev}
-                onChange={(e) => { setEv(e.target.value); if (e.target.value) setFf("event"); }}
-                className="min-h-[44px] w-full rounded-lg border-[1.5px] border-line bg-white px-3 text-[16px] text-forest-deep md:w-auto"
-              >
-                <option value="">All shows</option>
-                {eventNames.map((n) => <option key={n} value={n}>{n}</option>)}
-              </select>
-            </label>
-          )}
-        </section>
-
-        {error && (
-          <p role="alert" className="m-0 border-b border-[#E9C9B5] bg-[#FBEDE4] px-3 py-3 font-semibold text-warn">{error}</p>
-        )}
-
-        <div className="flex items-baseline justify-between border-b border-line px-3 py-2 text-[0.9rem] text-muted">
-          <span>{shown.length} {shown.length === 1 ? "order" : "orders"}{filterLabel !== "All orders" ? ` · ${filterLabel}` : ""}</span>
-          <span className="font-semibold text-forest-deep">{money(shownTotal)}</span>
-        </div>
-
-        {/* desktop column heads */}
-        <div className="hidden grid-cols-[120px_minmax(0,1.1fr)_minmax(0,2fr)_90px_120px_minmax(0,1.2fr)_110px] gap-3 border-b border-line bg-cream px-3 py-2 text-[0.78rem] font-bold uppercase tracking-wider text-muted md:grid">
-          <span>When</span><span>Name</span><span>Items</span><span className="text-right">Total</span><span>Pay</span><span>Fulfillment</span><span>Status</span>
-        </div>
-
-        {shown.length === 0 && !error && (
-          <p className="px-3 py-10 text-center text-muted">No orders here yet.</p>
-        )}
-
-        <ul className="m-0 list-none p-0">
-          {shown.map((o) => {
-            const isOpen = open === o.id;
-            return (
-              <li key={o.id} className={`border-b border-line ${isOpen ? "bg-white" : ""}`} data-order-id={o.id}>
-                <button
-                  type="button"
-                  aria-expanded={isOpen}
-                  onClick={() => setOpen(isOpen ? null : o.id)}
-                  className="block w-full px-3 py-3 text-left hover:bg-white md:grid md:grid-cols-[120px_minmax(0,1.1fr)_minmax(0,2fr)_90px_120px_minmax(0,1.2fr)_110px] md:items-center md:gap-3"
+        <div className="mx-auto max-w-site px-2 pb-10 md:px-4">
+          {/* filters — same chips as /shop */}
+          <section className="pt-3" aria-label="Filters">
+            <div className="flex flex-wrap gap-1.5 md:gap-2">
+              {(["all", "pickup", "ship", "event"] as FFilter[]).map((k) => (
+                <Chip key={k} on={ff === k} count={fCount(k)} onClick={() => { setFf(k); if (k !== "event" && k !== "all") setEv(""); }}>
+                  {k === "all" ? "All" : FULFILLMENT_LABEL[k]}
+                </Chip>
+              ))}
+            </div>
+            <div className="mt-1.5 flex flex-wrap gap-1.5 md:mt-2 md:gap-2">
+              {(["all", ...STATUSES] as SFilter[]).map((k) => (
+                <Chip key={k} on={sf === k} count={sCount(k)} onClick={() => setSf(k)}>
+                  {k === "all" ? "Any status" : k}
+                </Chip>
+              ))}
+            </div>
+            {eventNames.length > 0 && (
+              <label className="mt-2 block">
+                <span className="sr-only">Show</span>
+                <select
+                  value={ev}
+                  onChange={(e) => { setEv(e.target.value); if (e.target.value) setFf("event"); }}
+                  className="min-h-[44px] w-full rounded-full border-[1.5px] border-line bg-paper px-4 text-[16px] font-semibold text-forest-deep md:w-auto"
                 >
-                  {/* phone layout */}
-                  <span className="flex items-baseline gap-2 md:hidden">
-                    <strong className="min-w-0 flex-1 truncate text-[1.08rem] text-forest-deep">{o.name || "—"}</strong>
-                    <strong className="text-[1.08rem] text-forest-deep">{money(o.total || 0)}</strong>
-                  </span>
-                  <span className="mt-0.5 block text-[0.85rem] text-muted md:hidden">{whenFmt.format(new Date(o.created_at))}</span>
-                  <span className="mt-1 line-clamp-2 block text-[0.95rem] md:hidden">{itemsSummary(o.items)}</span>
-                  <span className="mt-2 flex flex-wrap items-center gap-1.5 md:hidden">
-                    <Pill status={o.status} />
-                    <Tag>{fulfillmentText(o)}</Tag>
-                    <Tag>{o.payment ? PAYMENT_LABEL[o.payment] : "—"}</Tag>
-                  </span>
+                  <option value="">All shows</option>
+                  {eventNames.map((n) => <option key={n} value={n}>{n}</option>)}
+                </select>
+              </label>
+            )}
+          </section>
 
-                  {/* desktop columns */}
-                  <span className="hidden text-[0.9rem] text-muted md:block">{whenFmt.format(new Date(o.created_at))}</span>
-                  <span className="hidden truncate font-semibold text-forest-deep md:block">{o.name || "—"}</span>
-                  <span className="hidden truncate text-[0.95rem] md:block">{itemsSummary(o.items)}</span>
-                  <span className="hidden text-right font-semibold md:block">{money(o.total || 0)}</span>
-                  <span className="hidden text-[0.9rem] md:block">{o.payment ? PAYMENT_LABEL[o.payment] : "—"}</span>
-                  <span className="hidden truncate text-[0.9rem] md:block">{fulfillmentText(o)}</span>
-                  <span className="hidden md:block"><Pill status={o.status} /></span>
-                </button>
+          {error && (
+            <p role="alert" className="m-0 mt-3 rounded-2xl border border-[#E9C9B5] bg-[#FBEDE4] px-4 py-3 font-semibold text-warn">{error}</p>
+          )}
 
-                {isOpen && <Ticket o={o} saving={saving === o.id} onStatus={(s) => changeStatus(o, s)} />}
-              </li>
-            );
-          })}
-        </ul>
+          <div className="mt-4 flex items-baseline justify-between px-1 pb-2">
+            <span className="text-[0.95rem] text-muted">
+              {shown.length} {shown.length === 1 ? "order" : "orders"}{filterLabel !== "All orders" ? ` · ${filterLabel}` : ""}
+            </span>
+            <span className="font-serif text-[1.15rem] font-bold text-forest-deep">{money(shownTotal)}</span>
+          </div>
+
+          {/* desktop column heads, aligned with the columns inside each card */}
+          {shown.length > 0 && (
+            <div className={`hidden px-4 pb-1.5 text-[0.74rem] font-bold uppercase tracking-[0.12em] text-forest-deep/60 ${COLS}`}>
+              <span>When</span><span>Name</span><span>Items</span><span className="text-right">Total</span><span>Fulfillment</span><span>Status</span>
+            </div>
+          )}
+
+          {shown.length === 0 && !error && (
+            <div className="rounded-2xl border border-line bg-paper px-4 py-12 text-center">
+              <p className="m-0 font-serif text-[1.3rem] font-semibold text-forest-deep">No orders here yet.</p>
+              <p className="m-0 mt-1 text-muted">New ones show up on their own every minute.</p>
+            </div>
+          )}
+
+          <ul className="m-0 list-none space-y-2 p-0">
+            {shown.map((o) => {
+              const isOpen = open === o.id;
+              return (
+                <li
+                  key={o.id}
+                  data-order-id={o.id}
+                  className={`overflow-hidden rounded-2xl border bg-white shadow-soft transition ${isOpen ? "border-leaf ring-2 ring-leaf/40" : "border-line"}`}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => setOpen(isOpen ? null : o.id)}
+                    className={`block w-full px-4 py-3.5 text-left hover:bg-paper ${COLS}`}
+                  >
+                    {/* phone layout */}
+                    <span className="flex items-baseline gap-2 md:hidden">
+                      <strong className="min-w-0 flex-1 truncate font-serif text-[1.15rem] font-semibold text-forest-deep">{o.name || "—"}</strong>
+                      <strong className="font-serif text-[1.15rem] font-bold text-forest-deep">{money(o.total || 0)}</strong>
+                    </span>
+                    <span className="mt-0.5 block text-[0.85rem] text-muted md:hidden">
+                      {whenFmt.format(new Date(o.created_at))} · {o.payment ? PAYMENT_LABEL[o.payment] : "—"}
+                    </span>
+                    <span className="mt-1.5 line-clamp-2 block text-[0.98rem] text-ink md:hidden">{itemsSummary(o.items)}</span>
+                    <span className="mt-2.5 flex flex-wrap items-center gap-1.5 md:hidden">
+                      <Pill status={o.status} />
+                      <Tag>{fulfillmentText(o)}</Tag>
+                    </span>
+
+                    {/* desktop columns inside the card */}
+                    <span className="hidden text-[0.9rem] text-muted md:block">{whenFmt.format(new Date(o.created_at))}</span>
+                    <span className="hidden truncate font-serif text-[1.08rem] font-semibold text-forest-deep md:block">{o.name || "—"}</span>
+                    <span className="hidden truncate text-[0.96rem] md:block">{itemsSummary(o.items)}</span>
+                    <span className="hidden text-right font-serif text-[1.08rem] font-bold text-forest-deep md:block">{money(o.total || 0)}</span>
+                    <span className="hidden min-w-0 md:block"><Tag>{fulfillmentText(o)}</Tag></span>
+                    <span className="hidden md:block"><Pill status={o.status} /></span>
+                  </button>
+
+                  {isOpen && <Ticket o={o} saving={saving === o.id} onStatus={(s) => changeStatus(o, s)} />}
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="mt-8 text-center md:hidden">
+            <button type="button" onClick={signOut} className="btn-link text-[15px]">Sign out</button>
+          </div>
+        </div>
       </div>
 
-      {/* ---------- print: pack list for the current filter ---------- */}
+      {/* ---------- print: pack list for the current filter (plain) ---------- */}
       <div className="hidden bg-white p-[10mm] text-[11pt] text-black print:block">
         <h1 className="m-0 font-serif text-[18pt] text-black">Pack list — {filterLabel}</h1>
         <p className="m-0 mb-3 text-[9pt]">
@@ -350,15 +415,39 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
   );
 }
 
+/* Ticket: what to pack first, then who it's for, then the buttons. */
 function Ticket({ o, saving, onStatus }: { o: OrderRow; saving: boolean; onStatus: (s: OrderStatus) => void }) {
   const phoneDigits = (o.phone || "").replace(/[^\d+]/g, "");
+  const next = nextStep(o);
   return (
-    <div className="border-t border-dashed border-line px-3 pb-4 pt-3">
-      <div className="grid gap-x-6 gap-y-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-        <div className="space-y-1 text-[0.98rem]">
-          <div className="text-[0.8rem] font-bold uppercase tracking-wider text-muted">
-            #{shortRef(o.id)} · {fullFmt.format(new Date(o.created_at))}
+    <div className="border-t border-dashed border-line bg-paper px-4 pb-4 pt-4">
+      <div className="grid gap-x-8 gap-y-4 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+        {/* 1. products */}
+        <div>
+          <p className="eyebrow m-0 mb-1.5">Pack</p>
+          <ul className="m-0 list-none p-0">
+            {o.items.map((i, n) => (
+              <li key={n} className="flex items-baseline gap-3 border-b border-line py-2">
+                <b className="w-9 flex-none font-serif text-[1.25rem] text-forest-deep">{i.qty}×</b>
+                <span className="min-w-0 flex-1 text-[1.02rem] font-semibold text-ink">
+                  {shortName(i.name)}
+                  {i.color ? <span className="font-normal text-muted"> · {i.color}</span> : null}
+                </span>
+                <span className="flex-none text-[0.95rem] text-muted">{money(i.price * i.qty)}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-2 flex items-baseline justify-end gap-4 text-[0.95rem]">
+            {!!o.shipping && <span className="text-muted">Shipping {money(o.shipping)}</span>}
+            <span className="font-serif text-[1.2rem] font-bold text-forest-deep">Total {money(o.total || 0)}</span>
           </div>
+          {o.note && <p className="m-0 mt-3 rounded-xl border border-line bg-cream p-3 text-[0.95rem]"><b>Note:</b> {o.note}</p>}
+        </div>
+
+        {/* 2. contact + how it gets to them */}
+        <div className="space-y-1 text-[0.98rem]">
+          <p className="eyebrow m-0 mb-1.5">For</p>
+          <div className="font-serif text-[1.15rem] font-semibold text-forest-deep">{o.name || "—"}</div>
           {o.phone && (
             <div>
               <a href={`tel:${phoneDigits}`} className="font-semibold">{o.phone}</a>
@@ -367,7 +456,7 @@ function Ticket({ o, saving, onStatus }: { o: OrderRow; saving: boolean; onStatu
             </div>
           )}
           {o.email && <div className="break-all"><a href={`mailto:${o.email}`}>{o.email}</a></div>}
-          <div className="pt-1">
+          <div className="pt-2">
             {o.fulfillment === "ship" && (
               <>
                 <strong className="block text-forest-deep">Ship to</strong>
@@ -383,36 +472,22 @@ function Ticket({ o, saving, onStatus }: { o: OrderRow; saving: boolean; onStatu
             )}
             {o.fulfillment === "pickup" && <strong className="block text-forest-deep">Pickup in Quincy</strong>}
           </div>
-          <div className="text-[0.92rem] text-muted">
+          <div className="pt-1 text-[0.9rem] text-muted">
             {o.payment ? PAYMENT_LABEL[o.payment] : "—"}
             {o.paypal_id ? ` · PayPal ${o.paypal_id}` : ""}
-          </div>
-          {o.note && <p className="m-0 mt-2 rounded-lg bg-cream p-2.5 text-[0.95rem]"><b>Note:</b> {o.note}</p>}
-        </div>
-
-        <div>
-          <ul className="m-0 list-none p-0">
-            {o.items.map((i, n) => (
-              <li key={n} className="flex gap-3 border-b border-line/70 py-1.5 text-[0.98rem]">
-                <b className="w-8 flex-none text-right">{i.qty}×</b>
-                <span className="min-w-0 flex-1">{shortName(i.name)}{i.color ? <span className="text-muted"> · {i.color}</span> : null}</span>
-                <span className="flex-none">{money(i.price * i.qty)}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-1.5 space-y-0.5 text-right text-[0.95rem]">
-            {!!o.shipping && <div className="text-muted">Shipping {money(o.shipping)}</div>}
-            <div className="font-bold text-forest-deep">Total {money(o.total || 0)}</div>
+            {" · "}#{shortRef(o.id)} · {fullFmt.format(new Date(o.created_at))}
           </div>
         </div>
       </div>
 
-      <div className="mt-4 flex items-center gap-2 text-[0.9rem] text-muted">
-        Status: <Pill status={o.status} /> {saving && <span>Saving…</span>}
+      {/* 3. status */}
+      <div className="mt-5 flex items-center gap-2 text-[0.92rem] text-muted">
+        Now: <Pill status={o.status} /> {saving && <span>Saving…</span>}
       </div>
       <div className="mt-2 grid grid-cols-2 gap-2 md:grid-cols-4">
         {ACTION_STATUSES.map((s) => {
           const on = o.status === s;
+          const isNext = s === next;
           return (
             <button
               key={s}
@@ -420,22 +495,26 @@ function Ticket({ o, saving, onStatus }: { o: OrderRow; saving: boolean; onStatu
               disabled={saving}
               aria-pressed={on}
               onClick={() => onStatus(s)}
-              className={`min-h-[56px] rounded-xl border-2 text-[1.05rem] font-bold transition active:scale-[0.98] disabled:opacity-60
-                ${on ? "border-forest-deep bg-forest-deep text-lime-bright" : "border-forest/30 bg-white text-forest-deep"}`}
+              className={`min-h-[56px] rounded-full border-2 text-[1.05rem] font-bold transition active:scale-[0.98] disabled:opacity-60
+                ${on
+                  ? "border-forest-deep bg-forest-deep text-lime-bright"
+                  : isNext
+                    ? "border-lime bg-lime text-forest-deep shadow-soft hover:bg-leaf"
+                    : "border-forest/25 bg-white text-forest-deep hover:border-grass"}`}
             >
-              {s}
+              {on ? `✓ ${s}` : s}
             </button>
           );
         })}
       </div>
       <div className="mt-2 flex flex-wrap gap-2">
-        {(["Received", "Paid"] as OrderStatus[]).map((s) => (
+        {(["Paid", "Received"] as OrderStatus[]).map((s) => (
           <button
             key={s}
             type="button"
             disabled={saving || o.status === s}
             onClick={() => onStatus(s)}
-            className="min-h-[44px] rounded-full border border-line bg-white px-4 text-[0.95rem] font-semibold text-forest-deep disabled:opacity-50"
+            className="min-h-[44px] rounded-full border-[1.5px] border-line bg-white px-4 text-[0.95rem] font-semibold text-forest-deep hover:border-grass disabled:opacity-50"
           >
             {s === "Paid" ? "Mark paid" : "Back to received"}
           </button>

@@ -4,9 +4,12 @@ import { useEffect, useRef } from "react";
 import { config } from "@/lib/config";
 import { useCart } from "./CartProvider";
 import { money2 } from "@/lib/format";
+import { placeOrder, type PlacedOrder } from "@/lib/place-order";
 
 const CUR = config.paypalCurrency || "USD";
-const configured = config.paypalClientId && config.paypalClientId !== "REPLACE_ME";
+/** False when NEXT_PUBLIC_PAYPAL_CLIENT_ID is empty — the PayPal box is skipped entirely. */
+export const paypalConfigured = Boolean(config.paypalClientId && config.paypalClientId !== "REPLACE_ME");
+const configured = paypalConfigured;
 
 declare global {
   interface Window {
@@ -40,11 +43,17 @@ export default function PayPalCheckout({
   onSuccess,
 }: {
   blocked: string;
-  onSuccess: (payer: string) => void;
+  onSuccess: (payer: string, placed: PlacedOrder) => void;
 }) {
-  const { subtotal, shipping, checkout, describe } = useCart();
+  const { subtotal, shipping, checkout, describe, orderRequest, recordPending } = useCart();
   const hostRef = useRef<HTMLDivElement>(null);
   const btnsRef = useRef<any>(null);
+  // PayPal's buttons keep the callbacks from their first render; read the
+  // latest cart/contact details through refs when the payment completes.
+  const reqRef = useRef(orderRequest);
+  reqRef.current = orderRequest;
+  const pendingRef = useRef(recordPending);
+  pendingRef.current = recordPending;
 
   useEffect(() => {
     if (!configured || blocked) return;
@@ -60,7 +69,7 @@ export default function PayPalCheckout({
             const c = checkout;
             const unit: any = {
               description: describe(120),
-              custom_id: [c.fulfillment === "pickup" ? "PICKUP" : "SHIP", c.name, c.phone].filter(Boolean).join(" / ").slice(0, 120),
+              custom_id: [c.fulfillment === "pickup" ? "PICKUP" : c.fulfillment === "event" ? "SHOW" : "SHIP", c.name, c.phone].filter(Boolean).join(" / ").slice(0, 120),
               amount: {
                 currency_code: CUR,
                 value: money2(subtotal + shipping),
@@ -86,10 +95,15 @@ export default function PayPalCheckout({
             }
             return actions.order.create({ purchase_units: [unit], application_context: app });
           },
-          onApprove: (_d: unknown, actions: any) =>
-            actions.order.capture().then((details: any) => {
+          onApprove: (data: any, actions: any) =>
+            actions.order.capture().then(async (details: any) => {
               const payer = details?.payer?.name?.given_name || "";
-              onSuccess(payer);
+              // Money is captured — log the order. Venmo through PayPal reports paymentSource "venmo".
+              const src = data?.paymentSource === "venmo" ? "venmo" : "paypal";
+              const paypalId = String(details?.id || data?.orderID || "");
+              const placed = await placeOrder(reqRef.current(src, paypalId));
+              if (!placed.ok) pendingRef.current(src, paypalId); // local backup copy
+              onSuccess(payer, placed);
             }),
           onError: (err: unknown) => {
             console.error(err);
@@ -120,17 +134,9 @@ export default function PayPalCheckout({
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blocked, subtotal, shipping, checkout.fulfillment, checkout.name, checkout.address, checkout.city, checkout.state, checkout.zip]);
+  }, [blocked, subtotal, shipping, checkout.fulfillment, checkout.eventName, checkout.name, checkout.phone, checkout.address, checkout.city, checkout.state, checkout.zip]);
 
-  if (!configured) {
-    return (
-      <div className="rounded-2xl border border-[#CBD7E4] bg-[#F1F4F8] p-4 text-forest-deep">
-        <strong className="mb-1 block">Online checkout turns on when PayPal is connected.</strong>
-        Everything else on this page works — Kim just needs to paste her live PayPal client ID into{" "}
-        <code>lib/config.ts</code> and card and PayPal buttons appear right here.
-      </div>
-    );
-  }
+  if (!configured) return null;
 
   if (blocked) {
     return <div className="rounded-2xl border border-line bg-cream p-4 text-forest-deep">{blocked}</div>;

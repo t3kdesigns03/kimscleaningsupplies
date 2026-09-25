@@ -4,13 +4,17 @@ import { useMemo, useState } from "react";
 import { config } from "@/lib/config";
 import { useCart } from "./CartProvider";
 import { money, money2 } from "@/lib/format";
+import { placeOrder, type PlacedOrder } from "@/lib/place-order";
 
-const configured = config.venmoHandle && config.venmoHandle !== "REPLACE_ME";
+/** False while venmoHandle is unset — the Venmo box is skipped entirely. */
+export const venmoConfigured = Boolean(config.venmoHandle && config.venmoHandle !== "REPLACE_ME");
+const configured = venmoConfigured;
 
-export default function VenmoBox({ onPaid }: { onPaid: () => void }) {
-  const { lines, total, recordPending } = useCart();
+export default function VenmoBox({ onPaid, blocked = "" }: { onPaid: (placed: PlacedOrder) => void; blocked?: string }) {
+  const { lines, total, recordPending, orderRequest } = useCart();
   const [copied, setCopied] = useState(false);
   const [done, setDone] = useState(false);
+  const [busy, setBusy] = useState(false);
 
   const { note, appUrl, webUrl, handle } = useMemo(() => {
     const handle = String(config.venmoHandle).replace(/^@/, "");
@@ -25,21 +29,7 @@ export default function VenmoBox({ onPaid }: { onPaid: () => void }) {
 
   const isPhone = typeof navigator !== "undefined" && /android|iphone|ipad|ipod/i.test(navigator.userAgent);
 
-  if (!configured) {
-    return (
-      <div className="rounded-2xl border border-line bg-paper p-[18px] shadow-soft">
-        <div className="mb-3 flex items-center gap-2.5">
-          <span className="flex h-[34px] w-[34px] items-center justify-center rounded-[9px] bg-[#008CFF] font-serif text-[20px] font-extrabold text-white">V</span>
-          <h3 className="m-0 text-[1.16rem]">Pay with the Venmo app</h3>
-        </div>
-        <div className="rounded-2xl border border-[#CBD7E4] bg-[#F1F4F8] p-4 text-forest-deep">
-          <strong className="mb-1 block">Venmo turns on when the username is set.</strong>
-          Add it to <code>lib/config.ts</code> as <code>venmoHandle</code> and this box fills in with
-          the amount, the note, and a button that opens Venmo.
-        </div>
-      </div>
-    );
-  }
+  if (!configured) return null;
   if (!lines.length) return null;
 
   return (
@@ -80,16 +70,22 @@ export default function VenmoBox({ onPaid }: { onPaid: () => void }) {
         <button
           type="button"
           className="btn btn-ghost"
-          onClick={() => {
+          disabled={busy || Boolean(blocked)}
+          onClick={async () => {
+            setBusy(true);
             recordPending("venmo", note);
+            // Honor system: logged as "Received" until Kim sees it land in Venmo.
+            const placed = await placeOrder(orderRequest("venmo"));
+            setBusy(false);
             setDone(true);
-            onPaid();
+            onPaid(placed);
           }}
         >
-          I&rsquo;ve paid with Venmo
+          {busy ? "Saving…" : <>I&rsquo;ve paid with Venmo</>}
         </button>
       </div>
 
+      {blocked && <p className="mb-0 mt-3 text-[0.9rem] text-muted">{blocked}</p>}
       <p className="mt-3.5 text-[0.82rem] text-muted">
         Venmo has no way to tell this website that a payment landed, so this step is on the honor
         system. Kim checks Venmo every evening.

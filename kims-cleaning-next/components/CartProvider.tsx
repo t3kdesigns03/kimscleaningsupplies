@@ -8,6 +8,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, useCallback } from "react";
 import { config } from "@/lib/config";
 import { products, getProduct, type Product } from "@/lib/products";
+import type { OrderPayment, OrderRequest } from "@/lib/orders";
 
 const KEY = "kims_cart_v1";
 const CHECKOUT_KEY = "kims_checkout_v1";
@@ -26,10 +27,13 @@ export interface Line extends CartItem {
   total: number;
 }
 
-export type Fulfillment = "ship" | "pickup";
+/** ship = mailed · pickup = Quincy · event = pick up at a fair/show booth */
+export type Fulfillment = "ship" | "pickup" | "event";
 
 export interface Checkout {
   fulfillment: Fulfillment;
+  /** eventLabel() of the chosen show when fulfillment is "event" */
+  eventName: string;
   name: string;
   email: string;
   phone: string;
@@ -41,6 +45,7 @@ export interface Checkout {
 
 const emptyCheckout: Checkout = {
   fulfillment: "ship",
+  eventName: "",
   name: "", email: "", phone: "",
   address: "", city: "", state: "", zip: "",
 };
@@ -61,6 +66,8 @@ interface CartCtx {
   updateCheckout: (patch: Partial<Checkout>) => void;
   describe: (max?: number) => string;
   recordPending: (method: string, reference?: string) => void;
+  /** The payload POST /api/orders expects for the current cart + checkout. */
+  orderRequest: (payment: OrderPayment, paypalId?: string) => OrderRequest;
   drawerOpen: boolean;
   openDrawer: () => void;
   closeDrawer: () => void;
@@ -163,7 +170,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const shipping = useMemo(() => {
     const flat = Number(config.flatShipping || 0);
-    if (!flat || !items.length || checkout.fulfillment === "pickup") return 0;
+    if (!flat || !items.length || checkout.fulfillment !== "ship") return 0;
     return flat;
   }, [items.length, checkout.fulfillment]);
 
@@ -176,7 +183,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           `${l.qty}x ${l.name.replace("Kim’s Cleaning Cloths — ", "Cloths ")}` +
           (l.variant ? ` (${l.variant})` : "")
       );
-      let s = "Kim's order: " + parts.join(", ") + (checkout.fulfillment === "pickup" ? " [PICKUP]" : "");
+      let s = "Kim's order: " + parts.join(", ") + (checkout.fulfillment === "pickup" ? " [PICKUP]" : checkout.fulfillment === "event" ? " [SHOW]" : "");
       return s.length > max ? s.slice(0, max - 1) + "…" : s;
     },
     [lines, checkout.fulfillment]
@@ -200,9 +207,29 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [total, shipping, subtotal, checkout, lines]
   );
 
+  const orderRequest = useCallback(
+    (payment: OrderPayment, paypalId = ""): OrderRequest => {
+      const c = checkout;
+      const ship = c.fulfillment === "ship";
+      return {
+        fulfillment: c.fulfillment,
+        payment,
+        paypal_id: paypalId || undefined,
+        name: c.name, email: c.email, phone: c.phone,
+        event_name: c.fulfillment === "event" ? c.eventName : undefined,
+        address: ship ? c.address : undefined,
+        city: ship ? c.city : undefined,
+        state: ship ? c.state : undefined,
+        zip: ship ? c.zip : undefined,
+        items: lines.map((l) => ({ slug: l.slug, variant: l.variant, qty: l.qty })),
+      };
+    },
+    [checkout, lines]
+  );
+
   const value: CartCtx = {
     ready, items, lines, count, subtotal, shipping, total, checkout,
-    add, setQty, remove, clear, updateCheckout, describe, recordPending,
+    add, setQty, remove, clear, updateCheckout, describe, recordPending, orderRequest,
     drawerOpen, openDrawer, closeDrawer,
   };
 

@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import { Toaster } from "@/components/Toast";
 import JsonLd from "@/components/JsonLd";
+import SiteChrome from "@/components/SiteChrome";
 import { config } from "@/lib/config";
 import { organizationSchema } from "@/lib/schema";
 
@@ -50,11 +51,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <JsonLd data={organizationSchema()} />
         <CartProvider>
-          <PromoBar />
-          <Header />
+          <SiteChrome>
+            <PromoBar />
+            <Header />
+          </SiteChrome>
           <main>{children}</main>
-          <Footer />
-          <CartDrawer />
+          <SiteChrome>
+            <Footer />
+            <CartDrawer />
+          </SiteChrome>
           <Toaster />
         </CartProvider>
       </body>

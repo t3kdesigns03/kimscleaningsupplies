@@ -5,7 +5,9 @@
 
 export const config = {
   // 1. PayPal live client ID — developer.paypal.com > Apps & Credentials > Live
-  paypalClientId: "REPLACE_ME",
+  // Set NEXT_PUBLIC_PAYPAL_CLIENT_ID in Netlify. Empty = PayPal buttons are
+  // hidden and checkout still works for pickup and shows (pay in person).
+  paypalClientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
   paypalCurrency: "USD",
 
   // 2. Venmo — your username WITHOUT the @ sign

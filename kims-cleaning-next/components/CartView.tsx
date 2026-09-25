@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useCart, type Fulfillment } from "./CartProvider";
+import { useCart, type Checkout, type Fulfillment } from "./CartProvider";
 import SmartImage from "./SmartImage";
-import PayPalCheckout from "./PayPalCheckout";
-import VenmoBox from "./VenmoBox";
+import PayPalCheckout, { paypalConfigured } from "./PayPalCheckout";
+import VenmoBox, { venmoConfigured } from "./VenmoBox";
 import { config, pickupAddress } from "@/lib/config";
+import { splitEvents, eventLabel } from "@/lib/events";
+import { placeOrder, type PlacedOrder } from "@/lib/place-order";
+import { shortRef } from "@/lib/orders";
 import { money } from "@/lib/format";
 import { SWATCH, imagesFor } from "@/lib/products";
 import { CheckIcon, EmptyCartIcon } from "./Icons";
@@ -19,10 +22,27 @@ const FIELD_LABEL: Record<string, string> = {
   address: "street address", city: "city", state: "state", zip: "ZIP",
 };
 
+const MODES: { key: Fulfillment; label: string; note: string }[] = [
+  { key: "ship", label: "Ship to me", note: config.flatShipping > 0 ? `${money(config.flatShipping)} flat` : "free" },
+  { key: "pickup", label: "Pickup", note: "Quincy, IL · free" },
+  { key: "event", label: "At a show", note: "pick up at the booth" },
+];
+
+/** One sentence for the thank-you screen that names how the order gets to them. */
+function fulfillmentLine(c: Checkout): string {
+  if (c.fulfillment === "event") return `We'll have it waiting for you at ${c.eventName || "the show"}.`;
+  if (c.fulfillment === "pickup") return `Pickup in Quincy — Kim will call or email to set a time. Pickup is at ${pickupAddress}.`;
+  const where = [c.city, c.state.toUpperCase()].filter(Boolean).join(", ");
+  return `Shipping to ${where || "you"}. Kim packs orders a couple of times a week and will email when yours is on its way.`;
+}
+
 export default function CartView() {
   const cart = useCart();
-  const { ready, lines, items, subtotal, shipping, total, checkout, setQty, remove, updateCheckout, clear } = cart;
-  const [thanks, setThanks] = useState<{ head: string; body: string } | null>(null);
+  const { ready, lines, items, subtotal, shipping, total, checkout, setQty, remove, updateCheckout, clear, orderRequest } = cart;
+  const [thanks, setThanks] = useState<{ head: string; body: string; ref?: string } | null>(null);
+  const [placing, setPlacing] = useState(false);
+  const [placeErr, setPlaceErr] = useState("");
+  const upcoming = useMemo(() => splitEvents().upcoming, []);
 
   if (!ready) {
     return <div className="wrap py-16 text-center text-muted">Loading your cart…</div>;
@@ -36,7 +56,8 @@ export default function CartView() {
             <CheckIcon className="h-9 w-9" />
           </div>
           <h1>{thanks.head}</h1>
-          <p className="mx-auto mb-6 max-w-[46ch] text-muted">{thanks.body}</p>
+          <p className="mx-auto mb-3 max-w-[46ch] text-muted">{thanks.body}</p>
+          {thanks.ref && <p className="mx-auto mb-6 font-semibold text-forest-deep">Order #{thanks.ref}</p>}
           <div className="flex flex-wrap justify-center gap-3">
             <Link href="/shop" className="btn btn-primary">Back to the shop</Link>
             <Link href="/events" className="btn btn-ghost">See where we&rsquo;ll be</Link>
@@ -60,31 +81,57 @@ export default function CartView() {
     );
   }
 
+  const inPerson = checkout.fulfillment !== "ship";
   const missing = (() => {
-    const need = checkout.fulfillment === "pickup" ? (["name", "email", "phone"] as const) : SHIP_FIELDS;
-    return need.filter((f) => !String(checkout[f] || "").trim()).map((f) => FIELD_LABEL[f]);
+    const need = inPerson ? (["name", "email", "phone"] as const) : SHIP_FIELDS;
+    const out = need.filter((f) => !String(checkout[f] || "").trim()).map((f) => FIELD_LABEL[f]);
+    if (checkout.fulfillment === "event" && !checkout.eventName) out.unshift("show");
+    return out;
   })();
-  const blocked = missing.length ? `Add your ${missing.join(", ")} above and the payment buttons appear here.` : "";
+  const blocked = missing.length ? `Add your ${missing.join(", ")} above to place the order.` : "";
+  const onlinePay = paypalConfigured || venmoConfigured;
 
-  function onPaid(payer: string) {
-    const pickup = checkout.fulfillment === "pickup";
+  function done(head: string, body: string, placed?: PlacedOrder) {
     clear();
-    setThanks({
-      head: payer ? `Thank you, ${payer}` : "Thank you",
-      body:
-        "Your payment went through. PayPal has emailed you the receipt — that is the one to keep. " +
-        (pickup ? "Kim will email you to arrange pickup in Quincy." : "Kim packs orders a couple of times a week and will email when yours is on its way."),
-    });
+    setThanks({ head, body, ref: placed?.ok && placed.id ? shortRef(placed.id) : undefined });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+  const notSaved = (placed: PlacedOrder) =>
+    placed.ok ? "" : ` If you don't hear from Kim in two days, email ${config.contactEmail}.`;
 
-  function onVenmoPaid() {
-    clear();
-    setThanks({
-      head: "Thank you — we'll watch for it",
-      body: "We'll confirm and ship when your Venmo payment lands. Email us if you need a receipt.",
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  function onPaid(payer: string, placed: PlacedOrder) {
+    done(
+      payer ? `Thank you, ${payer}` : "Thank you",
+      "Your payment went through. PayPal has emailed you the receipt — that is the one to keep. " +
+        fulfillmentLine(checkout) + notSaved(placed),
+      placed
+    );
+  }
+
+  function onVenmoPaid(placed: PlacedOrder) {
+    done(
+      "Thank you — we'll watch for it",
+      "We'll confirm when your Venmo payment lands. " + fulfillmentLine(checkout) + notSaved(placed),
+      placed
+    );
+  }
+
+  async function payInPerson() {
+    if (blocked || placing) return;
+    setPlacing(true);
+    setPlaceErr("");
+    const placed = await placeOrder(orderRequest("pickup"));
+    setPlacing(false);
+    if (!placed.ok) {
+      setPlaceErr(`${placed.error || "That didn't go through."} Try again, or call or email Kim.`);
+      return;
+    }
+    const first = checkout.name.trim().split(/\s+/)[0];
+    done(
+      first ? `Order placed, ${first}` : "Order placed",
+      `${fulfillmentLine(checkout)} You'll pay ${money(total)} ${checkout.fulfillment === "event" ? "at the booth" : "at pickup"} — cash, card or Venmo.`,
+      placed
+    );
   }
 
   return (
@@ -131,18 +178,16 @@ export default function CartView() {
         <aside className="space-y-4">
           <div className="rounded-2xl border border-line bg-paper p-[18px] shadow-soft">
             <h3 className="mt-0">How should we get it to you?</h3>
-            <div className="mb-4 grid grid-cols-2 gap-2">
-              {(["ship", "pickup"] as Fulfillment[]).map((mode) => {
-                const on = checkout.fulfillment === mode;
+            <div className="mb-4 grid grid-cols-3 gap-2">
+              {MODES.map(({ key, label, note }) => {
+                const on = checkout.fulfillment === key;
                 return (
-                  <button key={mode} type="button" aria-pressed={on}
-                    onClick={() => updateCheckout({ fulfillment: mode })}
-                    className={`flex min-h-[52px] flex-col items-center justify-center gap-0.5 rounded-lg border-[1.5px] p-2.5 text-[15px] font-semibold
+                  <button key={key} type="button" aria-pressed={on}
+                    onClick={() => updateCheckout({ fulfillment: key })}
+                    className={`flex min-h-[60px] flex-col items-center justify-center gap-0.5 rounded-lg border-[1.5px] px-1.5 py-2.5 text-center text-[15px] font-semibold leading-tight
                       ${on ? "border-forest bg-forest text-lime-bright" : "border-line bg-paper text-forest-deep"}`}>
-                    {mode === "ship" ? "Ship to me" : "Pickup"}
-                    <small className={`text-[0.78rem] font-normal ${on ? "text-lime-bright/85" : "text-muted"}`}>
-                      {mode === "ship" ? (config.flatShipping > 0 ? `${money(config.flatShipping)} flat` : "free") : "Quincy, IL · free"}
-                    </small>
+                    {label}
+                    <small className={`text-[0.76rem] font-normal ${on ? "text-lime-bright/85" : "text-muted"}`}>{note}</small>
                   </button>
                 );
               })}
@@ -151,7 +196,22 @@ export default function CartView() {
             {checkout.fulfillment === "pickup" && (
               <div className="mb-4 rounded-2xl border border-[#C9DCAE] bg-[#EFF4E7] p-4 text-forest-deep">
                 <strong className="mb-1 block">Free pickup in Quincy.</strong>
-                Kim will email you to arrange a time. Pickup is at {pickupAddress}.
+                Kim will call or email to set a time. Pickup is at {pickupAddress}.
+              </div>
+            )}
+
+            {checkout.fulfillment === "event" && (
+              <div className="mb-4">
+                <label className="field mb-2"><span>Which show?</span>
+                  <select value={checkout.eventName} onChange={(e) => updateCheckout({ eventName: e.target.value })}>
+                    <option value="">Pick a show…</option>
+                    {upcoming.map((e) => {
+                      const v = eventLabel(e);
+                      return <option key={v} value={v}>{e.date} — {e.name}, {e.city} {e.state}</option>;
+                    })}
+                  </select>
+                </label>
+                <p className="m-0 text-[0.9rem] text-muted">Kim brings your order to the booth. No shipping charge.</p>
               </div>
             )}
 
@@ -189,7 +249,7 @@ export default function CartView() {
               {config.flatShipping > 0 && (
                 <li className="flex justify-between gap-3 py-2">
                   <span>Shipping</span>
-                  <span>{checkout.fulfillment === "pickup" ? "Free — pickup" : money(shipping)}</span>
+                  <span>{checkout.fulfillment === "pickup" ? "Free — pickup" : checkout.fulfillment === "event" ? "Free — at the show" : money(shipping)}</span>
                 </li>
               )}
               <li className="mt-1.5 flex justify-between gap-3 border-t-2 border-forest-deep pt-3.5 font-serif text-[1.4rem] font-bold text-forest-deep">
@@ -198,16 +258,41 @@ export default function CartView() {
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-line bg-paper p-[18px] shadow-soft">
-            <div className="mb-3 flex items-center gap-2.5">
-              <span className="flex h-[34px] w-[34px] items-center justify-center rounded-[9px] bg-[#003087] font-serif text-[18px] font-extrabold text-white">P</span>
-              <h3 className="m-0 text-[1.16rem]">Pay with PayPal</h3>
+          {inPerson && (
+            <div className="rounded-2xl border border-line bg-paper p-[18px] shadow-soft">
+              <h3 className="m-0 mb-1 text-[1.16rem]">
+                {checkout.fulfillment === "event" ? "Reserve it — pay at the booth" : "Place it — pay at pickup"}
+              </h3>
+              <p className="mb-3 mt-0 text-[0.92rem] text-muted">Cash, card or Venmo when you pick it up. Nothing is charged now.</p>
+              {blocked && <p className="mb-3 mt-0 rounded-lg bg-cream p-3 text-[0.95rem] text-forest-deep">{blocked}</p>}
+              <button type="button" className="btn btn-primary btn-block" onClick={payInPerson} disabled={Boolean(blocked) || placing}>
+                {placing ? "Placing order…" : `Place order · ${money(total)}`}
+              </button>
+              {placeErr && <p role="alert" className="mb-0 mt-3 font-semibold text-warn">{placeErr}</p>}
             </div>
-            <PayPalCheckout blocked={blocked} onSuccess={onPaid} />
-            <p className="mt-3 text-[0.82rem] text-muted">PayPal checkout may also offer Venmo and card for US customers.</p>
-          </div>
+          )}
 
-          <VenmoBox onPaid={onVenmoPaid} />
+          {paypalConfigured && (
+            <div className="rounded-2xl border border-line bg-paper p-[18px] shadow-soft">
+              <div className="mb-3 flex items-center gap-2.5">
+                <span className="flex h-[34px] w-[34px] items-center justify-center rounded-[9px] bg-[#003087] font-serif text-[18px] font-extrabold text-white">P</span>
+                <h3 className="m-0 text-[1.16rem]">{inPerson ? "Or pay now with PayPal" : "Pay with PayPal"}</h3>
+              </div>
+              <PayPalCheckout blocked={blocked} onSuccess={onPaid} />
+              <p className="mt-3 text-[0.82rem] text-muted">PayPal checkout may also offer Venmo and card for US customers.</p>
+            </div>
+          )}
+
+          <VenmoBox onPaid={onVenmoPaid} blocked={blocked} />
+
+          {!inPerson && !onlinePay && (
+            <div className="rounded-2xl border border-line bg-cream p-[18px] text-forest-deep">
+              <strong className="mb-1 block">Online payment is being set up.</strong>
+              To order now, choose <button type="button" className="link-btn" onClick={() => updateCheckout({ fulfillment: "pickup" })}>Pickup</button> or{" "}
+              <button type="button" className="link-btn" onClick={() => updateCheckout({ fulfillment: "event" })}>At a show</button> and pay in person,
+              or email <a href={`mailto:${config.contactEmail}`}>{config.contactEmail}</a> to have it shipped.
+            </div>
+          )}
         </aside>
       </div>
     </div>

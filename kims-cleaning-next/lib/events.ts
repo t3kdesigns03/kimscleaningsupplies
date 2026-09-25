@@ -43,3 +43,9 @@ export function splitEvents(now = new Date()) {
   }
   return { upcoming, past };
 }
+
+/** One string per show, used as the checkout choice and stored as orders.event_name,
+    e.g. "Apple & Pork Fest — Clinton, IL (Sep 26–27)". */
+export function eventLabel(e: Pick<KEvent, "name" | "city" | "state" | "date">): string {
+  return `${e.name} — ${e.city}, ${e.state} (${e.date})`;
+}

@@ -21,7 +21,11 @@
 /product/kim-s-cleaning-cloths-qty-6/3      /product/cloth-6        301
 /product/kim-s-cleaning-cloths-qty-18/4     /product/cloth-18       301
 /product/grandma-s-dry-dust-mop/1           /product/grandma-mop    301
-/product/microfiber-mop-head/5              /product/mop-head       301
+/product/microfiber-mop-head/5              /product/scrubbies      301
+
+# --- Renamed on this site ------------------------------------------------
+# "Microfiber Mop Head" was the scrubbies photo, mislabeled. Now /product/scrubbies.
+/product/mop-head                           /product/scrubbies      301
 /product/microfiber-high-duster/6           /product/high-duster    301
 /product/microfiber-hand-duster/7           /product/hand-duster    301
 /product/kim-s-hair-towel/8                 /product/hair-towel     301

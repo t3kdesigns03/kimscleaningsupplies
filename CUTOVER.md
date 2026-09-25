@@ -53,7 +53,7 @@ clean single-segment slug.
 | `/product/kim-s-cleaning-cloths-qty-6/3` | `/product/cloth-6` |
 | `/product/kim-s-cleaning-cloths-qty-18/4` | `/product/cloth-18` |
 | `/product/grandma-s-dry-dust-mop/1` | `/product/grandma-mop` |
-| `/product/microfiber-mop-head/5` | `/product/mop-head` |
+| `/product/microfiber-mop-head/5` | `/product/scrubbies` (the old "Mop Head" listing was the scrubbies photo, mislabeled) |
 | `/product/microfiber-high-duster/6` | `/product/high-duster` |
 | `/product/microfiber-hand-duster/7` | `/product/hand-duster` |
 | `/product/kim-s-hair-towel/8` | `/product/hair-towel` |

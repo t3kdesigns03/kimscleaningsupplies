@@ -11,7 +11,7 @@
    the .svg clipart is only a last-resort fallback.
    ------------------------------------------------------------------ */
 
-export type Category = "cloths" | "mops" | "dusters" | "hair";
+export type Category = "cloths" | "mops" | "dusters" | "scrubbies" | "hair";
 export type Care = "wet" | "dry";
 
 export interface ProductOption {
@@ -173,20 +173,20 @@ export const products: Product[] = [
     care: "wet",
   },
   {
-    slug: "mop-head",
-    name: "Microfiber Mop Head",
-    short: "Screw-on refill pad",
-    price: 22.0,
+    slug: "windshield-mop",
+    name: "Windshield Mop",
+    short: "Inside and outside the glass",
+    price: 25.0,
     category: "mops",
-    blurb: "Hardwood floors. Fits a standard screw-on handle.",
+    blurb: "Cleans the inside and outside of the windshield, even where you can't reach.",
     images: [
-      "/images/products/mop-pads2.webp",
+      "/images/products/windshield-mop.webp",
     ],
-    desc: "The microfiber head on its own — it screws onto the standard handle you already own. Water is enough for most days. If you want soap on a hardwood floor, half a cup of Murphy's Oil Soap in the bucket is plenty.",
+    desc: "For the part of the windshield nobody can reach. The long handle and pivoting head get the inside and the outside of the glass, right down to where it meets the dash, without climbing across the front seat.",
     bullets: [
-      "Fits a standard screw-on mop handle",
-      "Water only, or half a cup of Murphy's Oil Soap",
-      "Washable — back in service the same day",
+      "Inside and outside of the windshield",
+      "Reaches down to where the glass meets the dash",
+      "Microfiber cover on a pivoting head",
     ],
     care: "wet",
   },
@@ -247,6 +247,24 @@ export const products: Product[] = [
       "Sleeves pull off and go in the washer",
     ],
     care: "dry",
+  },
+  {
+    slug: "scrubbies",
+    name: "Microfiber Scrubbies",
+    short: "Stove tops, no scratches",
+    price: 5.0,
+    category: "scrubbies",
+    blurb: "Gas or electric stove tops. Will not scratch any surface.",
+    images: [
+      "/images/products/mop-pads2.webp",
+    ],
+    desc: "The scrubbie for the stove. It works on gas and electric stove tops, and it will not scratch any surface. Sold individually.",
+    bullets: [
+      "Gas or electric stove tops",
+      "Will not scratch any surface",
+      "Sold individually",
+    ],
+    care: "wet",
   },
   {
     slug: "hair-towel",
@@ -318,6 +336,7 @@ export const CATEGORIES: { key: "all" | Category; label: string }[] = [
   { key: "cloths", label: "Cloths" },
   { key: "mops", label: "Mops" },
   { key: "dusters", label: "Dusters" },
+  { key: "scrubbies", label: "Scrubbies" },
   { key: "hair", label: "Hair" },
 ];
 

@@ -35,6 +35,7 @@ export default function Footer() {
               <li className="mb-0.5 md:mb-2"><Link href="/shop?filter=cloths" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Cleaning cloths</Link></li>
               <li className="mb-0.5 md:mb-2"><Link href="/shop?filter=mops" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Mops</Link></li>
               <li className="mb-0.5 md:mb-2"><Link href="/shop?filter=dusters" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Dusters</Link></li>
+              <li className="mb-0.5 md:mb-2"><Link href="/shop?filter=scrubbies" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Scrubbies</Link></li>
               <li className="mb-0.5 md:mb-2"><Link href="/shop?filter=hair" className="inline-flex min-h-[40px] items-center md:min-h-0 text-[#E4EFD2] no-underline hover:underline">Hair towel</Link></li>
             </ul>
           </div>

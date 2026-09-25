@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { SEO } from "@/lib/seo";
 import Link from "next/link";
 import Filters from "@/components/Filters";
 import { CheckIcon } from "@/components/Icons";
@@ -7,9 +8,10 @@ import PageHero from "@/components/PageHero";
 const TRUST = ["Water only", "Made in USA", "Free Quincy pickup", "Washes hundreds of times"];
 
 export const metadata = {
-  title: "Shop",
-  description:
-    "Microfiber cleaning cloths in 2, 6 and 18 packs, wet, dry, and windshield mops, hand and high dusters, scrubbies, and the hair towel. Water only. Made in USA.",
+  title: { absolute: SEO.shop.title },
+  description: SEO.shop.description,
+  alternates: { canonical: "/shop" },
+  openGraph: { title: SEO.shop.title, description: SEO.shop.description, url: "/shop" },
 };
 
 export default function ShopPage() {

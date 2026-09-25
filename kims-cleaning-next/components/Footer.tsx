@@ -52,8 +52,12 @@ export default function Footer() {
         </div>
 
         <div className="mt-7 flex flex-wrap gap-x-[18px] gap-y-2 border-t border-white/20 pt-4 text-[0.85rem] text-[#A8BC99]">
-          <span>&copy; {year} Kim&rsquo;s Cleaning Products</span>
-          <span>{config.town}</span>
+          <span>&copy; {year}</span>
+          {/* NAP — same name, place and email on every public page */}
+          <address className="not-italic">
+            Kim&rsquo;s Cleaning Products &middot; Quincy, Illinois &middot;{" "}
+            <a href={`mailto:${config.contactEmail}`} className="text-[#C9DAB8]">{config.contactEmail}</a>
+          </address>
           <span>PayPal and Venmo accepted</span>
         </div>
       </div>

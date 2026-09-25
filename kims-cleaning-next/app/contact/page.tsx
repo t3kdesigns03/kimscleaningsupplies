@@ -1,12 +1,14 @@
 import ContactForm from "@/components/ContactForm";
+import { SEO } from "@/lib/seo";
 import Link from "next/link";
 import { config } from "@/lib/config";
 import PageHero from "@/components/PageHero";
 
 export const metadata = {
-  title: "Contact",
-  description:
-    "Order questions, school and church fundraisers, and how to reach Kim. Email Kim Schoch in Quincy, IL.",
+  title: { absolute: SEO.contact.title },
+  description: SEO.contact.description,
+  alternates: { canonical: "/contact" },
+  openGraph: { title: SEO.contact.title, description: SEO.contact.description, url: "/contact" },
 };
 
 export default function ContactPage() {

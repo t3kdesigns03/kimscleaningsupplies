@@ -7,6 +7,19 @@ import { splitEvents } from "@/lib/events";
 import Reveal from "@/components/Reveal";
 import TheMath from "@/components/TheMath";
 import FairsStrip from "@/components/FairsStrip";
+import JsonLd from "@/components/JsonLd";
+import { SEO, homeFaqs, faqSchema } from "@/lib/seo";
+import type { Metadata } from "next";
+
+// Rebuild once a day so "this weekend" and the FAQ's next fair stay current.
+export const revalidate = 86400;
+
+export const metadata: Metadata = {
+  title: { absolute: SEO.home.title },
+  description: SEO.home.description,
+  alternates: { canonical: "/" },
+  openGraph: { title: SEO.home.title, description: SEO.home.description, url: "/" },
+};
 
 const STEPS = [
   { title: "Wet it", body: "Plain tap water. Cold is fine." },
@@ -22,6 +35,7 @@ export default function Home() {
   const tools = products.filter((p) => p.category !== "cloths");
   const { upcoming } = splitEvents();
   const next = (upcoming.length ? upcoming : []).slice(0, 3);
+  const faqs = homeFaqs();
 
   return (
     <>
@@ -145,6 +159,30 @@ export default function Home() {
             <Link href="/events" className="btn btn-primary">Full fall schedule</Link>
           </div>
         </div>
+      </section>
+
+      {/* FAQ — same answers are in the FAQPage JSON-LD below */}
+      <section className="section bg-white" aria-labelledby="faq-title">
+        <div className="wrap">
+          <h2 id="faq-title">Questions we hear at the booth</h2>
+          <dl className="mt-12 grid gap-x-10 gap-y-9 md:mt-16 md:grid-cols-2">
+            {faqs.map((f) => (
+              <div key={f.q} className="border-t-2 border-leaf pt-5">
+                <dt className="font-serif text-[1.3rem] font-semibold leading-snug text-forest-deep">{f.q}</dt>
+                <dd className="m-0 mt-2 text-[1rem] leading-relaxed text-muted">
+                  {f.a}
+                  {f.link && (
+                    <>
+                      {" "}
+                      <Link href={f.link.href} className="font-semibold">{f.link.label}</Link>
+                    </>
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        <JsonLd data={faqSchema(faqs)} />
       </section>
     </>
   );

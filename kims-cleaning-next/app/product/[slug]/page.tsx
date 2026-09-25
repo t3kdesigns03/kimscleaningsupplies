@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { productAlt, productDescription, productTitle } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ProductGallery from "@/components/ProductGallery";
@@ -28,17 +29,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   // `blurb` is a one-line card caption and reads as a stub in a search
   // result. `desc` is the real copy — trimmed to roughly what Google shows.
-  const description = p.desc.length > 160 ? `${p.desc.slice(0, 157).trimEnd()}…` : p.desc;
+  const description = productDescription(p);
   const url = `/product/${p.slug}`;
 
   return {
-    title: p.name,
+    title: { absolute: productTitle(p) },
     description,
     alternates: { canonical: url },
     openGraph: {
       type: "website",
       url,
-      title: `${p.name} — ${money(p.price)}`,
+      title: `${p.name} — ${money(p.price)} | Kim’s Cleaning Products`,
       description,
       images: p.images.slice(0, 1),
     },
@@ -70,7 +71,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
         <VariantProvider initial={firstVariant}>
         <div className="grid items-start gap-6 pb-24 md:grid-cols-2 md:gap-9 lg:pb-5">
-          <ProductGallery sources={p.images} alt={p.name} optionImages={optionImages} />
+          <ProductGallery sources={p.images} alt={productAlt(p.name)} optionImages={optionImages} />
 
           <div>
             <h1 className="mb-0.5 text-[clamp(1.75rem,6vw,2.7rem)]"><PackName name={p.name} /></h1>

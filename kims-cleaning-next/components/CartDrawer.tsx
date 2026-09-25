@@ -7,6 +7,7 @@
    ------------------------------------------------------------------ */
 
 import Link from "next/link";
+import { productAlt } from "@/lib/seo";
 import { useEffect } from "react";
 import { useCart } from "./CartProvider";
 import SmartImage from "./SmartImage";
@@ -93,7 +94,7 @@ export default function CartDrawer() {
                       style={{ background: "linear-gradient(170deg,#FFFDF8,#ECEAD2)" }}
                       aria-label={l.name}
                     >
-                      <SmartImage sources={imagesFor(l.product, l.variant)} alt={l.name} className="h-full w-full object-cover" />
+                      <SmartImage sources={imagesFor(l.product, l.variant)} alt={productAlt(l.name)} className="h-full w-full object-cover" />
                     </Link>
 
                     <div className="flex min-w-0 flex-1 flex-col">

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { ADMIN_COOKIE, isAdminToken } from "@/lib/server/admin-auth";
-import { setStatus, supabaseReady } from "@/lib/server/supabase";
+import { deleteOrder, setStatus, supabaseReady } from "@/lib/server/supabase";
 import { STATUSES, type OrderStatus } from "@/lib/orders";
 
 export const dynamic = "force-dynamic";
@@ -36,5 +36,27 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }>
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: "Could not update." }, { status: 502 });
+  }
+}
+
+/* DELETE → removes the order for good. Staff cookie required; the public
+   site has no route that deletes. */
+export async function DELETE(_req: Request, ctx: { params: Promise<{ id: string }> }) {
+  const jar = await cookies();
+  if (!isAdminToken(jar.get(ADMIN_COOKIE)?.value)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const { id } = await ctx.params;
+  if (!UUID.test(id)) return NextResponse.json({ error: "Bad id" }, { status: 400 });
+  if (!supabaseReady("service")) {
+    return NextResponse.json({ error: "SUPABASE_SERVICE_ROLE_KEY is not set." }, { status: 503 });
+  }
+  try {
+    const gone = await deleteOrder(id);
+    if (!gone) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ ok: true });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: "Could not delete." }, { status: 502 });
   }
 }

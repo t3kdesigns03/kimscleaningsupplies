@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { productAlt } from "@/lib/seo";
 import Link from "next/link";
 import { useCart, type Checkout, type Fulfillment } from "./CartProvider";
 import SmartImage from "./SmartImage";
@@ -143,7 +144,7 @@ export default function CartView() {
           {lines.map((l) => (
             <div key={l.slug + l.variant} className="grid grid-cols-[84px_1fr] gap-3.5 border-b border-line py-4 md:grid-cols-[104px_1fr]">
               <div className="h-[84px] w-[84px] overflow-hidden rounded-xl border border-line md:h-[104px] md:w-[104px]" style={{ background: "linear-gradient(170deg,#FFFFFF,#EDF6DD)" }}>
-                <SmartImage sources={imagesFor(l.product, l.variant)} alt={l.name} className="h-full w-full object-cover" />
+                <SmartImage sources={imagesFor(l.product, l.variant)} alt={productAlt(l.name)} className="h-full w-full object-cover" />
               </div>
               <div>
                 <div className="font-bold leading-tight">

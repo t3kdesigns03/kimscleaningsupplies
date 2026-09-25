@@ -1,13 +1,15 @@
 import Link from "next/link";
+import { SEO } from "@/lib/seo";
 import { SURFACES, REMOVES } from "@/lib/products";
 import { testimonials } from "@/lib/testimonials";
 import { pickupAddress } from "@/lib/config";
 import PageHero from "@/components/PageHero";
 
 export const metadata = {
-  title: "About Kim & Alice",
-  description:
-    "Kim Schoch and Alice sell Eco Easy microfiber at fairs and home shows across Iowa and Illinois. Pickup in Quincy, IL. Water only, made in USA.",
+  title: { absolute: SEO.about.title },
+  description: SEO.about.description,
+  alternates: { canonical: "/about" },
+  openGraph: { title: SEO.about.title, description: SEO.about.description, url: "/about" },
 };
 
 export default function AboutPage() {

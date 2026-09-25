@@ -34,7 +34,7 @@ export const config = {
   // Canonical production URL — no trailing slash. ONE place to change at
   // cutover: metadataBase, the sitemap, robots.txt and the structured data
   // all read from here. See CUTOVER.md.
-  siteUrl: "https://kimscleaningproducts.t3kdesigns.app",
+  siteUrl: "https://kimscleaningproducts.com",
 
   brand: "Kim's Cleaning Products",
   tagline: "Eco Easy Microfiber · Made in USA",

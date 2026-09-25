@@ -8,6 +8,7 @@
    ------------------------------------------------------------------ */
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { money } from "@/lib/format";
 import AdminHeader from "./AdminHeader";
 import {
@@ -109,6 +110,8 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
   const [open, setOpen] = useState<string | null>(null);
   const [saving, setSaving] = useState<string | null>(null);
   const [printedAt, setPrintedAt] = useState("");
+  const [confirmDel, setConfirmDel] = useState<OrderRow | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -182,6 +185,39 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
       setSaving(null);
     }
   }
+
+  async function deleteConfirmed() {
+    const o = confirmDel;
+    if (!o || deleting) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/admin/orders/${o.id}`, { method: "DELETE" });
+      if (res.status === 401) {
+        window.location.reload();
+        return;
+      }
+      const data = await res.json().catch(() => ({}));
+      // 404 = already gone (e.g. deleted on another phone) — drop it here too
+      if (!res.ok && res.status !== 404) throw new Error(data?.error || "Could not delete.");
+      setOrders((list) => list.filter((x) => x.id !== o.id));
+      setOpen(null);
+      setConfirmDel(null);
+      setError("");
+    } catch (e) {
+      setConfirmDel(null);
+      setError(e instanceof Error ? `${e.message} The order was not deleted.` : "The order was not deleted.");
+    } finally {
+      setDeleting(false);
+    }
+  }
+
+  // Esc closes the confirm
+  useEffect(() => {
+    if (!confirmDel) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && !deleting && setConfirmDel(null);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [confirmDel, deleting]);
 
   async function signOut() {
     await fetch("/api/admin/login", { method: "DELETE" }).catch(() => {});
@@ -343,7 +379,7 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
                     <span className="hidden md:block"><Pill status={o.status} /></span>
                   </button>
 
-                  {isOpen && <Ticket o={o} saving={saving === o.id} onStatus={(s) => changeStatus(o, s)} />}
+                  {isOpen && <Ticket o={o} saving={saving === o.id} onStatus={(s) => changeStatus(o, s)} onDelete={() => setConfirmDel(o)} />}
                 </li>
               );
             })}
@@ -351,6 +387,53 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
 
         </div>
       </div>
+
+      {/* ---------- delete confirm (phone-sized) ----------
+          Portaled to <body>: the page-enter fade (app/template.tsx) leaves a
+          transform on the page wrapper, which would pin a "fixed" overlay to
+          the page instead of the screen. */}
+      {confirmDel && createPortal(
+        <div
+          className="fixed inset-0 z-[80] flex items-end justify-center bg-forest-deep/50 p-2 backdrop-blur-[2px] print:hidden sm:items-center"
+          onClick={() => !deleting && setConfirmDel(null)}
+        >
+          <div
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="del-title"
+            aria-describedby="del-desc"
+            className="w-full max-w-sm rounded-2xl border border-line bg-paper p-5 shadow-lift"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 id="del-title" className="m-0 font-serif text-[1.45rem] font-semibold leading-tight text-forest-deep">
+              Delete this order? This cannot be undone.
+            </h2>
+            <p id="del-desc" className="mb-5 mt-2 text-[0.98rem] text-muted">
+              #{shortRef(confirmDel.id)} · {confirmDel.name || "—"} · {money(confirmDel.total || 0)}
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                autoFocus
+                disabled={deleting}
+                onClick={() => setConfirmDel(null)}
+                className="min-h-[52px] rounded-full border-2 border-forest/25 bg-white text-[1rem] font-bold text-forest-deep hover:border-grass disabled:opacity-60"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={deleting}
+                onClick={deleteConfirmed}
+                className="min-h-[52px] rounded-full border-2 border-warn bg-warn text-[1rem] font-bold text-white hover:bg-[#7d3c18] disabled:opacity-60"
+              >
+                {deleting ? "Deleting…" : "Delete order"}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
 
       {/* ---------- print: pack list for the current filter (plain) ---------- */}
       <div className="hidden bg-white p-[10mm] text-[11pt] text-black print:block">
@@ -398,7 +481,7 @@ export default function AdminInbox({ initial, initialError }: { initial: OrderRo
 }
 
 /* Ticket: what to pack first, then who it's for, then the buttons. */
-function Ticket({ o, saving, onStatus }: { o: OrderRow; saving: boolean; onStatus: (s: OrderStatus) => void }) {
+function Ticket({ o, saving, onStatus, onDelete }: { o: OrderRow; saving: boolean; onStatus: (s: OrderStatus) => void; onDelete: () => void }) {
   const phoneDigits = (o.phone || "").replace(/[^\d+]/g, "");
   const next = nextStep(o);
   return (
@@ -501,6 +584,17 @@ function Ticket({ o, saving, onStatus }: { o: OrderRow; saving: boolean; onStatu
             {s === "Paid" ? "Mark paid" : "Back to received"}
           </button>
         ))}
+      </div>
+
+      <div className="mt-5 border-t border-dashed border-line pt-3 text-right">
+        <button
+          type="button"
+          disabled={saving}
+          onClick={onDelete}
+          className="min-h-[44px] rounded-full px-3 text-[0.95rem] font-semibold text-warn underline decoration-warn/40 underline-offset-4 hover:bg-[#FBEDE4] disabled:opacity-50"
+        >
+          Delete order
+        </button>
       </div>
     </div>
   );

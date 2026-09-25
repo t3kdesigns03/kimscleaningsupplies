@@ -1,11 +1,13 @@
 import Link from "next/link";
+import { SEO } from "@/lib/seo";
 import { splitEvents, type KEvent } from "@/lib/events";
 import PageHero from "@/components/PageHero";
 
 export const metadata = {
-  title: "Where to find us",
-  description:
-    "Fall 2026 schedule: fairs, home shows, and festivals across Iowa and Illinois where Kim and Alice have a booth.",
+  title: { absolute: SEO.events.title },
+  description: SEO.events.description,
+  alternates: { canonical: "/events" },
+  openGraph: { title: SEO.events.title, description: SEO.events.description, url: "/events" },
 };
 
 function Row({ e, isNext, dim }: { e: KEvent; isNext?: boolean; dim?: boolean }) {

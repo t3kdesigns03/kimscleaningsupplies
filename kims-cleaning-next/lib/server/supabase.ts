@@ -72,3 +72,16 @@ export async function setStatus(id: string, status: OrderStatus): Promise<OrderR
   const rows = (await res.json()) as OrderRow[];
   return rows[0] || null;
 }
+
+/** Permanently removes one order. Returns false if no row had that id. */
+export async function deleteOrder(id: string): Promise<boolean> {
+  const key = serviceKey();
+  const res = await fetch(`${URL_}/rest/v1/orders?id=eq.${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    headers: headers(key, { Prefer: "return=representation" }),
+    cache: "no-store",
+  });
+  if (!res.ok) await fail(res, "delete order");
+  const rows = (await res.json()) as OrderRow[];
+  return rows.length > 0;
+}

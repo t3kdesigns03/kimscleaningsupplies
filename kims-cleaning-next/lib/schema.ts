@@ -18,12 +18,16 @@ export const ORG_ID = `${config.siteUrl}/#organization`;
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "Store",
+    // A Store is a LocalBusiness is an Organization; list both names so
+    // every reader (Google, Bing, AI crawlers) sees the business as both.
+    "@type": ["Organization", "LocalBusiness"],
     "@id": ORG_ID,
     name: config.brand,
+    alternateName: "Eco Easy Microfiber",
     url: config.siteUrl,
     description:
-      "Eco Easy microfiber cloths, dust mops, dusters, and hair towels that clean with water only. Made in USA.",
+      "Kim’s Cleaning Products sells Eco Easy Microfiber cloths, mops, and dusters that clean with water only. Made in USA. 15×15 cloth. Pickup in Quincy, Illinois, and at Iowa and Illinois fairs.",
+    slogan: "Cleans with just water.",
     logo: abs("/images/brand/logo-mark-512.png"),
     image: abs("/images/brand/hero-earth-full.jpg"),
     email: config.contactEmail,
@@ -35,7 +39,12 @@ export function organizationSchema() {
       postalCode: "62305",
       addressCountry: "US",
     },
-    areaServed: "US",
+    areaServed: [
+      { "@type": "State", name: "Iowa" },
+      { "@type": "State", name: "Illinois" },
+      { "@type": "Country", name: "US" },
+    ],
+    founder: [{ "@type": "Person", name: "Kim Schoch" }, { "@type": "Person", name: "Alice" }],
   };
 }
 
